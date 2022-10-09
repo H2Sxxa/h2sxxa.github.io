@@ -1,5 +1,6 @@
 ---
 title: 关于
+layout: about
 ---
 # Hello ! Here is H2Sxxa
 
