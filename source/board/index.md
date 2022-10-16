@@ -1,6 +1,6 @@
 ---
 title: 留言板
-commit: giscus
+comment: giscus
 ---
 
 ## 畅言所欲
