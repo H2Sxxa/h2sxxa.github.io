@@ -11,12 +11,10 @@ banner_img: https://pixiv.re/79639404-1.jpg
 
 ### 何为构建环境？
 
-在了解构建环境之前，你需要知道一个名为 **ForgeGradle** 的东西
+在了解构建环境之前，你需要知道一个名为 **ForgeGradle** 的东西，它的作用如下
 
-> ## 1.2. ForgeGradle 能干什么？
->
 > - 部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种：
->   - 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（`setupDecompWorkspace` task)
+>  - 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（`setupDecompWorkspace` task)
 >   - 持续集成服务器（CI）经常使用的用于自动构建 Mod 的环境（`setupCIWorkspace` task）
 >   - 不太常用的仅有反混淆后的 Minecraft 的开发环境（`setupDevWorkspace` task）
 > - 依赖处理
@@ -27,7 +25,7 @@ banner_img: https://pixiv.re/79639404-1.jpg
 >   - 运行服务器（`runServer` task）
 >   - 运行客户端（`runClient` task）
 > - 在执行 Gradle Java 插件的 `build` task 时可自动完成对源码的重混淆
->
+> 
 > 作者：3TUSK 出处：https://harbinger.covertdragon.team/chapter-01/forgegradle.html
 
 简单来说，构建环境就是把整个MC下到.gradle缓存里，同时进行几轮的反编译反混淆，便于 `runClient` 运行客户端调试与执行其他Gradle命令
