@@ -3,6 +3,8 @@ title: MineCraft 1.12.2 开发教程 —— 0.准备工作
 date: 2022-10-16 8:00:00
 tags: ["Minecraft","Forge","1.12.2"]
 categories: Minecraft Forge 1.12.2 Development Tutorial
+index_img: https://pixiv.re/101891205.jpg
+banner_img: https://pixiv.re/101891205.jpg
 ---
 
 ## 须知
@@ -146,13 +148,13 @@ IDF与MDK的区别在引用原文有细说，这里不会展开
 
 打开PowerShell or CMD输入
 
-````
+````shell
 java -version
 ````
 
 如果一切正常，看起来会是这样的
 
-```
+```shell
 C:\Users\Administrator>java -version
 java version "1.8.0_..."
 Java(TM) SE Runtime Environment (build 1.8.0_...)
@@ -161,9 +163,9 @@ Java HotSpot(TM) 64-Bit Server VM (build ..., mixed mode)
 
 请确认java version是**1.8.0**而不是其他(" _ "后面可以忽略)
 
-- [x] ### 拥有IDE,MDK......
+### 拥有IDE,MDK等开发工具......
 
-- [x] ### 拥有提问的智慧，耐心......
+### 了解何为提问的智慧，具有一定耐心......
 
 ## 参考
 [^1]: Harbinger https://harbinger.covertdragon.team
