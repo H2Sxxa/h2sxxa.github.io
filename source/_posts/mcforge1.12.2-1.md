@@ -127,7 +127,7 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 
 如果你构建成功了请跳过此步
 
-先前往https://mouse0w0.github.io/setup-mdk-guide查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助
+先前往[这里](https://mouse0w0.github.io/setup-mdk-guide)查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助
 
 ## 启动MC
 
