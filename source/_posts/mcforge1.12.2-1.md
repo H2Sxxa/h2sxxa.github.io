@@ -121,7 +121,13 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 
 1. 在你的mdk目录下打开CMD或者PowerShell窗口
 2. 输入`gradlew setupDecompWorkspace`
-3. 如果你使用eclipse等上述任务结束后输入`gradlew eclipse`，如果你使用IntelliJ IDEA，等上述任务结束后输入`gradlew genIntellijRuns`，VSCode在ForgeGradle2.3没有相应的Gradle Task（然而FG在之后某一版本是有的），所以你只需要输入2即可，代价是以后的`gradlew runClient`或其他命令可能都需要手动打开CMD/终端输入
+3. 如果你使用eclipse等上述任务结束后输入`gradlew eclipse`
+4. 如果你使用IntelliJ IDEA，等上述任务结束，**先选择build.gradle把项目导入IDEA后关闭IDEA**，在确保IDEA关闭后输入`gradlew genIntellijRuns` 
+   - 如何导入build.gradle? File->Open->选择你的build.gradle后点击ok，把作为项目打开
+
+1. VSCode在ForgeGradle2.3没有相应的Gradle Task（然而FG在之后某一版本是有的），所以你只需要输入2即可，代价是以后的`gradlew runClient`或其他命令可能都需要手动打开CMD/终端输入
+
+
 
 ### 构建失败？
 
@@ -129,7 +135,7 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 
 先前往[这里](https://mouse0w0.github.io/setup-mdk-guide)查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助
 
-## 启动MC
+## 在IDE中启动MC
 
 W.I.P.
 
