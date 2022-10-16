@@ -38,9 +38,98 @@ banner_img: https://pixiv.re/79639404-1.jpg
 - 由于某些硬件软件问题，并不是所有人配置开发环境都能顺利 (1G/环境变量/......)
 - 由于各种奇怪的操作，版本问题......只要有一个环节出了问题，基本就可以看见 `Build Failed` 了
 
-{% note warning %}
-如果没有耐心，构建环境就足以把你劝退
-{% endnote %}
+难道真的没有办法了吗？
+
+答案是否，在长期的开发者开发过程中已经形成了几套优秀的方案，下文提供2个解决方案来解决构建环境的绝大多数网络问题，当然如果并非是网络问题，可以删除.gradle再次重试
+
+> 是的，因为各种乱七八糟的原因，部署环境的过程总是会有各种莫名其妙的问题。一般情况下， --debug、--stacktrace 直接莽拿到的信息足够 debug 用了。但有一点请注意：部署环境的过程中，因为涉及到几轮 mapping 和下载 Minecraft 的 assets，所以在没有预先部署好的环境留下的缓存的情况行，这个过程不会特别快。要有耐心。
+>
+> 然而，由于某些特殊原因，即使你有足够的耐心也不一定能部署成功。遇到这种情况时，你可以尝试通过为 Gradle 配置代理。相关资料很容易找到，这里不再赘述。
+>
+> 此外，还要明确一点：不是所有的错误都和网络有关系。请不要盲目尝试各种所谓的解决方案——虽然，直接删了 .gradle 缓存目录可以解决 90% 的非网络因素引发的问题。
+>
+> 作者：3TUSK 出处：https://harbinger.covertdragon.team/chapter-02/
+
+- [Proxifier or TUN模式代理Gradle](https://github.com/IAXRetailer/MCreator_Setup/wiki/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BB%A3%E7%90%86Forge(java)%E6%9D%A5%E5%8A%A0%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83)
+
+- 使用代理镜像Maven源，类似于阿里云....，也有现成的框架，类似于[IDF](https://github.com/IdeallandEarthDept/IdeallandFramework)，不过你可能需要把[build.gradle这部分](https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/build.gradle#L42)改为下文那样，从而使用2847版本的MDK，不过2768其实也影响不大...看个人选择吧
+
+  ```java
+  minecraft {
+      version = "1.12.2-14.23.5.2847" //改为1.12.2-14.23.5.2847，此处已更改
+      runDir = "run"
+  
+      // the mappings can be changed at any time, and must be in the following format.
+      // snapshot_YYYYMMDD   snapshot are built nightly.
+      // stable_#            stables are built at the discretion of the MCP team.
+      // Use non-default mappings at your own risk. they may not always work.
+      // simply re-run your setup task after changing the mappings to update your workspace.
+      mappings = "snapshot_20171003"
+      // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+  }
+  
+  ```
+
+
+
+### 一些修改建议
+
+#### 修改Gradle版本至4.9
+
+1. 打开MDK目录下gradle\wrapper文件夹
+2. 打开gradle-wrapper.properties文件
+3. 将内容改为下文所述，其中distributionUrl的是否使用腾讯云镜像是可选的，如果不需要使用镜像，可以把distributionUrl的值改为`https\://services.gradle.org/distributions/gradle-4.9-all.zip`
+
+```properties
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+# Tecent cloud mirror
+distributionUrl=https\://mirrors.cloud.tencent.com/gradle/gradle-4.9-all.zip
+# Source address
+#distributionUrl=https\://services.gradle.org/distributions/gradle-4.9-all.zip
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+```
+
+### 开始构建！
+
+打开MDK目录下的README.txt，你会看到以下内容
+
+```
+Step 1: Open your command-line and browse to the folder where you extracted the zip file.
+
+Step 2: Once you have a command window up in the folder that the downloaded material was placed, type:
+
+Windows: "gradlew setupDecompWorkspace"
+Linux/Mac OS: "./gradlew setupDecompWorkspace"
+
+Step 3: After all that finished, you're left with a choice.
+For eclipse, run "gradlew eclipse" (./gradlew eclipse if you are on Mac/Linux)
+
+If you prefer to use IntelliJ, steps are a little different.
+1. Open IDEA, and import project.
+2. Select your build.gradle file and have it import.
+3. Once it's finished you must close IntelliJ and run the following command:
+
+"gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
+
+Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/ (if you use IDEA, it should automatically start on your project)
+
+```
+
+大致的意思由以下几个步骤组成
+
+1. 在你的mdk目录下打开CMD或者PowerShell窗口
+2. 输入`gradlew setupDecompWorkspace`
+3. 如果你使用eclipse等上述任务结束后输入`gradlew eclipse`，如果你使用IntelliJ IDEA，等上述任务结束后输入`gradlew genIntellijRuns`，VSCode在ForgeGradle2.3没有相应的Gradle Task（然而FG在之后某一版本是有的），所以你只需要输入2即可，代价是以后的`gradlew runClient`或其他命令可能都需要手动打开CMD/终端输入
+
+### 构建失败？
+
+如果你构建成功了请跳过此步
+
+先前往https://mouse0w0.github.io/setup-mdk-guide查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助
+
+## 启动MC
 
 W.I.P.
 
