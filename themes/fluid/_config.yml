@@ -350,6 +350,7 @@ navbar:
     - { key: "分类", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "标签", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "关于", link: "/about/", icon: "iconfont icon-user-fill" }
+    - { key: "留言", link: "/board/", icon: "iconfont icon-comment" }
     #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
