@@ -34,4 +34,6 @@ banner_img: https://pixiv.re/93025943.jpg
 
 ### 相关附件
 
+#### 如果有解压密码就是h2sxxa
+
 https://drive.h2sxxa.eu.org/zh-CN/Tools/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE/AIMP%E6%89%A9%E5%B1%95/
