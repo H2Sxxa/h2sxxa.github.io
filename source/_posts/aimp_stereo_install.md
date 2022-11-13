@@ -18,7 +18,7 @@ banner_img: https://pixiv.re/93025943.jpg
 
 ### 下载
 
-先火树前往官网(https://www.stereotool.com/download/)，发现左边上面有个Winamp/DSP plug-in version
+先火树前往官网( https://www.stereotool.com/download )，发现左边上面有个Winamp/DSP plug-in version
 
 下载后拿到了一个Installer了，然后就可以进入第二步了
 
