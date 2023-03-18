@@ -33,6 +33,8 @@ ADB是谷歌推出的一款专门用于连接手机进行调试的开发者工�
 
 找到系统的开发者选项，找到调试一栏，打开无线调试。
 
+如果找的到`禁止权限监控`，建议也打开，否则MAA可能无法操作。
+
 #### 配对设备并连接
 
 **如果要使用无线连接必须连接到同一网络下，或者你可以去使用USB调试来连接，教程自寻**
@@ -58,14 +60,14 @@ ADB是谷歌推出的一款专门用于连接手机进行调试的开发者工�
 
 在终端输入
 
-```````shell
+```shell
 .\adb.exe connect 127.0.0.1:42222
 #正常会出现connected to 127.0.0.1:42222
 .\adb.exe devices #确认是否连接成功
 #List of devices attached
 #127.0.0.1:42222    device
 #adb-xxxxx-xxxxx._adb-tls-connect._tcp.      device 不用理他，这是另一种连接方式
-```````
+```
 
 如果你这一步没什么问题，恭喜你已经成功一半了！
 
@@ -87,7 +89,7 @@ APK文件可以在 [[此处]](https://github.com/farmerbb/SecondScreen/releases/
 
 #### 手动修改
 
-```
+```shell
 .\adb.exe -s 127.0.0.1:42222 shell #进入设备终端
 wm size                               #查看当前设备的分辨率
 wm size 1920x1080                      #调整分辨率
