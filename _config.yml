@@ -78,4 +78,7 @@ theme: fluid
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/H2Sxxa/h2sxxa.github.io
+  # example, https://github.com/hexojs/hexojs.github.io
+  branch: gh-pages
