@@ -351,7 +351,7 @@ navbar:
     - { key: "标签", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "关于", link: "/about/", icon: "iconfont icon-user-fill" }
     - { key: "留言", link: "/board/", icon: "iconfont icon-comment" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "友链", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -997,22 +997,10 @@ links:
   # Member item of page
   items:
     - {
-      title: "Fluid Blog",
-      intro: "主题博客",
-      link: "https://hexo.fluid-dev.com/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
-      avatar: "/img/favicon.png"
+      title: "black_trees's Blog",
+      intro: "幻想乡算法研究所",
+      link: "https://hylwxqwq.github.io/",
+      avatar: "https://avatars.githubusercontent.com/u/77879721"
     }
 
   # 当成员头像加载失败时，替换为指定图片
