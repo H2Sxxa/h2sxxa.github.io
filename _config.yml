@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.h2sxxa.eu.org
+url: http://h2sxxa.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
