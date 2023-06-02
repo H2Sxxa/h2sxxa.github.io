@@ -870,12 +870,12 @@ cusdis:
 # Based on GitHub Discussions, similar to Utterances
 # See: https://giscus.app/
 giscus:
-  repo: IAXRetailer/Blog
+  repo: H2Sxxa/h2sxxa.github.io
   repo-id: R_kgDOIKwoQA
   category: Announcements
   category-id: DIC_kwDOIKwoQM4CR4Dz
-  theme-light: light
-  theme-dark: dark
+  theme-light: light_tritanopia
+  theme-dark: dark_dimmed
   mapping: pathname
   reactions-enabled: 1
   emit-metadata: 0
