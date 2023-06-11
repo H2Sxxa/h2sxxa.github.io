@@ -72,6 +72,8 @@ banner_img: https://pixiv.re/79639404-1.jpg
 
 
 
+
+
 ### 一些修改建议
 
 #### 修改Gradle版本至4.9
@@ -125,9 +127,7 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 4. 如果你使用IntelliJ IDEA，等上述任务结束，**先选择build.gradle把项目导入IDEA后关闭IDEA**，在确保IDEA关闭后输入`gradlew genIntellijRuns` 
    - 如何导入build.gradle? File->Open->选择你的build.gradle后点击ok，把作为项目打开
 
-1. VSCode在ForgeGradle2.3没有相应的Gradle Task（然而FG在之后某一版本是有的），所以你只需要输入2即可，代价是以后的`gradlew runClient`或其他命令可能都需要手动打开CMD/终端输入
-
-
+1. VSCode在ForgeGradle2.3没有相应的Gradle Task，如果你使用LCF，此处你直接导入即可（记得装Gradle插件）
 
 ### 构建失败？
 
@@ -137,5 +137,18 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 
 ## 在IDE中启动MC
 
-W.I.P.
+### IDEA
 
+IDEA入成功后，拉出右边的Gradle标签，会有对应的任务，运行`runClient`即可启动客户端
+
+### VSCode(不支持FG2.3)
+
+安装Gradle插件后，在Gradle选项卡处可以找到你的`runClient`
+
+### 手动启动
+
+在项目目录打开终端运行`.\gradlew runClient`
+
+## 参考
+
+[^1]: Harbinger https://harbinger.covertdragon.team
