@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/101891205.jpg">
 <meta property="article:published_time" content="2022-10-16T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-06-02T13:23:13.365Z">
+<meta property="article:modified_time" content="2023-06-11T10:03:02.343Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Minecraft">
 <meta property="article:tag" content="Forge">
@@ -247,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          3.2k 字
         
       </span>
     
@@ -258,7 +258,7 @@
         
         
         
-          24 分钟
+          27 分钟
         
       </span>
     
@@ -349,7 +349,7 @@
 <ul>
 <li>MDK2847下载地址 <a target="_blank" rel="noopener" href="https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip">https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip</a></li>
 </ul>
-<h4 id="考虑使用IDF等其他自建框架进行开发"><a href="#考虑使用IDF等其他自建框架进行开发" class="headerlink" title="考虑使用IDF等其他自建框架进行开发"></a>考虑使用IDF等其他自建框架进行开发</h4><p>IDF与MDK的区别在引用原文有细说，这里不会展开</p>
+<h4 id="考虑使用自建框架进行开发"><a href="#考虑使用自建框架进行开发" class="headerlink" title="考虑使用自建框架进行开发"></a>考虑使用自建框架进行开发</h4><h5 id="IDF-Idealland-Framework-适合完全-0-基础的小白"><a href="#IDF-Idealland-Framework-适合完全-0-基础的小白" class="headerlink" title="IDF(Idealland Framework) - 适合完全 0 基础的小白"></a>IDF(Idealland Framework) - 适合完全 0 基础的小白</h5><p><a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework">https://github.com/IdeallandEarthDept/IdeallandFramework</a></p>
 <blockquote>
 <p>IDF，Idealland Framework（理想境框架），是指基于理想境mod源码删减之后得出的一台框架。</p>
 <p>IDL，Idealland，理想境的简称。</p>
@@ -357,8 +357,11 @@
 <p>作者：道家深湖 <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv19031222">https://www.bilibili.com/read/cv19031222</a> 出处：bilibili</p>
 </blockquote>
 <p>值得一提的是，IDF几乎为您配好了所有镜像环境，因此在下一步构建环境也会轻松许多</p>
-<p>如果不需要IDF提供的代码，您可以像使用MDK一般清理src文件夹</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework">下载地址</a></p>
+<p>如果不需要IDF提供的代码，那我推荐你使用LCF</p>
+<h5 id="LCF-LunarCapitalFrameWork-适合有其他语言基础的小白"><a href="#LCF-LunarCapitalFrameWork-适合有其他语言基础的小白" class="headerlink" title="LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白"></a>LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白</h5><p><a target="_blank" rel="noopener" href="https://github.com/TeamGensouSpark/LunarCapitalFramework">https://github.com/TeamGensouSpark/LunarCapitalFramework</a></p>
+<p>LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE框架整合而成的另一类框架。</p>
+<p>与TDE一样配备了 <strong>Gradle 8.1.1</strong> + <strong><a target="_blank" rel="noopener" href="https://github.com/GTNewHorizons/RetroFuturaGradle">RetroFuturaGradle</a></strong> + <strong>Forge 14.23.5.2847</strong>，但并不是全镜像</p>
+<p>额外还将打算支持添加项目生成器与管理器脚本（依赖于Python）</p>
 <h3 id="需要更多帮助-or-看看其他的教程"><a href="#需要更多帮助-or-看看其他的教程" class="headerlink" title="需要更多帮助 or 看看其他的教程"></a>需要更多帮助 or 看看其他的教程</h3><blockquote>
 <p>1【视频，1.12.2】深湖出品的《边睡觉边开发Mod》</p>
 <ul>
@@ -407,14 +410,14 @@
 <li>MDK 开发指南 <a target="_blank" rel="noopener" href="https://github.com/mouse0w0/MinecraftDeveloperGuide">https://github.com/mouse0w0/MinecraftDeveloperGuide</a></li>
 <li>一个由我提供的MOD开发群组 <a target="_blank" rel="noopener" href="https://jq.qq.com/?_wv=1027&amp;k=c14qiAAd">https://jq.qq.com/?_wv=1027&amp;k=c14qiAAd</a></li>
 </ul>
-<h2 id="再次检查然后开始吧"><a href="#再次检查然后开始吧" class="headerlink" title="再次检查然后开始吧"></a>再次检查然后开始吧</h2><h3 id="确认Java版本"><a href="#确认Java版本" class="headerlink" title="确认Java版本"></a>确认Java版本</h3><p>打开PowerShell or CMD输入</p>
+<h2 id="再次检查然后开始吧"><a href="#再次检查然后开始吧" class="headerlink" title="再次检查然后开始吧"></a>再次检查然后开始吧</h2><h3 id="确认Java版本（此步仅MDK）"><a href="#确认Java版本（此步仅MDK）" class="headerlink" title="确认Java版本（此步仅MDK）"></a>确认Java版本（此步仅MDK）</h3><p>打开PowerShell or CMD输入</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -version<br></code></pre></td></tr></table></figure>
 
 <p>如果一切正常，看起来会是这样的</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">C:\Users\Administrator&gt;java -version<br>java version &quot;1.8.0_...&quot;<br>Java(TM) SE Runtime Environment (build 1.8.0_...)<br>Java HotSpot(TM) 64-Bit Server VM (build ..., mixed mode)<br></code></pre></td></tr></table></figure>
 
-<p>请确认java version是<strong>1.8.0</strong>而不是其他(“ _ “后面可以忽略)</p>
-<h3 id="拥有IDE-MDK等开发工具……"><a href="#拥有IDE-MDK等开发工具……" class="headerlink" title="拥有IDE,MDK等开发工具……"></a>拥有IDE,MDK等开发工具……</h3><h3 id="了解何为提问的智慧，具有一定耐心……"><a href="#了解何为提问的智慧，具有一定耐心……" class="headerlink" title="了解何为提问的智慧，具有一定耐心……"></a>了解何为提问的智慧，具有一定耐心……</h3><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Harbinger <a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team</a>
+<p>请确认java version是<strong>1.8.0</strong>而不是其他(“ _ “后面可以忽略)，或者你可以在你的IDE里面更改项目SDK</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Harbinger <a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>道家深湖指路明灯等文章 (出处文中均有提到)
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
