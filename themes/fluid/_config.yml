@@ -947,14 +947,13 @@ about:
   banner_img: /img/custom/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: https://avatars.githubusercontent.com/IAXRetailer
+  avatar: https://avatars.githubusercontent.com/H2Sxxa
   name: "H2Sxxa"
-  intro: "Just a developer"
+  intro: "Toho lover"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
-    - { class: "iconfont icon-github-fill", link: "https://github.com/IAXRetailer", tip: "GitHub" }
-    - { class: "iconfont icon-music", link: "https://drive.h2sxxa.eu.org", tip: "OneDrive" }
+    - { class: "iconfont icon-github-fill", link: "https://github.com/H2Sxxa", tip: "GitHub" }
     - { class: "iconfont icon-qq-fill", link: "https://jq.qq.com/?_wv=1027&k=mFDzNxmp", tip: "Material Mod" }
 
 #---------------------------
