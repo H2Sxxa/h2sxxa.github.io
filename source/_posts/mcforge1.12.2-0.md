@@ -74,9 +74,11 @@ MDK（Mod Development Kit）是Forge提供的一个工具，集成了ForgeGradle
 
 - MDK2847下载地址 https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip
 
-#### 考虑使用IDF等其他自建框架进行开发
+#### 考虑使用自建框架进行开发
 
-IDF与MDK的区别在引用原文有细说，这里不会展开
+##### IDF(Idealland Framework) - 适合完全 0 基础的小白
+
+https://github.com/IdeallandEarthDept/IdeallandFramework
 
 > IDF，Idealland Framework（理想境框架），是指基于理想境mod源码删减之后得出的一台框架。
 >
@@ -88,9 +90,21 @@ IDF与MDK的区别在引用原文有细说，这里不会展开
 
 值得一提的是，IDF几乎为您配好了所有镜像环境，因此在下一步构建环境也会轻松许多
 
-如果不需要IDF提供的代码，您可以像使用MDK一般清理src文件夹
+如果不需要IDF提供的代码，那我推荐你使用LCF
 
-[下载地址](https://github.com/IdeallandEarthDept/IdeallandFramework)
+
+
+##### LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白
+
+https://github.com/TeamGensouSpark/LunarCapitalFramework
+
+LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE框架整合而成的另一类框架。
+
+与TDE一样配备了 **Gradle 8.1.1** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle)** + **Forge 14.23.5.2847**，但并不是全镜像
+
+额外还将打算支持添加项目生成器与管理器脚本（依赖于Python）
+
+
 
 ### 需要更多帮助 or 看看其他的教程
 
@@ -144,7 +158,7 @@ IDF与MDK的区别在引用原文有细说，这里不会展开
 
 ## 再次检查然后开始吧
 
-### 确认Java版本
+### 确认Java版本（此步仅MDK）
 
 打开PowerShell or CMD输入
 
@@ -161,11 +175,7 @@ Java(TM) SE Runtime Environment (build 1.8.0_...)
 Java HotSpot(TM) 64-Bit Server VM (build ..., mixed mode)
 ```
 
-请确认java version是**1.8.0**而不是其他(" _ "后面可以忽略)
-
-### 拥有IDE,MDK等开发工具......
-
-### 了解何为提问的智慧，具有一定耐心......
+请确认java version是**1.8.0**而不是其他(" _ "后面可以忽略)，或者你可以在你的IDE里面更改项目SDK
 
 ## 参考
 [^1]: Harbinger https://harbinger.covertdragon.team
