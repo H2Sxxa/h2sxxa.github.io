@@ -998,8 +998,14 @@ links:
     - {
       title: "black_trees's Blog",
       intro: "幻想乡算法研究所",
-      link: "https://hylwxqwq.github.io/",
+      link: "https://enonya.github.io/",
       avatar: "https://avatars.githubusercontent.com/u/77879721"
+    }
+    - {
+      title: "NanodaOvO's Blog",
+      intro: "NanodaOvO's Blog",
+      link: "https://nanodaovo.github.io/",
+      avatar: "https://avatars.githubusercontent.com/u/106482877"
     }
 
   # 当成员头像加载失败时，替换为指定图片
