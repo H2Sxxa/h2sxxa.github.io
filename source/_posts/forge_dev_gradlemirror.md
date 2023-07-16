@@ -145,7 +145,11 @@ mirror_maven_url=download.mcbbs.net/maven
 buildscript {
     //只需要改repositories里的内容
     repositories {
-        if (use_mirror_url == "true") {
+        if (use_mirror == "true") {
+        removeIf {
+            it instanceof MavenArtifactRepository &&
+                (it.url.toString() == "https://repo.maven.apache.org/maven2/")
+        }
             maven { url "https://maven.aliyun.com/nexus/content/groups/public" }
             maven { url "https://${mirror_maven_url}" }
         } else {
@@ -155,5 +159,21 @@ buildscript {
     }
 	//...其他不用管
 }
+//...
+repositories { // 在这个大括号内添加
+    if (use_mirror == "true") {
+    removeIf {
+        it instanceof MavenArtifactRepository &&
+            (it.url.toString() == "https://repo.maven.apache.org/maven2/")
+    }
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "https://${mirror_maven_url}" }
+    }
+    //...其他不用管
+}
+//...
+
+
+
 ```
 
