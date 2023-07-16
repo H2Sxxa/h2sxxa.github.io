@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/97045292.jpg">
 <meta property="article:published_time" content="2023-07-16T04:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-16T04:59:31.582Z">
+<meta property="article:modified_time" content="2023-07-16T05:19:46.818Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Forge">
 <meta property="article:tag" content="Groovy">
@@ -247,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k 字
+          3.9k 字
         
       </span>
     
@@ -258,7 +258,7 @@
         
         
         
-          28 分钟
+          33 分钟
         
       </span>
     
@@ -326,7 +326,7 @@
 <h2 id="gradle-properties（如果没有可以直接新建一个gradle-properties然后添加保存）-1"><a href="#gradle-properties（如果没有可以直接新建一个gradle-properties然后添加保存）-1" class="headerlink" title="gradle.properties（如果没有可以直接新建一个gradle.properties然后添加保存）"></a>gradle.properties（如果没有可以直接新建一个gradle.properties然后添加保存）</h2><p>将这一段直接加在最下面</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># mirror</span><br><span class="hljs-attr">use_mirror</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># BMCLAPI is unstable sometimes, use lss233&#x27;s mirror for alternative.</span><br><span class="hljs-comment">#mirror_maven_url=bmclapi2.bangbang93.com/maven</span><br><span class="hljs-comment">#mirror_maven_url=crystal.app.lss233.com/repositories/minecraft</span><br><span class="hljs-attr">mirror_maven_url</span>=download.mcbbs.net/maven<br></code></pre></td></tr></table></figure>
 
-<h2 id="build-gradle-1"><a href="#build-gradle-1" class="headerlink" title="build.gradle"></a>build.gradle</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs groovy">buildscript &#123;<br>    <span class="hljs-comment">//只需要改repositories里的内容</span><br>    repositories &#123;<br>        <span class="hljs-keyword">if</span> (use_mirror_url == <span class="hljs-string">&quot;true&quot;</span>) &#123;<br>            maven &#123; url <span class="hljs-string">&quot;https://maven.aliyun.com/nexus/content/groups/public&quot;</span> &#125;<br>            maven &#123; url <span class="hljs-string">&quot;https://$&#123;mirror_maven_url&#125;&quot;</span> &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            mavenCentral()<br>            maven &#123; url <span class="hljs-string">&quot;https://maven.minecraftforge.net&quot;</span> &#125;<br>        &#125;<br>    &#125;<br>	<span class="hljs-comment">//...其他不用管</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="build-gradle-1"><a href="#build-gradle-1" class="headerlink" title="build.gradle"></a>build.gradle</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs groovy">buildscript &#123;<br>    <span class="hljs-comment">//只需要改repositories里的内容</span><br>    repositories &#123;<br>        <span class="hljs-keyword">if</span> (use_mirror == <span class="hljs-string">&quot;true&quot;</span>) &#123;<br>        removeIf &#123;<br>            it <span class="hljs-keyword">instanceof</span> MavenArtifactRepository &amp;&amp;<br>                (it.url.toString() == <span class="hljs-string">&quot;https://repo.maven.apache.org/maven2/&quot;</span>)<br>        &#125;<br>            maven &#123; url <span class="hljs-string">&quot;https://maven.aliyun.com/nexus/content/groups/public&quot;</span> &#125;<br>            maven &#123; url <span class="hljs-string">&quot;https://$&#123;mirror_maven_url&#125;&quot;</span> &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            mavenCentral()<br>            maven &#123; url <span class="hljs-string">&quot;https://maven.minecraftforge.net&quot;</span> &#125;<br>        &#125;<br>    &#125;<br>	<span class="hljs-comment">//...其他不用管</span><br>&#125;<br><span class="hljs-comment">//...</span><br>repositories &#123; <span class="hljs-comment">// 在这个大括号内添加</span><br>    <span class="hljs-keyword">if</span> (use_mirror == <span class="hljs-string">&quot;true&quot;</span>) &#123;<br>    removeIf &#123;<br>        it <span class="hljs-keyword">instanceof</span> MavenArtifactRepository &amp;&amp;<br>            (it.url.toString() == <span class="hljs-string">&quot;https://repo.maven.apache.org/maven2/&quot;</span>)<br>    &#125;<br>        maven &#123; url <span class="hljs-string">&quot;https://maven.aliyun.com/nexus/content/groups/public&quot;</span> &#125;<br>        maven &#123; url <span class="hljs-string">&quot;https://$&#123;mirror_maven_url&#125;&quot;</span> &#125;<br>    &#125;<br>    <span class="hljs-comment">//...其他不用管</span><br>&#125;<br><span class="hljs-comment">//...</span><br><br><br><br></code></pre></td></tr></table></figure>
 
 
                 
