@@ -51,7 +51,7 @@ zipStorePath=wrapper/dists
 
 要改的地方一共有3个，这3个文件都在项目文件夹下
 
-## gradle.properties
+## gradle.properties（如果没有可以直接新建一个gradle.properties然后添加保存）
 
 将这一段直接加在最下面
 
@@ -126,7 +126,7 @@ repositories {
 
 要改的地方一共有2个，这2个文件都在项目文件夹下
 
-## gradle.properties
+## gradle.properties（如果没有可以直接新建一个gradle.properties然后添加保存）
 
 将这一段直接加在最下面
 
