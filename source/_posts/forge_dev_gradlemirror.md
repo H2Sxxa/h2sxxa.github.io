@@ -47,7 +47,7 @@ zipStorePath=wrapper/dists
 
 （PS:觉得好用不妨给项目点个Star）
 
-# Gradle 8+
+# 新版 Gradle
 
 要改的地方一共有3个，这3个文件都在项目文件夹下
 
@@ -122,7 +122,7 @@ repositories {
 }
 ```
 
-# Gradle 8-（不全，等待确认后更新）
+# 旧版 Gradle
 
 要改的地方一共有2个，这2个文件都在项目文件夹下
 
@@ -172,8 +172,5 @@ repositories { // 在这个大括号内添加
     //...其他不用管
 }
 //...
-
-
-
 ```
 
