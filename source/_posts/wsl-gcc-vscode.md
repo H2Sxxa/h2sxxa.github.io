@@ -94,11 +94,13 @@ sudo apt-get install build-essential gdb
 ```
 
 ### 检查安装
+
 ```shell
 whereis g++
-#g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz
+# g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz
 whereis gdb
-#gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz
+
+# gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz
 ```
 
 至此，WSL + GCC就算是安装好了。
