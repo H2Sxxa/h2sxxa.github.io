@@ -16,26 +16,27 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="须知 这是Minecraft Forge Mod教程而不是Minecraft Bedrock Mod或者Minecraft Farbic Mod 本文不讨论MCreator，只讨论古典法：使用Java语言，在Forge的基础上做mod 使用的Forge MDK版本为Forge 14.23.5.2847，其他版本请勿反复提问 MacOS用户观看此教程请自力更生  前言在您开始阅读此教程前，请先回答以">
+    <meta name="description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MineCraft 1.12.2 开发教程 —— 0.准备工作">
-<meta property="og:url" content="http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-0/index.html">
+<meta property="og:title" content="使用WSL来运行gcc配合VSCode进行C的开发">
+<meta property="og:url" content="http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="须知 这是Minecraft Forge Mod教程而不是Minecraft Bedrock Mod或者Minecraft Farbic Mod 本文不讨论MCreator，只讨论古典法：使用Java语言，在Forge的基础上做mod 使用的Forge MDK版本为Forge 14.23.5.2847，其他版本请勿反复提问 MacOS用户观看此教程请自力更生  前言在您开始阅读此教程前，请先回答以">
+<meta property="og:description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pixiv.re/101891205.jpg">
-<meta property="article:published_time" content="2022-10-16T00:00:00.000Z">
+<meta property="og:image" content="https://pixiv.re/109368457.jpg">
+<meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
 <meta property="article:modified_time" content="2023-08-10T13:00:13.768Z">
 <meta property="article:author" content="H2Sxxa">
-<meta property="article:tag" content="Forge">
-<meta property="article:tag" content="Minecraft">
-<meta property="article:tag" content="1.12.2">
+<meta property="article:tag" content="WSL">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="gcc">
+<meta property="article:tag" content="VSCode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pixiv.re/101891205.jpg">
+<meta name="twitter:image" content="https://pixiv.re/109368457.jpg">
   
   
   
-  <title>MineCraft 1.12.2 开发教程 —— 0.准备工作 - H2Sxxa&#39;s Blog</title>
+  <title>使用WSL来运行gcc配合VSCode进行C的开发 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,13 +220,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://pixiv.re/101891205.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('https://pixiv.re/109368457.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MineCraft 1.12.2 开发教程 —— 0.准备工作"></span>
+            <span id="subtitle" data-typed-text="使用WSL来运行gcc配合VSCode进行C的开发"></span>
           
         </div>
 
@@ -236,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-16 08:00" pubdate>
-          2022年10月16日 早上
+        <time datetime="2023-08-10 17:00" pubdate>
+          2023年8月10日 下午
         </time>
       </span>
     
@@ -248,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          1.9k 字
         
       </span>
     
@@ -259,7 +260,7 @@
         
         
         
-          27 分钟
+          17 分钟
         
       </span>
     
@@ -296,130 +297,40 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MineCraft 1.12.2 开发教程 —— 0.准备工作</h1>
+            <h1 id="seo-header">使用WSL来运行gcc配合VSCode进行C的开发</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="须知"><a href="#须知" class="headerlink" title="须知"></a>须知</h2><ul>
-<li>这是Minecraft Forge Mod教程而不是Minecraft Bedrock Mod或者Minecraft Farbic Mod</li>
-<li>本文不讨论MCreator，只讨论古典法：使用Java语言，在Forge的基础上做mod</li>
-<li>使用的Forge MDK版本为<strong>Forge 14.23.5.2847</strong>，其他版本请勿反复提问</li>
-<li>MacOS用户观看此教程请自力更生</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在您开始阅读此教程前，请先回答以下几个问题</p>
-<h3 id="你懂Java吗-or-你知道面向对象的含义吗-？"><a href="#你懂Java吗-or-你知道面向对象的含义吗-？" class="headerlink" title="你懂Java吗 or 你知道面向对象的含义吗 ？"></a>你懂Java吗 or 你知道面向对象的含义吗 ？</h3><ul>
-<li><p>简述instanceof</p>
-</li>
-<li><p>简述面向对象</p>
-</li>
-<li><p>简述装饰器</p>
-</li>
-<li><p>简述类/包</p>
-</li>
-<li><p>……</p>
-<p>如果你不懂，当然没有关系，因为笔者刚接触时也不懂Java，也是通过一路的摸爬滚打才弄明白的，你现在Go to learn Java还不算迟</p>
-<blockquote>
-<p>有些人会编程但不会Java，这很正常，毕竟世界上有那么多编程语言，正常人都不会样样精通。</p>
-<p>如果你懂面向对象，那么找一个介绍java语法的教程即可。这里我推荐菜鸟教程——<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-tutorial.html">https://www.runoob.com/java/java-tutorial.html</a></p>
-<p>适合会编程的人，没什么废话。不适合完全不会编程的新手。</p>
-<p>作者：道家深湖 <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv12067660">https://www.bilibili.com/read/cv12067660</a> 出处：bilibili</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="你有IDE吗？"><a href="#你有IDE吗？" class="headerlink" title="你有IDE吗？"></a>你有IDE吗？</h3><p>如果没有，这里有3个选择：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download">IntelliJ IDEA Community</a> (当然，如果你有钱可以选择UItimate，不过这并不影响开发)</li>
-<li><a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads">Eclipse</a></li>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/Download">Visual Studio Code</a></li>
-</ul>
-<p>这里推荐使用IDEA Community版本，推荐的版本为最新版，因为绝大多数的开发者使用的为此软件，便于提问</p>
-<p>不过在本教程中，笔者将使用VSCode来示范代码，不必担心，对于IDEA部分必要功能我也会提，但是对于Eclipse我就爱莫能助了</p>
-<h3 id="你有Java吗？"><a href="#你有Java吗？" class="headerlink" title="你有Java吗？"></a>你有Java吗？</h3><p>如果你想要开发1.12.2的Mod，你需要一个Java8 (JDK)</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://adoptopenjdk.net/">AdoptOpenJDK</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/">Oracle JDK</a></li>
-<li>……</li>
-</ul>
-<p>下载太慢？试看看<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/windows/">清华源</a>，注意下载.msi而不是zip，除非你完全能区分明白这2东西</p>
-<p>等等，还没完，当你安装完成之后，请务必检查一下JAVA_HOME，不过你也可以在IDE里设置项目SDK，然后在IDE里构建开发…</p>
-<p>对于我来说，JAVA_HOME在没有多版本开发需求下是较优选；不会配置JAVA_HOME？<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-environment-setup.html">点击此处</a></p>
-<h3 id="你有MDK吗-？or-MDK是什么？"><a href="#你有MDK吗-？or-MDK是什么？" class="headerlink" title="你有MDK吗 ？or MDK是什么？"></a>你有MDK吗 ？or MDK是什么？</h3><p>MDK（Mod Development Kit）是Forge提供的一个工具，集成了ForgeGradle以及其他东西</p>
-<p>所有1.12.2的MDK可以在<a target="_blank" rel="noopener" href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.12.2.html">这里</a>找到</p>
-<ul>
-<li>MDK2847下载地址 <a target="_blank" rel="noopener" href="https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip">https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip</a></li>
-</ul>
-<h4 id="考虑使用自建框架进行开发"><a href="#考虑使用自建框架进行开发" class="headerlink" title="考虑使用自建框架进行开发"></a>考虑使用自建框架进行开发</h4><h5 id="IDF-Idealland-Framework-适合完全-0-基础的小白"><a href="#IDF-Idealland-Framework-适合完全-0-基础的小白" class="headerlink" title="IDF(Idealland Framework) - 适合完全 0 基础的小白"></a>IDF(Idealland Framework) - 适合完全 0 基础的小白</h5><p><a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework">https://github.com/IdeallandEarthDept/IdeallandFramework</a></p>
-<blockquote>
-<p>IDF，Idealland Framework（理想境框架），是指基于理想境mod源码删减之后得出的一台框架。</p>
-<p>IDL，Idealland，理想境的简称。</p>
-<p>MDK，Mod Development Kit，模组开发包的简称。 </p>
-<p>作者：道家深湖 <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv19031222">https://www.bilibili.com/read/cv19031222</a> 出处：bilibili</p>
-</blockquote>
-<p>值得一提的是，IDF几乎为您配好了所有镜像环境，因此在下一步构建环境也会轻松许多</p>
-<p>如果不需要IDF提供的代码，那我推荐你使用LCF</p>
-<h5 id="LCF-LunarCapitalFrameWork-适合有其他语言基础的小白"><a href="#LCF-LunarCapitalFrameWork-适合有其他语言基础的小白" class="headerlink" title="LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白"></a>LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白</h5><p><a target="_blank" rel="noopener" href="https://github.com/TeamGensouSpark/LunarCapitalFramework">https://github.com/TeamGensouSpark/LunarCapitalFramework</a></p>
-<p>LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE框架整合而成的另一类框架。</p>
-<p>与TDE一样配备了 <strong>Gradle 8.1.1</strong> + <strong><a target="_blank" rel="noopener" href="https://github.com/GTNewHorizons/RetroFuturaGradle">RetroFuturaGradle</a></strong> + <strong>Forge 14.23.5.2847</strong>，但并不是全镜像</p>
-<p>额外还将打算支持添加项目生成器与管理器脚本（依赖于Python）</p>
-<h3 id="需要更多帮助-or-看看其他的教程"><a href="#需要更多帮助-or-看看其他的教程" class="headerlink" title="需要更多帮助 or 看看其他的教程"></a>需要更多帮助 or 看看其他的教程</h3><blockquote>
-<p>1【视频，1.12.2】深湖出品的《边睡觉边开发Mod》</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ar4y1K7Qk">https://www.bilibili.com/video/BV1Ar4y1K7Qk</a></li>
-</ul>
-<p>2【网页，1.12.2】由3TUSK牵头的教程《Harbinger》</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team/</a></li>
-</ul>
-<p>3【书籍，1.12.2】由土球（zzzz_ustc）撰写的书籍《我的世界：Minecraft模组开发指南》</p>
-<ul>
-<li>各大网购平台有售，搜索书名即可。</li>
-</ul>
-<p>4【网页，1.16】由FledgeXu撰写的《Boson》。不过由于作者本人已经不打算维护，所以本教程需要在熟练Modder监护下阅读，不然你可能上来就卡住。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://boson.v2mcdev.com/introducation/intro.html">https://boson.v2mcdev.com/introducation/intro.html</a></li>
-</ul>
-<p>5【汇总】MCBBS的教程帖汇总。很多，不算全，我推荐的就是上面那几个了。除了汇总贴，bbs也有很多其他资源可供各位自行发掘。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.mcbbs.net/thread-54579-1-1.html">https://www.mcbbs.net/thread-54579-1-1.html</a></li>
-</ul>
-<p>6【离线包】离线包汇总。对于那些因为在大陆网络受限，而构建工作环境失败的人会有帮助。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.mcbbs.net/thread-896542-1-1.html">https://www.mcbbs.net/thread-896542-1-1.html</a></li>
-</ul>
-<p>7【MCWiki】作为modder，有的时候你需要查mc原版的一些信息，来这就对了。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://minecraft.fandom.com/zh/wiki/">https://minecraft.fandom.com/zh/wiki/</a></li>
-</ul>
-<p>8【mod集散地】Curseforge，国际Mod汇总处，你想知道这世界上都有什么mod吗？</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.curseforge.com/minecraft/mc-mods">https://www.curseforge.com/minecraft/mc-mods</a></li>
-</ul>
-<p>9【中文Mod百科】MCMod，中文的mod wiki。虽然不是世界上所有mod都有，但也相当不错了。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.mcmod.cn/">https://www.mcmod.cn/</a></li>
-</ul>
-<p>10【Github】Github就是github。</p>
-<ul>
-<li>链接略，国内不稳定 </li>
-</ul>
-<p>作者：道家深湖 <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv12067660">https://www.bilibili.com/read/cv12067660</a> 出处：bilibili</p>
-</blockquote>
-<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><ul>
-<li>MDK 配置指南 <a target="_blank" rel="noopener" href="https://mouse0w0.github.io/setup-mdk-guide">https://mouse0w0.github.io/setup-mdk-guide</a></li>
-<li>MDK 开发指南 <a target="_blank" rel="noopener" href="https://github.com/mouse0w0/MinecraftDeveloperGuide">https://github.com/mouse0w0/MinecraftDeveloperGuide</a></li>
-<li>一个由我提供的MOD开发群组 <a target="_blank" rel="noopener" href="https://jq.qq.com/?_wv=1027&amp;k=c14qiAAd">https://jq.qq.com/?_wv=1027&amp;k=c14qiAAd</a></li>
-</ul>
-<h2 id="再次检查然后开始吧"><a href="#再次检查然后开始吧" class="headerlink" title="再次检查然后开始吧"></a>再次检查然后开始吧</h2><h3 id="确认Java版本（此步仅MDK）"><a href="#确认Java版本（此步仅MDK）" class="headerlink" title="确认Java版本（此步仅MDK）"></a>确认Java版本（此步仅MDK）</h3><p>打开PowerShell or CMD输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -version<br></code></pre></td></tr></table></figure>
+                <h1 id="使用WSL来运行GCC"><a href="#使用WSL来运行GCC" class="headerlink" title="使用WSL来运行GCC"></a>使用WSL来运行GCC</h1><h2 id="为什么是WSL-GCC"><a href="#为什么是WSL-GCC" class="headerlink" title="为什么是WSL + GCC"></a>为什么是WSL + GCC</h2><p>说到Windows上的C/Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。</p>
+<p>但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个<code>tasks.json</code>，且不需要额外配置，其次就是WSL（Linux）里安装gcc等开发C/Cpp所用到的工具非常简单，apt-get就完事，远比用Windows舒服。</p>
+<p>WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW编译一个发行版，如果能够使用CI（类似于Github Action）编译会很方便，我不认为这是一个缺点。</p>
+<h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
+<h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu也有，直接安装应该也可以使用WSL，安装完后记得<code>wsl -l -v</code>看看是否安装成功。</p>
+<h3 id="🔧手动安装"><a href="#🔧手动安装" class="headerlink" title="🔧手动安装"></a>🔧手动安装</h3><p>使用下方这行命令可以列出所有可用的 Linux 发行版本（不含一些第三方版本），默认是Ubuntu，我也推荐安装Ubuntu。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-o</span><br><span class="hljs-comment"># wsl --list --online</span><br><span class="hljs-comment">#以下是可安装的有效分发的列表。</span><br><span class="hljs-comment">#使用 &#x27;wsl.exe --install &lt;Distro&gt;&#x27; 安装。</span><br><br><span class="hljs-comment">#NAME                                   FRIENDLY NAME</span><br><span class="hljs-comment">#Ubuntu                                 Ubuntu</span><br><span class="hljs-comment">#Debian                                 Debian GNU/Linux</span><br><span class="hljs-comment">#kali-linux                             Kali Linux Rolling</span><br><span class="hljs-comment">#Ubuntu-18.04                           Ubuntu 18.04 LTS</span><br><span class="hljs-comment">#Ubuntu-20.04                           Ubuntu 20.04 LTS</span><br><span class="hljs-comment">#Ubuntu-22.04                           Ubuntu 22.04 LTS</span><br><span class="hljs-comment">#OracleLinux_7_9                        Oracle Linux 7.9</span><br><span class="hljs-comment">#OracleLinux_8_7                        Oracle Linux 8.7</span><br><span class="hljs-comment">#OracleLinux_9_1                        Oracle Linux 9.1</span><br><span class="hljs-comment">#openSUSE-Leap-15.5                     openSUSE Leap 15.5</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-15-SP5           SUSE Linux Enterprise 15 SP5</span><br><span class="hljs-comment">#openSUSE-Tumbleweed                    openSUSE Tumbleweed</span><br></code></pre></td></tr></table></figure>
 
-<p>如果一切正常，看起来会是这样的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">C:\Users\Administrator&gt;java -version<br>java version &quot;1.8.0_...&quot;<br>Java(TM) SE Runtime Environment (build 1.8.0_...)<br>Java HotSpot(TM) 64-Bit Server VM (build ..., mixed mode)<br></code></pre></td></tr></table></figure>
+<p>输入这行就会自动开始安装WSL了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl -<span class="hljs-literal">-install</span> <span class="hljs-literal">-d</span> Ubuntu<br></code></pre></td></tr></table></figure>
 
-<p>请确认java version是<strong>1.8.0</strong>而不是其他(“ _ “后面可以忽略)，或者你可以在你的IDE里面更改项目SDK</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Harbinger <a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team</a>
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>道家深湖指路明灯等文章 (出处文中均有提到)
-<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+<h3 id="升级到WSL2（可选）"><a href="#升级到WSL2（可选）" class="headerlink" title="升级到WSL2（可选）"></a>升级到WSL2（可选）</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/compare-versions#whats-new-in-wsl-2">比较 WSL 版本</a></p>
+<p>一般使用<code>--install</code>安装下来默认就是WSL2了，如果你不放心可以检查检查。</p>
+<p>输入下方这行命令就可以查看你安装的Linux的WSL版本了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br><br><span class="hljs-comment">#  NAME      STATE           VERSION</span><br><span class="hljs-comment">#* Ubuntu    Stopped         2</span><br></code></pre></td></tr></table></figure>
+
+<p>升级到WSL2很简单，只需要<code>wsl --set-version 你所需要升级的Linux的NAME 2</code></p>
+<h3 id="配置账户密码"><a href="#配置账户密码" class="headerlink" title="配置账户密码"></a>配置账户密码</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">微软的教程</a></p>
+<p>运行刚才安装好的Ubuntu，或者直接Powershell里运行<code>wsl</code>，然后就是首次启动配置账户密码了，输入密码的时候，<strong>终端不会有任何符号输出</strong>，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。</p>
+<h2 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像<br>sudo apt update -y #更新软件包清单<br>sudo apt upgrade -y #升级软件包<br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
+
+<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">whereis g++<br><span class="hljs-meta">#</span><span class="bash">g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz</span><br>whereis gdb<br><span class="hljs-meta">#</span><span class="bash">gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz</span><br></code></pre></td></tr></table></figure>
+
+<p>至此，WSL + GCC就算是安装好了。</p>
+<h2 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h2><p>VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装C/C++插件同时安装至WSL。</p>
+<p>调试的时候选择GCC即可，至此就完成了WSL + GCC + VSCode的开发环境配置。</p>
+<p>PS:我是按照自己的经验编写本文章的，如有不足，请在评论区指教。</p>
+
                 
               </div>
             
@@ -437,7 +348,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Minecraft-Forge-1-12-2-Development-Tutorial/" class="category-chain-item">Minecraft Forge 1.12.2 Development Tutorial</a>
+  <a href="/categories/Development-Progarmming/" class="category-chain-item">Development &amp; Progarmming</a>
   
   
 
@@ -452,11 +363,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Forge/" class="print-no-link">#Forge</a>
+        <a href="/tags/WSL/" class="print-no-link">#WSL</a>
       
-        <a href="/tags/Minecraft/" class="print-no-link">#Minecraft</a>
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
       
-        <a href="/tags/1-12-2/" class="print-no-link">#1.12.2</a>
+        <a href="/tags/gcc/" class="print-no-link">#gcc</a>
+      
+        <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
       
     </div>
   
@@ -468,8 +381,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MineCraft 1.12.2 开发教程 —— 0.准备工作</div>
-      <div>http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-0/</div>
+      <div>使用WSL来运行gcc配合VSCode进行C的开发</div>
+      <div>http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/</div>
     </div>
     <div class="license-meta">
       
@@ -481,7 +394,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月16日</div>
+          <div>2023年8月10日</div>
         </div>
       
       
@@ -513,15 +426,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/16/mcforge1.12.2-1/" title="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/07/16/forge_dev_gradlemirror/" title="Forge镜像补全计划（教程向）">
+                        <span class="hidden-mobile">Forge镜像补全计划（教程向）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
