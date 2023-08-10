@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/110404372.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-10T13:05:37.858Z">
+<meta property="article:modified_time" content="2023-08-10T13:08:33.358Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
@@ -324,7 +324,7 @@
 <h2 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像<br>sudo apt update -y #更新软件包清单<br>sudo apt upgrade -y #升级软件包<br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
 
-<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">whereis g++<br><span class="hljs-meta">#</span><span class="bash">g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz</span><br>whereis gdb<br><span class="hljs-meta">#</span><span class="bash">gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz</span><br></code></pre></td></tr></table></figure>
+<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">whereis g++<br><span class="hljs-meta">#</span><span class="bash"> g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz</span><br>whereis gdb<br><br><span class="hljs-meta">#</span><span class="bash"> gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz</span><br></code></pre></td></tr></table></figure>
 
 <p>至此，WSL + GCC就算是安装好了。</p>
 <h2 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h2><p>VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装C/C++插件同时安装至WSL。</p>
