@@ -17,7 +17,7 @@ banner_img: https://pixiv.re/93025943.jpg
 
 ### 下载
 
-先火树前往官网( https://www.stereotool.com/download )，发现左边上面有个Winamp/DSP plug-in version
+先前往官网( https://www.stereotool.com/download )，左边上面有个Winamp/DSP plug-in version
 
 下载后拿到了一个Installer了，然后就可以进入第二步了
 
@@ -27,12 +27,5 @@ banner_img: https://pixiv.re/93025943.jpg
 
 ### 注册
 
-你以为安装成功了吗，其实还不算完...如果现在结束的话虽然可以用，但是有时候会蹦出来烦人的滴滴声，对此可以用一些小手段"结束调研"完成注册，在网上冲了会浪，找到了一个Stereo Tool Keygen
+你以为安装成功了吗，其实还不算完...如果现在结束的话虽然可以用，但是有时候会蹦出来烦人的滴滴声，对此可以用一些小手段"结束调研"完成注册，这里就不一一列举......
 
-运行这个exe，然后点击Patch(改了邮箱建议点一下Generate)，在右下角把文件类型切换为`dsp_stereo_tool.dll`，然后选择你刚才新建的插件目录里的相应文件，等待出现Patch Successfully的弹窗，然后复制Serial的值，打开AIMP，在相应位置输入这串东西，点击下面的Confirm就可以了
-
-### 相关附件
-
-#### 如果有解压密码就是h2sxxa
-
-https://drive.h2sxxa.eu.org/zh-CN/Tools/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE/AIMP%E6%89%A9%E5%B1%95/

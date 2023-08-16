@@ -17,15 +17,34 @@ banner_img: https://pixiv.re/110404372.jpg
 
 WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW编译一个发行版，如果能够使用CI（类似于Github Action）编译会很方便，我不认为这是一个缺点。
 
+## 前置步骤
+
+如果WSL内核版本较低打开WSL会出现`0x800701bc`错误。
+
+所以我们为解决这个问题需要进行一些小小的操作。
+
+### 开启WSL和虚拟化
+
+使用管理员身份打开PowerShell输入
+
+```powershell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+### 升级WSL内核
+
+[点击这里获取WSL升级安装包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
+
+安装升级后，打开PowerShell输入`wsl --set-default-version 2`，然后就大功告成了！
+
 ## 安装WSL
 
 [微软提供的教程](https://learn.microsoft.com/zh-cn/windows/wsl/install)
 
 ### 🏪微软商店安装
 
-如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu也有，直接安装应该也可以使用WSL，安装完后记得`wsl -l -v`看看是否安装成功。
-
-
+如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了，安装完后记得`wsl -l -v`看看是否安装成功。
 
 ### 🔧手动安装
 
@@ -59,23 +78,6 @@ wsl -l -o
  wsl --install -d Ubuntu
 ```
 
-### 升级到WSL2（可选）
-
-[比较 WSL 版本](https://learn.microsoft.com/zh-cn/windows/wsl/compare-versions#whats-new-in-wsl-2)
-
-一般使用`--install`安装下来默认就是WSL2了，如果你不放心可以检查检查。
-
-输入下方这行命令就可以查看你安装的Linux的WSL版本了
-
-```powershell
-wsl -l -v
-
-#  NAME      STATE           VERSION
-#* Ubuntu    Stopped         2
-```
-
-升级到WSL2很简单，只需要`wsl --set-version 你所需要升级的Linux的NAME 2`
-
 ### 配置账户密码
 
 [微软的教程](https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password)
@@ -95,23 +97,18 @@ sudo apt-get install build-essential gdb
 
 ### 检查安装
 
-```shell
+```sh
 whereis g++
-# g++: /usr/bin/g++ /usr/share/man/man1/g++.1.gz
 whereis gdb
-
-# gdb: /usr/bin/gdb /etc/gdb /usr/include/gdb /usr/share/gdb /usr/share/man/man1/gdb.1.gz
 ```
 
 至此，WSL + GCC就算是安装好了。
 
 ## 安装VSCode插件
 
-VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装C/C++插件同时安装至WSL。
+VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。
 
-调试的时候选择GCC即可，至此就完成了WSL + GCC + VSCode的开发环境配置。
-
-PS:我是按照自己的经验编写本文章的，如有不足，请在评论区指教。
+调试的时候选择GCC即可，如果是cpp的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。
 
 
 
