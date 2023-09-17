@@ -1,7 +1,7 @@
 ---
 title: 浅谈面向对象与面向过程
 date: 2023-9-17 20:10:00
-tags: ["OOP","rust","python","c","VSCode"]
+tags: ["OOP","Rust","Python","C"]
 categories: Development & Progarmming
 index_img: https://pixiv.re/111682831.jpg
 banner_img: https://pixiv.re/111682831.jpg
@@ -11,7 +11,7 @@ banner_img: https://pixiv.re/111682831.jpg
 
 本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。
 
-## 面向对象（OO）
+## 面向对象（OO） 
 
 ### 对象是什么
 
