@@ -22,13 +22,11 @@
       
       <tag>OOP</tag>
       
-      <tag>rust</tag>
+      <tag>Rust</tag>
       
-      <tag>python</tag>
+      <tag>Python</tag>
       
-      <tag>c</tag>
-      
-      <tag>VSCode</tag>
+      <tag>C</tag>
       
     </tags>
     
@@ -53,13 +51,13 @@
     
     <tags>
       
-      <tag>VSCode</tag>
-      
       <tag>WSL</tag>
       
       <tag>Linux</tag>
       
       <tag>gcc</tag>
+      
+      <tag>VSCode</tag>
       
     </tags>
     
