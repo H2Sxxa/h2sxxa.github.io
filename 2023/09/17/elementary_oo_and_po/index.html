@@ -16,27 +16,28 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
+    <meta name="description" content="浅谈面向对象与面向过程本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。 面向对象（OO）对象是什么对象是什么这个问题曾经困惑了我许久，Rust的struct和Python的class都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用WSL来运行gcc配合VSCode进行C的开发">
-<meta property="og:url" content="http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/index.html">
+<meta property="og:title" content="浅谈面向对象与面向过程">
+<meta property="og:url" content="http://h2sxxa.github.io/2023/09/17/elementary_oo_and_po/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
+<meta property="og:description" content="浅谈面向对象与面向过程本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。 面向对象（OO）对象是什么对象是什么这个问题曾经困惑了我许久，Rust的struct和Python的class都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pixiv.re/110404372.jpg">
-<meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
+<meta property="og:image" content="https://pixiv.re/111682831.jpg">
+<meta property="article:published_time" content="2023-09-17T12:10:00.000Z">
 <meta property="article:modified_time" content="2023-09-17T12:17:35.615Z">
 <meta property="article:author" content="H2Sxxa">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="c">
 <meta property="article:tag" content="VSCode">
-<meta property="article:tag" content="WSL">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="gcc">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pixiv.re/110404372.jpg">
+<meta name="twitter:image" content="https://pixiv.re/111682831.jpg">
   
   
   
-  <title>使用WSL来运行gcc配合VSCode进行C的开发 - H2Sxxa&#39;s Blog</title>
+  <title>浅谈面向对象与面向过程 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -220,13 +221,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://pixiv.re/110404372.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('https://pixiv.re/111682831.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用WSL来运行gcc配合VSCode进行C的开发"></span>
+            <span id="subtitle" data-typed-text="浅谈面向对象与面向过程"></span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-10 17:00" pubdate>
-          2023年8月10日 下午
+        <time datetime="2023-09-17 20:10" pubdate>
+          2023年9月17日 晚上
         </time>
       </span>
     
@@ -297,39 +298,31 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用WSL来运行gcc配合VSCode进行C的开发</h1>
+            <h1 id="seo-header">浅谈面向对象与面向过程</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="使用WSL来运行GCC"><a href="#使用WSL来运行GCC" class="headerlink" title="使用WSL来运行GCC"></a>使用WSL来运行GCC</h1><h2 id="为什么是WSL-GCC"><a href="#为什么是WSL-GCC" class="headerlink" title="为什么是WSL + GCC"></a>为什么是WSL + GCC</h2><p>说到Windows上的C/Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。</p>
-<p>但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个<code>tasks.json</code>，且不需要额外配置，其次就是WSL（Linux）里安装gcc等开发C/Cpp所用到的工具非常简单，apt-get就完事，远比用Windows舒服。</p>
-<p>WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW编译一个发行版，如果能够使用CI（类似于Github Action）编译会很方便，我不认为这是一个缺点。</p>
-<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><p>如果WSL内核版本较低打开WSL会出现<code>0x800701bc</code>错误。</p>
-<p>所以我们为解决这个问题需要进行一些小小的操作。</p>
-<h3 id="开启WSL和虚拟化"><a href="#开启WSL和虚拟化" class="headerlink" title="开启WSL和虚拟化"></a>开启WSL和虚拟化</h3><p>使用管理员身份打开PowerShell输入</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows</span><span class="hljs-literal">-Subsystem</span><span class="hljs-literal">-Linux</span> /all /norestart<br>dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
+                <h1 id="浅谈面向对象与面向过程"><a href="#浅谈面向对象与面向过程" class="headerlink" title="浅谈面向对象与面向过程"></a>浅谈面向对象与面向过程</h1><p>本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。</p>
+<h2 id="面向对象（OO）"><a href="#面向对象（OO）" class="headerlink" title="面向对象（OO）"></a>面向对象（OO）</h2><h3 id="对象是什么"><a href="#对象是什么" class="headerlink" title="对象是什么"></a>对象是什么</h3><p>对象是什么这个问题曾经困惑了我许久，Rust的<code>struct</code>和Python的<code>class</code>都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程中组合优于继承，所以我认为对象最基本的特征还是在于是否可实例化和封装。</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>例如定义一个生物的类</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Living</span></span> &#123;<br>    name: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// 私有属性，不是pub name，用于封装name</span><br>&#125;<br><br><span class="hljs-keyword">impl</span> Living &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(name: &amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-keyword">Self</span> &#123;<br>        <span class="hljs-keyword">Self</span> &#123;<br>            name: name.to_string(),<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_name</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.name.clone();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">set_name</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, name: &amp;<span class="hljs-built_in">str</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name = name.to_string();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
-<p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！</p>
-<h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
-<h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了，安装完后记得<code>wsl -l -v</code>看看是否安装成功。</p>
-<h3 id="🔧手动安装"><a href="#🔧手动安装" class="headerlink" title="🔧手动安装"></a>🔧手动安装</h3><p>使用下方这行命令可以列出所有可用的 Linux 发行版本（不含一些第三方版本），默认是Ubuntu，我也推荐安装Ubuntu。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-o</span><br><span class="hljs-comment"># wsl --list --online</span><br><span class="hljs-comment">#以下是可安装的有效分发的列表。</span><br><span class="hljs-comment">#使用 &#x27;wsl.exe --install &lt;Distro&gt;&#x27; 安装。</span><br><br><span class="hljs-comment">#NAME                                   FRIENDLY NAME</span><br><span class="hljs-comment">#Ubuntu                                 Ubuntu</span><br><span class="hljs-comment">#Debian                                 Debian GNU/Linux</span><br><span class="hljs-comment">#kali-linux                             Kali Linux Rolling</span><br><span class="hljs-comment">#Ubuntu-18.04                           Ubuntu 18.04 LTS</span><br><span class="hljs-comment">#Ubuntu-20.04                           Ubuntu 20.04 LTS</span><br><span class="hljs-comment">#Ubuntu-22.04                           Ubuntu 22.04 LTS</span><br><span class="hljs-comment">#OracleLinux_7_9                        Oracle Linux 7.9</span><br><span class="hljs-comment">#OracleLinux_8_7                        Oracle Linux 8.7</span><br><span class="hljs-comment">#OracleLinux_9_1                        Oracle Linux 9.1</span><br><span class="hljs-comment">#openSUSE-Leap-15.5                     openSUSE Leap 15.5</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-15-SP5           SUSE Linux Enterprise 15 SP5</span><br><span class="hljs-comment">#openSUSE-Tumbleweed                    openSUSE Tumbleweed</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Living</span>:</span><br>    __name:<span class="hljs-built_in">str</span> <span class="hljs-comment"># 会把这个变量转化为 _Living__name，无法通过__name访问，实现封装</span><br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-literal">None</span>:</span><br>        self.__name = name<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_name</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>        <span class="hljs-keyword">return</span> self.__name<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_name</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>        self.__name = name<br></code></pre></td></tr></table></figure>
 
-<p>输入这行就会自动开始安装WSL了</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl -<span class="hljs-literal">-install</span> <span class="hljs-literal">-d</span> Ubuntu<br></code></pre></td></tr></table></figure>
+<p>在上述2段代码中，我们都对<code>name</code>做了私有化处理，并且定义了2个方法<code>get_name</code>和<code>set_name</code>，这是很经典的封装，这两个方法叫做<code>getter</code>和<code>setter</code>，但很多情况下，我们也无需强制自己把所有成员属性私有化并且加上<code>getter</code>和<code>setter</code>，这是很死的做法。</p>
+<h4 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h4><p>实例化就是把一类东西转化为一种东西（这个东西是前面的东西的一个例子，例如<code>human</code>是<code>Living</code>的一个例子），后者相比前者往往范围更小更精确，还是刚才那个<code>Living</code>，让我们实例化一种名为<code>human</code>的生物，在很多语言中<code>new</code>是作为实例化的关键字，Python的<code>class</code>有2个魔法方法，分别是<code>__init__</code>和<code>__new__</code>，通过字面意思理解，前者是初始化，后者是实例化，C++和Java都有构造函数且都是在<code>new</code>时被调用（不考虑C++的其他实例化方法）。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>()&#123;<br>    <span class="hljs-keyword">let</span> human = Living::new(<span class="hljs-string">&quot;human&quot;</span>); <span class="hljs-comment">// 人是有名字的生物的一种实例</span><br>    human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>);<br>    <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,human.get_name())<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="配置账户密码"><a href="#配置账户密码" class="headerlink" title="配置账户密码"></a>配置账户密码</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">微软的教程</a></p>
-<p>运行刚才安装好的Ubuntu，或者直接Powershell里运行<code>wsl</code>，然后就是首次启动配置账户密码了，输入密码的时候，<strong>终端不会有任何符号输出</strong>，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。</p>
-<h2 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像<br>sudo apt update -y #更新软件包清单<br>sudo apt upgrade -y #升级软件包<br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">human = Living(<span class="hljs-string">&quot;human&quot;</span>)<br>human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>)<br><span class="hljs-built_in">print</span>(human.get_name())<br></code></pre></td></tr></table></figure>
 
-<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">whereis g++<br>whereis gdb<br></code></pre></td></tr></table></figure>
+<p>上面2段运行结果都是输出<code>human_i</code>，我们可以看得出来<code>Living</code>的实例有能力为你保存一个<code>name</code>的属性，并且通过内置方法来控制。</p>
+<h2 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h2><p>我接触的面向过程的语言不多，目前只有C，虽然说可以通过其他语言的多范式编程来实现面向过程，那未免有点不地道。</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>有过程就必然有结果，下方是一个求字符串长度的例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> <span class="hljs-keyword">const</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> x[] = <span class="hljs-string">&quot;string&quot;</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%i\n&quot;</span>, (<span class="hljs-keyword">int</span>) <span class="hljs-built_in">strlen</span>(x));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>至此，WSL + GCC就算是安装好了。</p>
-<h2 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h2><p>VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。</p>
-<p>调试的时候选择GCC即可，如果是cpp的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。</p>
+<p>因为我们对<code>x</code>使用了<code>strlen</code>，<code>strlen</code>是一个求解过程，所以得到了<code>6</code>这个结果，这看起来远没有面向对象复杂。</p>
+<h2 id="面向对象的语言与面向过程的语言对比"><a href="#面向对象的语言与面向过程的语言对比" class="headerlink" title="面向对象的语言与面向过程的语言对比"></a>面向对象的语言与面向过程的语言对比</h2><p>还是求字符串长度的例子，Python是一门可以进行面向对象的语言，<code>str</code>是一类，<code>str()</code>/<code>&quot;string&quot;</code>都是<code>str</code>的实例，如果我们用面向对象的方法来求字符串长度那就是<code>&quot;string&quot;.__len__()</code>，如果面向过程，那就是<code>len(&quot;string&quot;)</code>，在C里我们用的是后者这种写法，其中的不同，还是很明显的。</p>
 
                 
               </div>
@@ -363,13 +356,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/OOP/" class="print-no-link">#OOP</a>
+      
+        <a href="/tags/rust/" class="print-no-link">#rust</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+        <a href="/tags/c/" class="print-no-link">#c</a>
+      
         <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
-      
-        <a href="/tags/WSL/" class="print-no-link">#WSL</a>
-      
-        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
-      
-        <a href="/tags/gcc/" class="print-no-link">#gcc</a>
       
     </div>
   
@@ -381,8 +376,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用WSL来运行gcc配合VSCode进行C的开发</div>
-      <div>http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/</div>
+      <div>浅谈面向对象与面向过程</div>
+      <div>http://h2sxxa.github.io/2023/09/17/elementary_oo_and_po/</div>
     </div>
     <div class="license-meta">
       
@@ -394,7 +389,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月10日</div>
+          <div>2023年9月17日</div>
         </div>
       
       
@@ -426,18 +421,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/17/elementary_oo_and_po/" title="浅谈面向对象与面向过程">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">浅谈面向对象与面向过程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/07/16/forge_dev_gradlemirror/" title="Forge镜像补全计划（教程向）">
-                        <span class="hidden-mobile">Forge镜像补全计划（教程向）</span>
+                      <a href="/2023/08/10/wsl-gcc-vscode/" title="使用WSL来运行gcc配合VSCode进行C的开发">
+                        <span class="hidden-mobile">使用WSL来运行gcc配合VSCode进行C的开发</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
