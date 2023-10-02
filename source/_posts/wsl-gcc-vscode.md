@@ -23,7 +23,7 @@ MinGW全称是Minimalist GNU on Windows，翻译一下就是**用于Windows的�
 
 #### 什么是WSL
 
-WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在Windows 10.1607 存在于Windows系统中。
+WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在 Windows 10.1607 后存在于Windows系统中。
 
 > 适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。
 >
