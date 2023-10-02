@@ -11,11 +11,38 @@ banner_img: https://pixiv.re/110404372.jpg
 
 ## 为什么是WSL + GCC
 
-说到Windows上的C/Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。
+### 什么是MinGW
 
-但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个`tasks.json`，且不需要额外配置，其次就是WSL（Linux）里安装gcc等开发C/Cpp所用到的工具非常简单，apt-get就完事，远比用Windows舒服。
+MinGW全称是Minimalist GNU on Windows，翻译一下就是**用于Windows的简单GNU套件**，里面不仅包含了mingw-gcc/g++用于编译C/C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C/C++程序。
 
-WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW编译一个发行版，如果能够使用CI（类似于Github Action）编译会很方便，我不认为这是一个缺点。
+如果你不想使用WSL，你可以参考 [Get Started with C++ and MinGW-w64 in Visual Studio Code](https://code.visualstudio.com/docs/cpp/config-mingw) 这篇文章来为你的VSCode配置MinGW。
+
+### 为什么用WSL
+
+总而言之就是Windows开发体验太蚌埠了，用WSL就不会这么蚌埠。
+
+#### 什么是WSL
+
+WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在Windows 10.1607 存在于Windows系统中。
+
+> 适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。
+>
+> --  [什么是适用于 Linux 的 Windows 子系统 | Microsoft Learn](https://learn.microsoft.com/zh-cn/windows/wsl/about)
+
+同样提供一份官方教程 [Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code](https://code.visualstudio.com/docs/cpp/config-wsl)
+
+#### 对比MinGW
+
+- 可以运行Linux命令
+- 使用apt等软件包管理器管理依赖安装
+- 更加舒服的GDB调试
+- ......
+
+#### 那我想要让我的程序给Windows用啊！
+
+WSL里的gcc编译出来仅能提供给相同平台架构的机器使用，如果你需要多平台，你可以尝试交叉编译，也可以用类似于Github Action的CI来进行编译，总之方法有很多，这个问题随着你的深入会很简单。
+
+那么我们开始吧！
 
 ## 前置步骤
 
@@ -25,7 +52,7 @@ WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW�
 
 ### 开启WSL和虚拟化
 
-使用管理员身份打开PowerShell输入
+使用**管理员身份**打开PowerShell输入
 
 ```powershell
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
@@ -89,7 +116,7 @@ wsl -l -o
 配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令
 
 ```shell
-sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像
+sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像，也可以不切换（X
 sudo apt update -y #更新软件包清单
 sudo apt upgrade -y #升级软件包
 sudo apt-get install build-essential gdb
@@ -102,13 +129,10 @@ whereis g++
 whereis gdb
 ```
 
-至此，WSL + GCC就算是安装好了。
+至此，如果有成功显示路径，WSL + GCC就算是安装好了。
 
 ## 安装VSCode插件
 
 VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。
 
-调试的时候选择GCC即可，如果是cpp的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。
-
-
-
+调试的时候选择GCC即可，如果是C++的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。
