@@ -16,16 +16,16 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
+    <meta name="description" content="使用WSL来运行GCC为什么是WSL + GCC什么是MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Starte">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用WSL来运行gcc配合VSCode进行C的开发">
 <meta property="og:url" content="http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="使用WSL来运行GCC为什么是WSL + GCC说到Windows上的C&#x2F;Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。 但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个tasks.j">
+<meta property="og:description" content="使用WSL来运行GCC为什么是WSL + GCC什么是MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Starte">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/110404372.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-17T12:25:52.140Z">
+<meta property="article:modified_time" content="2023-10-02T02:47:04.998Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.4k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          17 分钟
+          20 分钟
         
       </span>
     
@@ -302,12 +302,26 @@
             
               <div class="markdown-body">
                 
-                <h1 id="使用WSL来运行GCC"><a href="#使用WSL来运行GCC" class="headerlink" title="使用WSL来运行GCC"></a>使用WSL来运行GCC</h1><h2 id="为什么是WSL-GCC"><a href="#为什么是WSL-GCC" class="headerlink" title="为什么是WSL + GCC"></a>为什么是WSL + GCC</h2><p>说到Windows上的C/Cpp编译器，那自然就是MinGW，想要开发适用于Windows的应用程序，那自然可以选择MinGW，没有问题，毕竟Linux编译的程序无法直接用于Windows。</p>
-<p>但是MinGW的开发体验非常糟糕，一个项目可能需要手动创建多个配置文件来使用MinGW里的C编译器，相比之下 WSL + GCC 可以自动生成一个<code>tasks.json</code>，且不需要额外配置，其次就是WSL（Linux）里安装gcc等开发C/Cpp所用到的工具非常简单，apt-get就完事，远比用Windows舒服。</p>
-<p>WSL + GCC编译的程序不能直接用于Windows，后期也可以使用MinGW编译一个发行版，如果能够使用CI（类似于Github Action）编译会很方便，我不认为这是一个缺点。</p>
+                <h1 id="使用WSL来运行GCC"><a href="#使用WSL来运行GCC" class="headerlink" title="使用WSL来运行GCC"></a>使用WSL来运行GCC</h1><h2 id="为什么是WSL-GCC"><a href="#为什么是WSL-GCC" class="headerlink" title="为什么是WSL + GCC"></a>为什么是WSL + GCC</h2><h3 id="什么是MinGW"><a href="#什么是MinGW" class="headerlink" title="什么是MinGW"></a>什么是MinGW</h3><p>MinGW全称是Minimalist GNU on Windows，翻译一下就是<strong>用于Windows的简单GNU套件</strong>，里面不仅包含了mingw-gcc/g++用于编译C/C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C/C++程序。</p>
+<p>如果你不想使用WSL，你可以参考 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">Get Started with C++ and MinGW-w64 in Visual Studio Code</a> 这篇文章来为你的VSCode配置MinGW。</p>
+<h3 id="为什么用WSL"><a href="#为什么用WSL" class="headerlink" title="为什么用WSL"></a>为什么用WSL</h3><p>总而言之就是Windows开发体验太蚌埠了，用WSL就不会这么蚌埠。</p>
+<h4 id="什么是WSL"><a href="#什么是WSL" class="headerlink" title="什么是WSL"></a>什么是WSL</h4><p>WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在Windows 10.1607 存在于Windows系统中。</p>
+<blockquote>
+<p>适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。</p>
+<p>–  <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/about">什么是适用于 Linux 的 Windows 子系统 | Microsoft Learn</a></p>
+</blockquote>
+<p>同样提供一份官方教程 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-wsl">Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code</a></p>
+<h4 id="对比MinGW"><a href="#对比MinGW" class="headerlink" title="对比MinGW"></a>对比MinGW</h4><ul>
+<li>可以运行Linux命令</li>
+<li>使用apt等软件包管理器管理依赖安装</li>
+<li>更加舒服的GDB调试</li>
+<li>……</li>
+</ul>
+<h4 id="那我想要让我的程序给Windows用啊！"><a href="#那我想要让我的程序给Windows用啊！" class="headerlink" title="那我想要让我的程序给Windows用啊！"></a>那我想要让我的程序给Windows用啊！</h4><p>WSL里的gcc编译出来仅能提供给相同平台架构的机器使用，如果你需要多平台，你可以尝试交叉编译，也可以用类似于Github Action的CI来进行编译，总之方法有很多，这个问题随着你的深入会很简单。</p>
+<p>那么我们开始吧！</p>
 <h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><p>如果WSL内核版本较低打开WSL会出现<code>0x800701bc</code>错误。</p>
 <p>所以我们为解决这个问题需要进行一些小小的操作。</p>
-<h3 id="开启WSL和虚拟化"><a href="#开启WSL和虚拟化" class="headerlink" title="开启WSL和虚拟化"></a>开启WSL和虚拟化</h3><p>使用管理员身份打开PowerShell输入</p>
+<h3 id="开启WSL和虚拟化"><a href="#开启WSL和虚拟化" class="headerlink" title="开启WSL和虚拟化"></a>开启WSL和虚拟化</h3><p>使用<strong>管理员身份</strong>打开PowerShell输入</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows</span><span class="hljs-literal">-Subsystem</span><span class="hljs-literal">-Linux</span> /all /norestart<br>dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
 
 <h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
@@ -323,13 +337,13 @@
 <h3 id="配置账户密码"><a href="#配置账户密码" class="headerlink" title="配置账户密码"></a>配置账户密码</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">微软的教程</a></p>
 <p>运行刚才安装好的Ubuntu，或者直接Powershell里运行<code>wsl</code>，然后就是首次启动配置账户密码了，输入密码的时候，<strong>终端不会有任何符号输出</strong>，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。</p>
 <h2 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像<br>sudo apt update -y #更新软件包清单<br>sudo apt upgrade -y #升级软件包<br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像，也可以不切换（X<br>sudo apt update -y #更新软件包清单<br>sudo apt upgrade -y #升级软件包<br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
 
 <h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">whereis g++<br>whereis gdb<br></code></pre></td></tr></table></figure>
 
-<p>至此，WSL + GCC就算是安装好了。</p>
+<p>至此，如果有成功显示路径，WSL + GCC就算是安装好了。</p>
 <h2 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h2><p>VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。</p>
-<p>调试的时候选择GCC即可，如果是cpp的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。</p>
+<p>调试的时候选择GCC即可，如果是C++的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。</p>
 
                 
               </div>
