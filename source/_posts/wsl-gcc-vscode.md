@@ -115,7 +115,7 @@ wsl -l -o
 
 配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令
 
-```shell
+```bash
 sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像，也可以不切换（X
 sudo apt update -y #更新软件包清单
 sudo apt upgrade -y #升级软件包
@@ -124,7 +124,7 @@ sudo apt-get install build-essential gdb
 
 ### 检查安装
 
-```sh
+```bash
 whereis g++
 whereis gdb
 ```
@@ -136,3 +136,37 @@ whereis gdb
 VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。
 
 调试的时候选择GCC即可，如果是C++的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。
+
+## 补记：交叉编译
+
+### 交叉编译是什么
+
+简单来说，就是跨平台编译，这里的平台包括但不限于系统架构（x86-64,aarch64......），操作系统（Windows，Linux......）。
+
+### WSL交叉编译Windows可执行程序
+
+#### 安装MinGW
+
+只需一行命令即可。
+
+```bash
+sudo apt-get install mingw-w64
+```
+
+安装结束后，使用以下命令检查安装。
+
+- i686对于32位系统
+
+- x86_64对应64位系统
+
+```bash
+whereis i686-w64-mingw32-gcc
+whereis i686-w64-mingw32-g++
+whereis x86_64-w64-mingw32-gcc
+whereis x86_64-w64-mingw32-g++
+```
+
+#### 使用方法
+
+示例：如果我需要编译一个Windows x64的可执行文件只需`x86_64-w64-mingw32-gcc -o 输出文件路径.exe 源代码路径.c`
+
