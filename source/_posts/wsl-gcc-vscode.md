@@ -71,7 +71,11 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 
 ### 🏪微软商店安装
 
-如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了，安装完后记得`wsl -l -v`看看是否安装成功。
+如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。
+
+安装完后打开PowerShell输入`wsl --install`确保安装完整即可。
+
+全部结束后记得`wsl -l -v`看看是否安装成功（当然也可以不看❌）。
 
 ### 🔧手动安装
 
