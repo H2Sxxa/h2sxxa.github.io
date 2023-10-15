@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/99637663.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-15T23:24:56.001Z">
+<meta property="article:modified_time" content="2023-10-15T23:28:11.727Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
@@ -260,7 +260,7 @@
         
         
         
-          23 分钟
+          24 分钟
         
       </span>
     
@@ -327,7 +327,9 @@
 <h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
 <p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！</p>
 <h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
-<h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了，安装完后记得<code>wsl -l -v</code>看看是否安装成功。</p>
+<h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。</p>
+<p>安装完后打开PowerShell输入<code>wsl --install</code>确保安装完整即可。</p>
+<p>全部结束后记得<code>wsl -l -v</code>看看是否安装成功（当然也可以不看❌）。</p>
 <h3 id="🔧手动安装"><a href="#🔧手动安装" class="headerlink" title="🔧手动安装"></a>🔧手动安装</h3><p>使用下方这行命令可以列出所有可用的 Linux 发行版本（不含一些第三方版本），默认是Ubuntu，我也推荐安装Ubuntu。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-o</span><br><span class="hljs-comment"># wsl --list --online</span><br><span class="hljs-comment">#以下是可安装的有效分发的列表。</span><br><span class="hljs-comment">#使用 &#x27;wsl.exe --install &lt;Distro&gt;&#x27; 安装。</span><br><br><span class="hljs-comment">#NAME                                   FRIENDLY NAME</span><br><span class="hljs-comment">#Ubuntu                                 Ubuntu</span><br><span class="hljs-comment">#Debian                                 Debian GNU/Linux</span><br><span class="hljs-comment">#kali-linux                             Kali Linux Rolling</span><br><span class="hljs-comment">#Ubuntu-18.04                           Ubuntu 18.04 LTS</span><br><span class="hljs-comment">#Ubuntu-20.04                           Ubuntu 20.04 LTS</span><br><span class="hljs-comment">#Ubuntu-22.04                           Ubuntu 22.04 LTS</span><br><span class="hljs-comment">#OracleLinux_7_9                        Oracle Linux 7.9</span><br><span class="hljs-comment">#OracleLinux_8_7                        Oracle Linux 8.7</span><br><span class="hljs-comment">#OracleLinux_9_1                        Oracle Linux 9.1</span><br><span class="hljs-comment">#openSUSE-Leap-15.5                     openSUSE Leap 15.5</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-15-SP5           SUSE Linux Enterprise 15 SP5</span><br><span class="hljs-comment">#openSUSE-Tumbleweed                    openSUSE Tumbleweed</span><br></code></pre></td></tr></table></figure>
 
