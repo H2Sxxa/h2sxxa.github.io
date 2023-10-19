@@ -1,7 +1,7 @@
 ---
-title: 使用WSL来运行gcc配合VSCode进行C的开发
+title: 使用WSL来运行GCC配合VSCode进行C的开发
 date: 2023-8-10 17:00:00
-tags: ["WSL","Linux","gcc","VSCode"]
+tags: ["WSL","Linux","GCC","VSCode"]
 categories: Development & Progarmming
 index_img: https://pixiv.re/99637663.jpg
 banner_img: https://pixiv.re/99637663.jpg
