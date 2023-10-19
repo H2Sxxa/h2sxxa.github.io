@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/99637663.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-15T23:30:52.009Z">
+<meta property="article:modified_time" content="2023-10-19T12:41:58.442Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          2.9k 字
         
       </span>
     
@@ -325,7 +325,7 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows</span><span class="hljs-literal">-Subsystem</span><span class="hljs-literal">-Linux</span> /all /norestart<br>dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
 
 <h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
-<p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！</p>
+<p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！（也可以不输，似乎默认就是WSL2了现在）</p>
 <h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
 <h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。</p>
 <p>安装完后打开PowerShell输入<code>wsl --install</code>确保安装完整即可。</p>
@@ -338,7 +338,7 @@
 
 <h3 id="配置账户密码"><a href="#配置账户密码" class="headerlink" title="配置账户密码"></a>配置账户密码</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">微软的教程</a></p>
 <p>运行刚才安装好的Ubuntu，或者直接Powershell里运行<code>wsl</code>，然后就是首次启动配置账户密码了，输入密码的时候，<strong>终端不会有任何符号输出</strong>，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。</p>
-<h2 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
+<h2 id="安装GCC-build-essential-GDB"><a href="#安装GCC-build-essential-GDB" class="headerlink" title="安装GCC(build-essential) + GDB"></a>安装GCC(build-essential) + GDB</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list <span class="hljs-comment">#切换阿里云镜像，也可以不切换（X</span><br>sudo apt update -y <span class="hljs-comment">#更新软件包清单</span><br>sudo apt upgrade -y <span class="hljs-comment">#升级软件包</span><br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
 
 <h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">whereis g++<br>whereis gdb<br></code></pre></td></tr></table></figure>
@@ -360,6 +360,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">whereis i686-w64-mingw32-gcc<br>whereis i686-w64-mingw32-g++<br>whereis x86_64-w64-mingw32-gcc<br>whereis x86_64-w64-mingw32-g++<br></code></pre></td></tr></table></figure>
 
 <h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>示例：如果我需要编译一个Windows x64的可执行文件只需<code>x86_64-w64-mingw32-gcc -o 输出文件路径.exe 源代码路径.c</code></p>
+<h2 id="后记：解决Math-h无法引用"><a href="#后记：解决Math-h无法引用" class="headerlink" title="后记：解决Math.h无法引用"></a>后记：解决<code>Math.h</code>无法引用</h2><p><a target="_blank" rel="noopener" href="https://nanodaovo.github.io/2023/10/19/debug-mathh">详见这位的博客，点击即可跳转</a></p>
 
                 
               </div>
