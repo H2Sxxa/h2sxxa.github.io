@@ -63,7 +63,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 
 [点击这里获取WSL升级安装包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
-安装升级后，打开PowerShell输入`wsl --set-default-version 2`，然后就大功告成了！
+安装升级后，打开PowerShell输入`wsl --set-default-version 2`，然后就大功告成了！（也可以不输，似乎默认就是WSL2了现在）
 
 ## 安装WSL
 
@@ -115,7 +115,7 @@ wsl -l -o
 
 运行刚才安装好的Ubuntu，或者直接Powershell里运行`wsl`，然后就是首次启动配置账户密码了，输入密码的时候，**终端不会有任何符号输出**，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。
 
-## 安装GCC
+## 安装GCC(build-essential) + GDB
 
 配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令
 
@@ -174,3 +174,6 @@ whereis x86_64-w64-mingw32-g++
 
 示例：如果我需要编译一个Windows x64的可执行文件只需`x86_64-w64-mingw32-gcc -o 输出文件路径.exe 源代码路径.c`
 
+## 后记：解决`Math.h`无法引用
+
+[详见这位的博客，点击即可跳转](https://nanodaovo.github.io/2023/10/19/debug-mathh)
