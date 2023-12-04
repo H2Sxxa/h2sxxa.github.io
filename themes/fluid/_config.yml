@@ -1007,6 +1007,12 @@ links:
       link: "https://nanodaovo.github.io/",
       avatar: "https://avatars.githubusercontent.com/u/106482877"
     }
+    - {
+      title: "Kano",
+      intro: "关注鹿乃喵,关注鹿乃谢谢喵",
+      link: "https://2754lm.github.io/",
+      avatar: "https://avatars.githubusercontent.com/u/86175561"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
