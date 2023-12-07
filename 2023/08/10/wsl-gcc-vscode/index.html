@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/99637663.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T23:30:30.094Z">
+<meta property="article:modified_time" content="2023-12-07T10:59:19.231Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
@@ -260,7 +260,7 @@
         
         
         
-          24 分钟
+          25 分钟
         
       </span>
     
@@ -319,14 +319,15 @@
 </ul>
 <h4 id="那我想要让我的程序给Windows用啊！"><a href="#那我想要让我的程序给Windows用啊！" class="headerlink" title="那我想要让我的程序给Windows用啊！"></a>那我想要让我的程序给Windows用啊！</h4><p>WSL里的gcc编译出来仅能提供给相同平台架构的机器使用，如果你需要多平台，你可以尝试交叉编译，也可以用类似于Github Action的CI来进行编译，总之方法有很多，这个问题随着你的深入会很简单。</p>
 <p>那么我们开始吧！</p>
-<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><p>如果WSL内核版本较低打开WSL会出现<code>0x800701bc</code>错误。</p>
-<p>所以我们为解决这个问题需要进行一些小小的操作。</p>
+<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><p>为了确保你的WSL功能可用我们用命令行先把功能打开</p>
 <h3 id="开启WSL和虚拟化"><a href="#开启WSL和虚拟化" class="headerlink" title="开启WSL和虚拟化"></a>开启WSL和虚拟化</h3><p>使用<strong>管理员身份</strong>打开PowerShell输入</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows</span><span class="hljs-literal">-Subsystem</span><span class="hljs-literal">-Linux</span> /all /norestart<br>dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
 
-<h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
+<p>然后重启一下电脑，可能会进行系统更新w</p>
+<h3 id="升级WSL内核"><a href="#升级WSL内核" class="headerlink" title="升级WSL内核"></a>升级WSL内核</h3><p>电脑默认是WSL1内核，我们把它升级到WSL2，以防出现<code>0x800701bc</code>错误。</p>
+<p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
 <p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！（也可以不输，似乎默认就是WSL2了现在）</p>
-<h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
+<h2 id="安装WSL的Linux分发版"><a href="#安装WSL的Linux分发版" class="headerlink" title="安装WSL的Linux分发版"></a>安装WSL的Linux分发版</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
 <h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。</p>
 <p>安装完后打开PowerShell输入<code>wsl --install</code>确保安装完整即可。</p>
 <p>全部结束后记得<code>wsl -l -v</code>看看是否安装成功（当然也可以不看❌）。</p>
