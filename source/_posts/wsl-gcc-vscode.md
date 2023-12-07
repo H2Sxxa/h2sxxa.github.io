@@ -46,9 +46,7 @@ WSL里的gcc编译出来仅能提供给相同平台架构的机器使用，如�
 
 ## 前置步骤
 
-如果WSL内核版本较低打开WSL会出现`0x800701bc`错误。
-
-所以我们为解决这个问题需要进行一些小小的操作。
+为了确保你的WSL功能可用我们用命令行先把功能打开
 
 ### 开启WSL和虚拟化
 
@@ -59,13 +57,18 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
 
+然后重启一下电脑，可能会进行系统更新w
+
+
 ### 升级WSL内核
+
+电脑默认是WSL1内核，我们把它升级到WSL2，以防出现`0x800701bc`错误。
 
 [点击这里获取WSL升级安装包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
 安装升级后，打开PowerShell输入`wsl --set-default-version 2`，然后就大功告成了！（也可以不输，似乎默认就是WSL2了现在）
 
-## 安装WSL
+## 安装WSL的Linux分发版
 
 [微软提供的教程](https://learn.microsoft.com/zh-cn/windows/wsl/install)
 
