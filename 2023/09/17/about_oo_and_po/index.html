@@ -16,26 +16,27 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言前不久（大概），发现了AIMP居然可以使用插件，于是想着往这软件套个DSP，大概是因为假的音乐才好听（雾 没有图，建议忍着点  安装 dsp_stereo_tool下载先前往官网( https:&#x2F;&#x2F;www.stereotool.com&#x2F;download )，左边上面有个Winamp&#x2F;DSP plug-in version 下载后拿到了一个Installer了，然后就可以进入第二步了 安装双击后">
+    <meta name="description" content="浅谈面向对象与面向过程本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。 面向对象（OO）对象是什么对象是什么这个问题曾经困惑了我许久，Rust的struct和Python的class都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次AIMP的DSP Stereo Tool插件安装">
-<meta property="og:url" content="http://h2sxxa.github.io/2022/11/06/aimp_stereo_install/index.html">
+<meta property="og:title" content="浅谈面向对象与面向过程">
+<meta property="og:url" content="http://h2sxxa.github.io/2023/09/17/about_oo_and_po/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="前言前不久（大概），发现了AIMP居然可以使用插件，于是想着往这软件套个DSP，大概是因为假的音乐才好听（雾 没有图，建议忍着点  安装 dsp_stereo_tool下载先前往官网( https:&#x2F;&#x2F;www.stereotool.com&#x2F;download )，左边上面有个Winamp&#x2F;DSP plug-in version 下载后拿到了一个Installer了，然后就可以进入第二步了 安装双击后">
+<meta property="og:description" content="浅谈面向对象与面向过程本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。 面向对象（OO）对象是什么对象是什么这个问题曾经困惑了我许久，Rust的struct和Python的class都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pixiv.re/93025943.jpg">
-<meta property="article:published_time" content="2022-11-06T00:00:00.000Z">
+<meta property="og:image" content="https://pixiv.re/111639285-2.jpg">
+<meta property="article:published_time" content="2023-09-17T12:10:00.000Z">
 <meta property="article:modified_time" content="2024-01-03T06:26:03.953Z">
 <meta property="article:author" content="H2Sxxa">
-<meta property="article:tag" content="Music">
-<meta property="article:tag" content="AIMP">
-<meta property="article:tag" content="DSP">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="OOP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pixiv.re/93025943.jpg">
+<meta name="twitter:image" content="https://pixiv.re/111639285-2.jpg">
   
   
   
-  <title>记一次AIMP的DSP Stereo Tool插件安装 - H2Sxxa&#39;s Blog</title>
+  <title>浅谈面向对象与面向过程 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,13 +220,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://pixiv.re/93025943.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('https://pixiv.re/111639285-2.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="记一次AIMP的DSP Stereo Tool插件安装"></span>
+            <span id="subtitle" data-typed-text="浅谈面向对象与面向过程"></span>
           
         </div>
 
@@ -236,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-06 08:00" pubdate>
-          2022年11月6日 早上
+        <time datetime="2023-09-17 20:10" pubdate>
+          2023年9月17日 晚上
         </time>
       </span>
     
@@ -248,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          427 字
+          2k 字
         
       </span>
     
@@ -259,7 +260,7 @@
         
         
         
-          4 分钟
+          17 分钟
         
       </span>
     
@@ -296,18 +297,31 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">记一次AIMP的DSP Stereo Tool插件安装</h1>
+            <h1 id="seo-header">浅谈面向对象与面向过程</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前不久（大概），发现了AIMP居然可以使用插件，于是想着往这软件套个DSP，大概是因为假的音乐才好听（雾</p>
-<p class="note warning">没有图，建议忍着点</p>
+                <h1 id="浅谈面向对象与面向过程"><a href="#浅谈面向对象与面向过程" class="headerlink" title="浅谈面向对象与面向过程"></a>浅谈面向对象与面向过程</h1><p>本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。</p>
+<h2 id="面向对象（OO）"><a href="#面向对象（OO）" class="headerlink" title="面向对象（OO）"></a>面向对象（OO）</h2><h3 id="对象是什么"><a href="#对象是什么" class="headerlink" title="对象是什么"></a>对象是什么</h3><p>对象是什么这个问题曾经困惑了我许久，Rust的<code>struct</code>和Python的<code>class</code>都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程中组合优于继承，所以我认为对象最基本的特征还是在于是否可实例化和封装。</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>例如定义一个生物的类</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Living</span></span> &#123;<br>    name: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// 私有属性，不是pub name，用于封装name</span><br>&#125;<br><br><span class="hljs-keyword">impl</span> Living &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(name: &amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-keyword">Self</span> &#123;<br>        <span class="hljs-keyword">Self</span> &#123;<br>            name: name.to_string(),<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_name</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.name.clone();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">set_name</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, name: &amp;<span class="hljs-built_in">str</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name = name.to_string();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="安装-dsp-stereo-tool"><a href="#安装-dsp-stereo-tool" class="headerlink" title="安装 dsp_stereo_tool"></a>安装 dsp_stereo_tool</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>先前往官网( <a target="_blank" rel="noopener" href="https://www.stereotool.com/download">https://www.stereotool.com/download</a> )，左边上面有个Winamp/DSP plug-in version</p>
-<p>下载后拿到了一个Installer了，然后就可以进入第二步了</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>双击后安装程序后，选择<code>Let me pick a Plugins directory</code>，点击<code>NEXT</code>，然后找到你的AIMP插件文件夹（例如<code>C:\Program Files (x86)\AIMP\Plugins</code>），新建一个<code>dsp_stereo_tool</code>文件夹，最后选中新建的那个文件夹点击Install，打开AIMP后你就能发现安装成功了</p>
-<h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>你以为安装成功了吗，其实还不算完…如果现在结束的话虽然可以用，但是有时候会蹦出来烦人的滴滴声，对此可以用一些小手段”结束调研”完成注册，这里就不一一列举……</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Living</span>:</span><br>    __name:<span class="hljs-built_in">str</span> <span class="hljs-comment"># 会把这个变量转化为 _Living__name，无法通过__name访问，实现封装</span><br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-literal">None</span>:</span><br>        self.__name = name<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_name</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>        <span class="hljs-keyword">return</span> self.__name<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_name</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>        self.__name = name<br></code></pre></td></tr></table></figure>
+
+<p>在上述2段代码中，我们都对<code>name</code>做了私有化处理，并且定义了2个方法<code>get_name</code>和<code>set_name</code>，这是很经典的封装，这两个方法叫做<code>getter</code>和<code>setter</code>，但很多情况下，我们也无需强制自己把所有成员属性私有化并且加上<code>getter</code>和<code>setter</code>，这是很死的做法。</p>
+<h4 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h4><p>实例化就是把一类东西转化为一种东西（这个东西是前面的东西的一个例子，例如<code>human</code>是<code>Living</code>的一个例子），后者相比前者往往范围更小更精确，还是刚才那个<code>Living</code>，让我们实例化一种名为<code>human</code>的生物，在很多语言中<code>new</code>是作为实例化的关键字，Python的<code>class</code>有2个魔法方法，分别是<code>__init__</code>和<code>__new__</code>，通过字面意思理解，前者是初始化，后者是实例化，C++和Java都有构造函数且都是在<code>new</code>时被调用（不考虑C++的其他实例化方法）。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>()&#123;<br>    <span class="hljs-keyword">let</span> human = Living::new(<span class="hljs-string">&quot;human&quot;</span>); <span class="hljs-comment">// 人是有名字的生物的一种实例</span><br>    human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>);<br>    <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,human.get_name())<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">human = Living(<span class="hljs-string">&quot;human&quot;</span>)<br>human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>)<br><span class="hljs-built_in">print</span>(human.get_name())<br></code></pre></td></tr></table></figure>
+
+<p>上面2段运行结果都是输出<code>human_i</code>，我们可以看得出来<code>Living</code>的实例有能力为你保存一个<code>name</code>的属性，并且通过内置方法来控制。</p>
+<h2 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h2><p>我接触的面向过程的语言不多，目前只有C，虽然说可以通过其他语言的多范式编程来实现面向过程，那未免有点不地道。</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>有过程就必然有结果，下方是一个求字符串长度的例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> <span class="hljs-keyword">const</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> x[] = <span class="hljs-string">&quot;string&quot;</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%i\n&quot;</span>, (<span class="hljs-keyword">int</span>) <span class="hljs-built_in">strlen</span>(x));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为我们对<code>x</code>使用了<code>strlen</code>，<code>strlen</code>是一个求解过程，所以得到了<code>6</code>这个结果，这看起来远没有面向对象复杂。</p>
+<h2 id="面向对象的语言与面向过程的语言对比"><a href="#面向对象的语言与面向过程的语言对比" class="headerlink" title="面向对象的语言与面向过程的语言对比"></a>面向对象的语言与面向过程的语言对比</h2><p>还是求字符串长度的例子，Python是一门可以进行面向对象的语言，<code>str</code>是一类，<code>str()</code>/<code>&quot;string&quot;</code>都是<code>str</code>的实例，如果我们用面向对象的方法来求字符串长度那就是<code>&quot;string&quot;.__len__()</code>，如果面向过程，那就是<code>len(&quot;string&quot;)</code>，在C里我们用的是后者这种写法，其中的不同，还是很明显的。</p>
 
                 
               </div>
@@ -326,7 +340,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Share-Misc/" class="category-chain-item">Share &amp; Misc</a>
+  <a href="/categories/Development-Progarmming/" class="category-chain-item">Development &amp; Progarmming</a>
   
   
 
@@ -341,11 +355,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Music/" class="print-no-link">#Music</a>
+        <a href="/tags/Rust/" class="print-no-link">#Rust</a>
       
-        <a href="/tags/AIMP/" class="print-no-link">#AIMP</a>
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
       
-        <a href="/tags/DSP/" class="print-no-link">#DSP</a>
+        <a href="/tags/C/" class="print-no-link">#C</a>
+      
+        <a href="/tags/OOP/" class="print-no-link">#OOP</a>
       
     </div>
   
@@ -357,8 +373,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>记一次AIMP的DSP Stereo Tool插件安装</div>
-      <div>http://h2sxxa.github.io/2022/11/06/aimp_stereo_install/</div>
+      <div>浅谈面向对象与面向过程</div>
+      <div>http://h2sxxa.github.io/2023/09/17/about_oo_and_po/</div>
     </div>
     <div class="license-meta">
       
@@ -370,7 +386,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月6日</div>
+          <div>2023年9月17日</div>
         </div>
       
       
@@ -402,9 +418,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/18/maa_wifi_connect/" title="MAA通过无线调试连接手机运行">
+                      <a href="/2023/09/17/about_code_aesthetic/" title="谈谈代码美学">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MAA通过无线调试连接手机运行</span>
+                        <span class="hidden-mobile">谈谈代码美学</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -412,8 +428,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/16/mcforge1.12.2-1/" title="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC">
-                        <span class="hidden-mobile">MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</span>
+                      <a href="/2023/08/10/wsl-gcc-vscode/" title="使用WSL来运行GCC配合VSCode进行C的开发">
+                        <span class="hidden-mobile">使用WSL来运行GCC配合VSCode进行C的开发</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
