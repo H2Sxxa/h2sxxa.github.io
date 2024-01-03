@@ -248,10 +248,8 @@
           theme: giscusTheme,
         }
       };
-      giscus.style.cssText += 'color-scheme: normal;';
-      try {
-        giscus.contentWindow.postMessage({ 'giscus': message }, 'https://giscus.app'); 
-      } catch (error) {}
+      // giscus.style.cssText += 'color-scheme: normal;';
+      giscus.contentWindow.postMessage({ 'giscus': message }, 'https://giscus.app'); 
     }
   }
 
