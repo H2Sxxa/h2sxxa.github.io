@@ -16,16 +16,16 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="谈谈代码美学本篇文章仅仅阐述个人观点，如果有想法欢迎提出讨论 什么是代码美学对于一段代码来说，这段代码可读性高，干净简洁，那么这段代码就是具有美感的，既然有美，那必然就有看上去不太漂亮的代码，下面是一个例子 1234567891011121314&#x2F;&#x2F;&#x2F; 获取最小值的下标fn func(i_vec: Vec&lt;i32&gt;) -&gt; usize &amp;#123;    let mut i: u">
+    <meta name="description" content="谈谈代码美学本篇文章仅仅阐述个人观点，如果有想法欢迎提出讨论 什么是代码美学最近看了一系列代码美学相关的视频，什么是代码美学，乍一听感觉是用代码画一幅画，雕几个雕塑之类的，其实并不，代码美感来源于良好的编程习惯与一些技巧，本篇文章谈谈我的拙见 对于一段代码来说，这段代码可读性高，干净简洁，便于使用或维护，那么这段代码就是具有美感的，这种代码往往质量较高，下面有一段不太漂亮的代码 123456789">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈代码美学">
 <meta property="og:url" content="http://h2sxxa.github.io/2023/09/17/about_code_aesthetic/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="谈谈代码美学本篇文章仅仅阐述个人观点，如果有想法欢迎提出讨论 什么是代码美学对于一段代码来说，这段代码可读性高，干净简洁，那么这段代码就是具有美感的，既然有美，那必然就有看上去不太漂亮的代码，下面是一个例子 1234567891011121314&#x2F;&#x2F;&#x2F; 获取最小值的下标fn func(i_vec: Vec&lt;i32&gt;) -&gt; usize &amp;#123;    let mut i: u">
+<meta property="og:description" content="谈谈代码美学本篇文章仅仅阐述个人观点，如果有想法欢迎提出讨论 什么是代码美学最近看了一系列代码美学相关的视频，什么是代码美学，乍一听感觉是用代码画一幅画，雕几个雕塑之类的，其实并不，代码美感来源于良好的编程习惯与一些技巧，本篇文章谈谈我的拙见 对于一段代码来说，这段代码可读性高，干净简洁，便于使用或维护，那么这段代码就是具有美感的，这种代码往往质量较高，下面有一段不太漂亮的代码 123456789">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.re/96078807.jpg">
 <meta property="article:published_time" content="2023-09-17T12:10:00.000Z">
-<meta property="article:modified_time" content="2024-01-03T07:55:00.769Z">
+<meta property="article:modified_time" content="2024-01-04T13:21:14.013Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Code Aesthetic">
 <meta property="article:tag" content="Rust">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          887 字
+          2k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          8 分钟
+          17 分钟
         
       </span>
     
@@ -303,8 +303,9 @@
               <div class="markdown-body">
                 
                 <h1 id="谈谈代码美学"><a href="#谈谈代码美学" class="headerlink" title="谈谈代码美学"></a>谈谈代码美学</h1><p>本篇文章仅仅阐述个人观点，如果有想法欢迎提出讨论</p>
-<h2 id="什么是代码美学"><a href="#什么是代码美学" class="headerlink" title="什么是代码美学"></a>什么是代码美学</h2><p>对于一段代码来说，这段代码可读性高，干净简洁，那么这段代码就是具有美感的，既然有美，那必然就有看上去不太漂亮的代码，下面是一个例子</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">/// 获取最小值的下标</span><br><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">func</span></span>(i_vec: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">i32</span>&gt;) -&gt; <span class="hljs-built_in">usize</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> i: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> j: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> k: <span class="hljs-built_in">i32</span> = <span class="hljs-built_in">i32</span>::MAX;<br>    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> i_vec &#123;<br>        <span class="hljs-keyword">if</span> v &lt; k &#123;<br>            k = v;<br>            j = i;<br>        &#125;<br>        i += <span class="hljs-number">1</span>;<br>    &#125;<br>    j<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="什么是代码美学"><a href="#什么是代码美学" class="headerlink" title="什么是代码美学"></a>什么是代码美学</h2><p>最近看了一系列代码美学相关的视频，什么是代码美学，乍一听感觉是用代码画一幅画，雕几个雕塑之类的，其实并不，代码美感来源于良好的编程习惯与一些技巧，本篇文章谈谈我的拙见</p>
+<p>对于一段代码来说，这段代码可读性高，干净简洁，便于使用或维护，那么这段代码就是具有美感的，这种代码往往质量较高，下面有一段不太漂亮的代码</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">/// 获取最小值的下标</span><br><span class="hljs-comment">/// 传入一个 i32 的 Vec</span><br><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_index</span></span>(i_vec: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">i32</span>&gt;) -&gt; <span class="hljs-built_in">usize</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> i: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> j: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> k: <span class="hljs-built_in">i32</span> = <span class="hljs-built_in">i32</span>::MAX;<br>    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> i_vec &#123;<br>        <span class="hljs-keyword">if</span> v &lt; k &#123;<br>            k = v;<br>            j = i;<br>        &#125;<br>        i += <span class="hljs-number">1</span>;<br>    &#125;<br>    j<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>这段代码并不复杂，但解读起来也略有难度，<code>i</code>是当前下标，<code>j</code>是当前最小值下标，<code>k</code>是当前最小值，遍历<code>i_vec</code>，如果当前值<code>v</code>比<code>k</code>小，则替换<code>k</code>并把当前下标保存至<code>j</code></p>
 <p>仔细想想，首先阻碍我们理解这段代码的是什么？</p>
@@ -354,10 +355,45 @@
 <p>还是那段二元一次方程，使用缩写后</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> arg: <span class="hljs-built_in">i32</span> = ...<br><span class="hljs-keyword">let</span> ans = <span class="hljs-number">3</span> * arg.pow(<span class="hljs-number">2</span>) + <span class="hljs-number">2</span> * arg + <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
 
-<h3 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h3><p>对于一些类型系统很强大的静态语言，我们可以使用一部分的类型来减少变量名称的复杂程度</p>
+<h3 id="保持简洁"><a href="#保持简洁" class="headerlink" title="保持简洁"></a>保持简洁</h3><p>在早期计算机编程中，在一个庞大的项目中确定一个变量的类型是十分麻烦的，匈牙利命名法就是为了解决这个类型诞生的，简单来说用法就是 <code>类型缩写+大写开头变量名称</code> ，下面是几个例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-keyword">int</span> iAge;<span class="hljs-comment">// int</span><br><span class="hljs-keyword">char</span> szName[];<span class="hljs-comment">// char</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C#"><span class="hljs-keyword">interface</span> <span class="hljs-title">IAnimal</span> &#123;&#125; <span class="hljs-comment">// interface</span><br></code></pre></td></tr></table></figure>
+
+<p>笔者曾经就对 <code>Java</code> 中的接口要不要使用 <code>I</code> 开头而纠结过，究其原因其实就是为什么要加，加了有什么好处，像 <code>C#</code> 的官方文档之中，命名接口也使用了匈牙利命名法，那么遵守官方文档的规范或许是一个好的选择，但如果没有官方文档呢？</p>
+<p>现代编程工具查看一个变量的类型是非常便利的，那让变量前面加个类型缩写也就没那么重要了，你已经事先知道<code>Animal</code>是一个接口了，那究竟是什么驱使你加上那几个字母，就像StackOverflow上的一句话</p>
+<blockquote>
+<p>The times of the Hungarian notation have passed</p>
+</blockquote>
+<p>对于现代编程，一个更好更简洁的命名法能够让你的代码看上去更漂亮</p>
+<p>但也不是说不要用匈牙利命名法，就像<code>C#</code>中的接口命名一样，如果事先有一个规范，那么去遵守，大胆去用就对了，匈牙利命名法还适用于涉及WinAPI的C/C++编程</p>
+<h2 id="代码美学与类型注释"><a href="#代码美学与类型注释" class="headerlink" title="代码美学与类型注释"></a>代码美学与类型注释</h2><p>现在有很多的编程语言拥有强大的类型系统，这些类型系统应用得当可以帮助我们更好的调用方法，这个例子很容易说明</p>
+<p>在<code>Python</code>中，下面2个函数的不同之处是有意义的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_name</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>        <span class="hljs-keyword">return</span> self.name<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_animal_name</span>(<span class="hljs-params">animal</span>):</span><br>    <span class="hljs-keyword">return</span> animal.get_name()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_animal_name</span>(<span class="hljs-params">animal: Animal</span>) -&gt; <span class="hljs-built_in">str</span>:</span><br>    <span class="hljs-keyword">return</span> animal.get_name()<br></code></pre></td></tr></table></figure>
+
+<p>由于<code>Python</code>是一门动态类型的语言，当你调用上面这个函数时，由于没有给出确切的类型，他不会告诉你返回什么，输入什么</p>
+<p><img src="https://raw.githubusercontent.com/H2Sxxa/Blog-ImageGallery/main/picture/image-20240104203459309.png" srcset="/img/loading.gif" lazyload alt="image-20240104203459309"></p>
+<p>而下面这个函数给出了确切的类型注解，因此你可以放心的传入一个<code>Animal</code>并使用返回的<code>str</code>类型</p>
+<p><img src="https://raw.githubusercontent.com/H2Sxxa/Blog-ImageGallery/main/picture/image-20240104203552056.png" srcset="/img/loading.gif" lazyload alt="image-20240104203552056"></p>
+<p>因此，我认为，类型系统其实也能算作注释或文档的一部分，如果你有一个拥有明确目的的函数名和确切的类型，删除一部分的多余的注释是完全没有问题的</p>
+<p>此时再来重写一下之前那段寻找最小值的代码 </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">find_min_index</span></span>(vec: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">i32</span>&gt;) -&gt; <span class="hljs-built_in">usize</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> current_index: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ans_index: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> min: <span class="hljs-built_in">i32</span> = <span class="hljs-built_in">i32</span>::MAX;<br>    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> vec &#123;<br>        <span class="hljs-keyword">if</span> v &lt; min &#123;<br>            min = v;<br>            ans_index = current_index;<br>        &#125;<br>        current_index += <span class="hljs-number">1</span>;<br>    &#125;<br>    ans_index<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="代码美学与编程范式"><a href="#代码美学与编程范式" class="headerlink" title="代码美学与编程范式"></a>代码美学与编程范式</h2><h3 id="函数式编程与代码扁平化"><a href="#函数式编程与代码扁平化" class="headerlink" title="函数式编程与代码扁平化"></a>函数式编程与代码扁平化</h3><p>对于很多人来说，函数式编程看起来遥远实则相近，大部分的语言如今都或多或少支持一部分的函数式编程，你可能在用，但你不知道这就是函数式编程，像<code>Python</code>里的<code>lambda</code>、<code>map</code>、<code>filter</code>，<code>Java</code>的<code>java.util.function</code>下的<code>Consumer</code>、<code>Supplier</code>、<code>Predicate</code>、<code>Function</code>都是属于函数式编程的范畴之内，更不必提<code>Haskell</code>、<code>ML</code>、<code>Scala</code>这些以函数式而出名的语言，如果你对函数式编程感兴趣可以自行去了解，这不属于本篇文章的范畴，函数式编程有什么好处？暂且不提开发效率，使用函数式编程会大大减少代码的嵌套，也就是<strong>代码扁平化</strong></p>
+<p>再次来重写一下上面的这段代码</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">find_min_index</span></span>(vec: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">i32</span>&gt;) -&gt; <span class="hljs-built_in">usize</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ans_index: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> min: <span class="hljs-built_in">i32</span> = <span class="hljs-built_in">i32</span>::MAX;<br><br>    vec.into_iter()<br>        .enumerate()<br>        .for_each(|(current_index, value)| &#123;<br>            <span class="hljs-keyword">if</span> value &lt; min &#123;<br>                min = value;<br>                ans_index = current_index;<br>            &#125;<br>        &#125;);<br><br>    ans_index<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>代码扁平化还有另一种方法那就是提取内层嵌套为一个函数，这种方法并不难理解也不过多阐述</p>
+<h3 id="面向对象编程与设计模式"><a href="#面向对象编程与设计模式" class="headerlink" title="面向对象编程与设计模式"></a>面向对象编程与设计模式</h3><p>设计模式是什么，其实就是一系列代码的最佳实践，至于和面向对象放在一起，那是因为<code>Java</code>的设计模式往往是属于比较出名的那个，而<code>Java</code>又是典型的面向对象语言</p>
+<h4 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h4><p>设计模式往往与抽象有关</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+
 <p>TODO</p>
-<p>此时再来重写一下之前那段代码 </p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">findMinIndex</span></span>(vec: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">i32</span>&gt;) -&gt; <span class="hljs-built_in">usize</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> current_index: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ans_index: <span class="hljs-built_in">usize</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> min: <span class="hljs-built_in">i32</span> = <span class="hljs-built_in">i32</span>::MAX;<br>    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> vec &#123;<br>        <span class="hljs-keyword">if</span> v &lt; min &#123;<br>            min = v;<br>            ans_index = current_index;<br>        &#125;<br>        current_index += <span class="hljs-number">1</span>;<br>    &#125;<br>    ans_index<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89909623">四种基本的编程命名规范 - 知乎</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface">C#官方文档中的接口</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/41967120/4676238">Confused about the Interface and Class coding guidelines for TypeScript(StackOverflow)</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/375730170">如何做好抽象？- 知乎</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
