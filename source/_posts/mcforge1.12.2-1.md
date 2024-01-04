@@ -3,8 +3,8 @@ title: MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC
 date: 2022-10-16 14:00:00
 tags: ["Minecraft","Forge","1.12.2"]
 categories: Minecraft Forge 1.12.2 Development Tutorial
-index_img: https://pixiv.re/79639404-1.jpg
-banner_img: https://pixiv.re/79639404-1.jpg
+index_img: https://pixiv.nl/79639404-1.jpg
+banner_img: https://pixiv.nl/79639404-1.jpg
 ---
 
 ## 构建环境
