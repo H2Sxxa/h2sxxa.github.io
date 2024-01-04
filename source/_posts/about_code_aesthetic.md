@@ -13,11 +13,14 @@ banner_img: https://pixiv.re/96078807.jpg
 
 ## 什么是代码美学
 
-对于一段代码来说，这段代码可读性高，干净简洁，那么这段代码就是具有美感的，既然有美，那必然就有看上去不太漂亮的代码，下面是一个例子
+最近看了一系列代码美学相关的视频，什么是代码美学，乍一听感觉是用代码画一幅画，雕几个雕塑之类的，其实并不，代码美感来源于良好的编程习惯与一些技巧，本篇文章谈谈我的拙见
+
+对于一段代码来说，这段代码可读性高，干净简洁，便于使用或维护，那么这段代码就是具有美感的，这种代码往往质量较高，下面有一段不太漂亮的代码
 
 ```rust
 /// 获取最小值的下标
-fn func(i_vec: Vec<i32>) -> usize {
+/// 传入一个 i32 的 Vec
+fn get_index(i_vec: Vec<i32>) -> usize {
     let mut i: usize = 0;
     let mut j: usize = 0;
     let mut k: i32 = i32::MAX;
@@ -76,13 +79,13 @@ def func(*args,**kwargs):
 
 简单列举几个缩写（仅供参考）
 
-|名称|缩写|
-|---|---|
-|answer|ans|
-|temporary|tmp|
-|database|db|
-|function|func|
-|pointer|ptr|
+| 名称      | 缩写 |
+| --------- | ---- |
+| answer    | ans  |
+| temporary | tmp  |
+| database  | db   |
+| function  | func |
+| pointer   | ptr  |
 
 还是那段二元一次方程，使用缩写后
 
@@ -91,16 +94,63 @@ let arg: i32 = ...
 let ans = 3 * arg.pow(2) + 2 * arg + 1;
 ```
 
-### 类型系统
+### 保持简洁
 
-对于一些类型系统很强大的静态语言，我们可以使用一部分的类型来减少变量名称的复杂程度
+在早期计算机编程中，在一个庞大的项目中确定一个变量的类型是十分麻烦的，匈牙利命名法就是为了解决这个类型诞生的，简单来说用法就是 `类型缩写+大写开头变量名称` ，下面是几个例子
 
-TODO
+```C
+int iAge;// int
+char szName[];// char
+```
 
-此时再来重写一下之前那段代码 
+```C#
+interface IAnimal {} // interface
+```
+
+笔者曾经就对 `Java` 中的接口要不要使用 `I` 开头而纠结过，究其原因其实就是为什么要加，加了有什么好处，像 `C#` 的官方文档之中，命名接口也使用了匈牙利命名法，那么遵守官方文档的规范或许是一个好的选择，但如果没有官方文档呢？
+
+现代编程工具查看一个变量的类型是非常便利的，那让变量前面加个类型缩写也就没那么重要了，你已经事先知道`Animal`是一个接口了，那究竟是什么驱使你加上那几个字母，就像StackOverflow上的一句话
+
+> The times of the Hungarian notation have passed
+
+对于现代编程，一个更好更简洁的命名法能够让你的代码看上去更漂亮
+
+但也不是说不要用匈牙利命名法，就像`C#`中的接口命名一样，如果事先有一个规范，那么去遵守，大胆去用就对了，匈牙利命名法还适用于涉及WinAPI的C/C++编程
+
+## 代码美学与类型注释
+
+现在有很多的编程语言拥有强大的类型系统，这些类型系统应用得当可以帮助我们更好的调用方法，这个例子很容易说明
+
+在`Python`中，下面2个函数的不同之处是有意义的
+
+```python
+class Animal:
+    def get_name(self) -> str:
+        return self.name
+
+
+def get_animal_name(animal):
+    return animal.get_name()
+
+
+def get_animal_name(animal: Animal) -> str:
+    return animal.get_name()
+```
+
+由于`Python`是一门动态类型的语言，当你调用上面这个函数时，由于没有给出确切的类型，他不会告诉你返回什么，输入什么
+
+![image-20240104203459309](https://raw.githubusercontent.com/H2Sxxa/Blog-ImageGallery/main/picture/image-20240104203459309.png)
+
+而下面这个函数给出了确切的类型注解，因此你可以放心的传入一个`Animal`并使用返回的`str`类型
+
+![image-20240104203552056](https://raw.githubusercontent.com/H2Sxxa/Blog-ImageGallery/main/picture/image-20240104203552056.png)
+
+因此，我认为，类型系统其实也能算作注释或文档的一部分，如果你有一个拥有明确目的的函数名和确切的类型，删除一部分的多余的注释是完全没有问题的
+
+此时再来重写一下之前那段寻找最小值的代码 
 
 ```rust
-fn findMinIndex(vec: Vec<i32>) -> usize {
+fn find_min_index(vec: Vec<i32>) -> usize {
     let mut current_index: usize = 0;
     let mut ans_index: usize = 0;
     let mut min: i32 = i32::MAX;
@@ -114,3 +164,53 @@ fn findMinIndex(vec: Vec<i32>) -> usize {
     ans_index
 }
 ```
+
+## 代码美学与编程范式
+
+### 函数式编程与代码扁平化
+
+对于很多人来说，函数式编程看起来遥远实则相近，大部分的语言如今都或多或少支持一部分的函数式编程，你可能在用，但你不知道这就是函数式编程，像`Python`里的`lambda`、`map`、`filter`，`Java`的`java.util.function`下的`Consumer`、`Supplier`、`Predicate`、`Function`都是属于函数式编程的范畴之内，更不必提`Haskell`、`ML`、`Scala`这些以函数式而出名的语言，如果你对函数式编程感兴趣可以自行去了解，这不属于本篇文章的范畴，函数式编程有什么好处？暂且不提开发效率，使用函数式编程会大大减少代码的嵌套，也就是**代码扁平化**
+
+再次来重写一下上面的这段代码
+
+```rust
+fn find_min_index(vec: Vec<i32>) -> usize {
+    let mut ans_index: usize = 0;
+    let mut min: i32 = i32::MAX;
+
+    vec.into_iter()
+        .enumerate()
+        .for_each(|(current_index, value)| {
+            if value < min {
+                min = value;
+                ans_index = current_index;
+            }
+        });
+
+    ans_index
+}
+```
+
+代码扁平化还有另一种方法那就是提取内层嵌套为一个函数，这种方法并不难理解也不过多阐述
+
+### 面向对象编程与设计模式
+
+设计模式是什么，其实就是一系列代码的最佳实践，至于和面向对象放在一起，那是因为`Java`的设计模式往往是属于比较出名的那个，而`Java`又是典型的面向对象语言
+
+#### 抽象
+
+设计模式往往与抽象有关
+
+```java
+
+```
+
+TODO
+
+## 参考文献
+
+[^1]: [四种基本的编程命名规范 - 知乎](https://zhuanlan.zhihu.com/p/89909623)
+[^2]: [C#官方文档中的接口](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface)
+[^3]: [Confused about the Interface and Class coding guidelines for TypeScript(StackOverflow)](https://stackoverflow.com/a/41967120/4676238)
+[^4]: [如何做好抽象？- 知乎](https://zhuanlan.zhihu.com/p/375730170)
+
