@@ -851,7 +851,7 @@ i.iconfont {
   --scrollbar-hover-color: #a6a6a6;
   --button-bg-color: transparent;
   --button-hover-bg-color: #f2f3f5;
-  --highlight-bg-color: #f6f8fa;
+  --highlight-bg-color: #fafafa;
   --inlinecode-bg-color: rgba(175,184,193,0.2);
   --fold-title-color: #3c4858;
   --fold-border-color: #eaecef;
@@ -878,7 +878,7 @@ i.iconfont {
     --scrollbar-hover-color: #9da8b3;
     --button-bg-color: transparent;
     --button-hover-bg-color: #46647e;
-    --highlight-bg-color: #444;
+    --highlight-bg-color: #282c34;
     --inlinecode-bg-color: rgba(99,110,123,0.4);
     --fold-title-color: #c4c6c9;
     --fold-border-color: #435266;
@@ -916,7 +916,7 @@ i.iconfont {
     --scrollbar-hover-color: #9da8b3;
     --button-bg-color: transparent;
     --button-hover-bg-color: #46647e;
-    --highlight-bg-color: #444;
+    --highlight-bg-color: #282c34;
     --inlinecode-bg-color: rgba(99,110,123,0.4);
     --fold-title-color: #c4c6c9;
     --fold-border-color: #435266;
