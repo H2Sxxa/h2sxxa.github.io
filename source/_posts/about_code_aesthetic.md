@@ -199,18 +199,37 @@ fn find_min_index(vec: Vec<i32>) -> usize {
 
 #### 抽象
 
-设计模式往往与抽象有关
+设计模式往往与抽象有关，因此知道什么是抽象实际上是必要的，什么是抽象？抽象是从几个具体的事物抽离相似的部分，简单地从一段代码实例来说
 
-```java
+```python
+class Pig:
+    def drink(self): ...
+    def eat(self): ...
+    ...
 
+class Dog:
+    def drink(self): ...
+    def eat(self): ...
+    ...
 ```
 
-TODO
+可以看到`Pig`和`Dog`拥有相同的特征，`eat`和`drink`，把共同的特征抽离出来就是`Animal`，这就是一个抽象，此外，我们还可以把`Animal`定义为一个抽象类（Abstract Class）
+
+```python
+class Animal(ABC):
+    def drink(self): ...
+    def eat(self): ...
+
+
+class Pig(Animal)
+class Dog(Animal):...
+```
+
+
 
 ## 参考文献
 
 [^1]: [四种基本的编程命名规范 - 知乎](https://zhuanlan.zhihu.com/p/89909623)
 [^2]: [C#官方文档中的接口](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface)
 [^3]: [Confused about the Interface and Class coding guidelines for TypeScript(StackOverflow)](https://stackoverflow.com/a/41967120/4676238)
-[^4]: [如何做好抽象？- 知乎](https://zhuanlan.zhihu.com/p/375730170)
 
