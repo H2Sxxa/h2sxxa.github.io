@@ -2,37 +2,37 @@
 title: 关于
 layout: about
 ---
-# Hello ! Here is H2Sxxa
+# Hello ! Here is H2Sxxa 👋
 
-## Who am I ？
+## Who am I 🤔 ？
 
-Friend,do you know TouHou Project?
+~~The Master of Nothing~~
 
-Love Touhou Project,also love the Material Design(amateur)...
+A simple college student, major in Artificial Intelligence.
 
-A Student,a touhou lover...also a gamer!
+Love **Touhou Project☯** and doing some awful Graphic Designs.
 
-## Sponse
+The Programming Language I used/am using: 
 
-Here is a sponse link: https://afdian.net/@H2Sxxa
+ - Python(A great and flexible script language)
+ - Java(Just want to make some mcmod)
+ - Rust(Interesting and Modern, also Safe and Fast)
+ - Dart(Flutter is easy to make some cross-platform application)
 
-## Github stats
+## Status 📊
 
-[![H2Sxxa's Github Stats](https://github-readme-stats.vercel.app/api?username=H2Sxxa&count_private=true&show_icons=true&theme=radical)](https://github.com/anuraghazra/github-readme-stats)
+[![wakatime](https://wakatime.com/badge/user/2cbbd499-4c2f-44d5-8b4e-813449cabaf3.svg)](https://wakatime.com/@2cbbd499-4c2f-44d5-8b4e-813449cabaf3)
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=H2Sxxa&layout=compact&theme=radical)](https://github.com/anuraghazra/github-readme-stats)
+<p align="left"><img src="https://raw.githubusercontent.com/H2Sxxa/H2Sxxa/main/metrics.plugin.svg"></p>
 
-↑There are sommmmmme commits from https://github.com/IAXRetailer/auto-green
-
-## Contact
+## Contact 📞
 
 - Github: https://github.com/H2Sxxa
 - Email : mailto:h2sxxa0w0@gmail.com
 - Steam : 1227101305
 - BiliBili : https://space.bilibili.com/393570351
-- QQ : 1525223576
 
-## Others
+## Others 💡
 
-- My Minecraft Mod Dev QQ-Group [416619634](https://jq.qq.com/?_wv=1027&k=SYIkwBe6)
-- My Blog https://h2sxxa.github.io
+- A Minecraft Touhou Mod QQ-Group: 752204159
+- Blog: https://h2sxxa.github.io
