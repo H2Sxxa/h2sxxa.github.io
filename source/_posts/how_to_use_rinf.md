@@ -115,8 +115,9 @@ Flutter侧的代码默认会生成在`lib/messages`中，只需要关心`generat
 
 ```dart
 void main() async {
+  //...
   await initializeRust();
-    //...
+  //...
 }
 
 class MyAppState extends State<MyApp> {
@@ -144,7 +145,7 @@ class FooPageState extends State<FooPage> {
   @override
   void initState(){
     super.initState();
-    DataOutput().listen((signal) => update(signal.message));
+    DataOutput.rustSignalStream.listen((signal) => update(signal.message));
   }
 
   @override
