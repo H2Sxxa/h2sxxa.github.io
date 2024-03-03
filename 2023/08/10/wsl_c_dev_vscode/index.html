@@ -16,27 +16,27 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用WSL来运行GCC为什么是WSL + GCC什么是MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Starte">
+    <meta name="description" content="我只想看看怎么配置MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Started with C++ and Min">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用WSL来运行GCC配合VSCode进行C的开发">
-<meta property="og:url" content="http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/index.html">
+<meta property="og:title" content="在VSCode里通过WSL进行C的开发">
+<meta property="og:url" content="http://h2sxxa.github.io/2023/08/10/wsl_c_dev_vscode/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="使用WSL来运行GCC为什么是WSL + GCC什么是MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Starte">
+<meta property="og:description" content="我只想看看怎么配置MinGWMinGW全称是Minimalist GNU on Windows，翻译一下就是用于Windows的简单GNU套件，里面不仅包含了mingw-gcc&#x2F;g++用于编译C&#x2F;C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C&#x2F;C++程序。 如果你不想使用WSL，你可以参考 Get Started with C++ and Min">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.nl/99637663.jpg">
 <meta property="article:published_time" content="2023-08-10T09:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-10T13:43:15.014Z">
+<meta property="article:modified_time" content="2024-03-03T13:19:58.909Z">
 <meta property="article:author" content="H2Sxxa">
+<meta property="article:tag" content="C">
 <meta property="article:tag" content="WSL">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="GCC">
 <meta property="article:tag" content="VSCode">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://pixiv.nl/99637663.jpg">
   
   
   
-  <title>使用WSL来运行GCC配合VSCode进行C的开发 - H2Sxxa&#39;s Blog</title>
+  <title>在VSCode里通过WSL进行C的开发 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用WSL来运行GCC配合VSCode进行C的开发"></span>
+            <span id="subtitle" data-typed-text="在VSCode里通过WSL进行C的开发"></span>
           
         </div>
 
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.7k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          11 分钟
+          14 分钟
         
       </span>
     
@@ -297,27 +297,22 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用WSL来运行GCC配合VSCode进行C的开发</h1>
+            <h1 id="seo-header">在VSCode里通过WSL进行C的开发</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="使用WSL来运行GCC"><a href="#使用WSL来运行GCC" class="headerlink" title="使用WSL来运行GCC"></a>使用WSL来运行GCC</h1><h2 id="为什么是WSL-GCC"><a href="#为什么是WSL-GCC" class="headerlink" title="为什么是WSL + GCC"></a>为什么是WSL + GCC</h2><h3 id="什么是MinGW"><a href="#什么是MinGW" class="headerlink" title="什么是MinGW"></a>什么是MinGW</h3><p>MinGW全称是Minimalist GNU on Windows，翻译一下就是<strong>用于Windows的简单GNU套件</strong>，里面不仅包含了mingw-gcc/g++用于编译C/C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C/C++程序。</p>
+                <h2 id="我只想看看怎么配置MinGW"><a href="#我只想看看怎么配置MinGW" class="headerlink" title="我只想看看怎么配置MinGW"></a>我只想看看怎么配置MinGW</h2><p>MinGW全称是Minimalist GNU on Windows，翻译一下就是<strong>用于Windows的简单GNU套件</strong>，里面不仅包含了mingw-gcc/g++用于编译C/C++文件，还包含了许多头文件以及bison，make等工具，可以让你在Windows上轻松开发C/C++程序。</p>
 <p>如果你不想使用WSL，你可以参考 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">Get Started with C++ and MinGW-w64 in Visual Studio Code</a> 这篇文章来为你的VSCode配置MinGW。</p>
-<h3 id="为什么用WSL"><a href="#为什么用WSL" class="headerlink" title="为什么用WSL"></a>为什么用WSL</h3><p>总而言之就是Windows开发体验太蚌埠了，用WSL就不会这么蚌埠。</p>
-<h4 id="什么是WSL"><a href="#什么是WSL" class="headerlink" title="什么是WSL"></a>什么是WSL</h4><p>WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在 Windows 10.1607 后存在于Windows系统中。</p>
+<h2 id="什么是WSL"><a href="#什么是WSL" class="headerlink" title="什么是WSL"></a>什么是WSL</h2><p>WSL的全称是Windows Subsystem for Linux，也就是Windows Linux子系统，在 Windows 10.1607 后存在于Windows系统中。</p>
 <blockquote>
 <p>适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。</p>
 <p>–  <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/about">什么是适用于 Linux 的 Windows 子系统 | Microsoft Learn</a></p>
 </blockquote>
 <p>同样提供一份官方教程 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-wsl">Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code</a></p>
-<h4 id="对比MinGW"><a href="#对比MinGW" class="headerlink" title="对比MinGW"></a>对比MinGW</h4><ul>
-<li>可以运行Linux命令</li>
-<li>使用apt等软件包管理器管理依赖安装</li>
-<li>更加舒服的GDB调试</li>
-<li>……</li>
-</ul>
-<h4 id="那我想要让我的程序给Windows用啊！"><a href="#那我想要让我的程序给Windows用啊！" class="headerlink" title="那我想要让我的程序给Windows用啊！"></a>那我想要让我的程序给Windows用啊！</h4><p>WSL里的gcc编译出来仅能提供给相同平台架构的机器使用，如果你需要多平台，你可以尝试交叉编译，也可以用类似于Github Action的CI来进行编译，总之方法有很多，这个问题随着你的深入会很简单。</p>
+<h2 id="为什么是WSL"><a href="#为什么是WSL" class="headerlink" title="为什么是WSL"></a>为什么是WSL</h2><p>总而言之就是Windows开发体验太蚌埠了<del>(说的就是你MSVC)</del>，而Linux好很多，而且软件包管理起来也很方便。</p>
+<h3 id="我想要让我的程序给Windows用啊！"><a href="#我想要让我的程序给Windows用啊！" class="headerlink" title="我想要让我的程序给Windows用啊！"></a>我想要让我的程序给Windows用啊！</h3><p>WSL里的C编译器编译出来仅能提供给相同平台架构的机器使用，如果你需要多平台，你可以尝试交叉编译，也可以用类似于Github Action的CI来进行编译，总之方法有很多，这个问题随着你的深入会很简单。</p>
+<p>补记有关于如何在WSL进行交叉编译可以供你简单参考。</p>
 <p>那么我们开始吧！</p>
 <h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><p>为了确保你的WSL功能可用我们用命令行先把功能打开</p>
 <h3 id="开启WSL和虚拟化"><a href="#开启WSL和虚拟化" class="headerlink" title="开启WSL和虚拟化"></a>开启WSL和虚拟化</h3><p>使用<strong>管理员身份</strong>打开PowerShell输入</p>
@@ -328,10 +323,11 @@
 <p><a target="_blank" rel="noopener" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">点击这里获取WSL升级安装包</a></p>
 <p>安装升级后，打开PowerShell输入<code>wsl --set-default-version 2</code>，然后就大功告成了！（也可以不输，似乎默认就是WSL2了现在）</p>
 <h2 id="安装WSL的Linux分发版"><a href="#安装WSL的Linux分发版" class="headerlink" title="安装WSL的Linux分发版"></a>安装WSL的Linux分发版</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">微软提供的教程</a></p>
-<h3 id="🏪微软商店安装"><a href="#🏪微软商店安装" class="headerlink" title="🏪微软商店安装"></a>🏪微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。</p>
+<h3 id="微软商店安装"><a href="#微软商店安装" class="headerlink" title="微软商店安装"></a>微软商店安装</h3><p>如果安装Ubuntu（WSL）直接在微软商店搜索Ubuntu即可，直接安装就行了。</p>
 <p>安装完后打开PowerShell输入<code>wsl --install</code>确保安装完整即可。</p>
 <p>全部结束后记得<code>wsl -l -v</code>看看是否安装成功（当然也可以不看❌）。</p>
-<h3 id="🔧手动安装"><a href="#🔧手动安装" class="headerlink" title="🔧手动安装"></a>🔧手动安装</h3><p>使用下方这行命令可以列出所有可用的 Linux 发行版本（不含一些第三方版本），默认是Ubuntu，我也推荐安装Ubuntu。</p>
+<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><p>使用下方这行命令可以列出所有可用的 Linux 发行版本（不含一些第三方版本），默认是Ubuntu，我也推荐安装Ubuntu，比较省事。</p>
+<p><del>当然如果你想要折腾也可以去找个ArchLinux</del></p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-o</span><br><span class="hljs-comment"># wsl --list --online</span><br><span class="hljs-comment">#以下是可安装的有效分发的列表。</span><br><span class="hljs-comment">#使用 &#x27;wsl.exe --install &lt;Distro&gt;&#x27; 安装。</span><br><br><span class="hljs-comment">#NAME                                   FRIENDLY NAME</span><br><span class="hljs-comment">#Ubuntu                                 Ubuntu</span><br><span class="hljs-comment">#Debian                                 Debian GNU/Linux</span><br><span class="hljs-comment">#kali-linux                             Kali Linux Rolling</span><br><span class="hljs-comment">#Ubuntu-18.04                           Ubuntu 18.04 LTS</span><br><span class="hljs-comment">#Ubuntu-20.04                           Ubuntu 20.04 LTS</span><br><span class="hljs-comment">#Ubuntu-22.04                           Ubuntu 22.04 LTS</span><br><span class="hljs-comment">#OracleLinux_7_9                        Oracle Linux 7.9</span><br><span class="hljs-comment">#OracleLinux_8_7                        Oracle Linux 8.7</span><br><span class="hljs-comment">#OracleLinux_9_1                        Oracle Linux 9.1</span><br><span class="hljs-comment">#openSUSE-Leap-15.5                     openSUSE Leap 15.5</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4</span><br><span class="hljs-comment">#SUSE-Linux-Enterprise-15-SP5           SUSE Linux Enterprise 15 SP5</span><br><span class="hljs-comment">#openSUSE-Tumbleweed                    openSUSE Tumbleweed</span><br></code></pre></td></tr></table></figure>
 
 <p>输入这行就会自动开始安装WSL了</p>
@@ -339,15 +335,70 @@
 
 <h3 id="配置账户密码"><a href="#配置账户密码" class="headerlink" title="配置账户密码"></a>配置账户密码</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">微软的教程</a></p>
 <p>运行刚才安装好的Ubuntu，或者直接Powershell里运行<code>wsl</code>，然后就是首次启动配置账户密码了，输入密码的时候，<strong>终端不会有任何符号输出</strong>，切记要保管好自己的账户密码，不然后面sudo的时候忘记就难受了。</p>
-<h2 id="安装GCC-build-essential-GDB"><a href="#安装GCC-build-essential-GDB" class="headerlink" title="安装GCC(build-essential) + GDB"></a>安装GCC(build-essential) + GDB</h2><p>配置好账户密码之后，在Ubuntu（WSL）里逐一运行下方的命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list <span class="hljs-comment">#切换阿里云镜像，也可以不切换（X</span><br>sudo apt update -y <span class="hljs-comment">#更新软件包清单</span><br>sudo apt upgrade -y <span class="hljs-comment">#升级软件包</span><br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
+<h2 id="选择你的编译器"><a href="#选择你的编译器" class="headerlink" title="选择你的编译器"></a>选择你的编译器</h2><p>编译器简单来说就是将源代码经过一系列处理变为二进制文件的一个软件，如果你想了解更多，请查看编译原理</p>
+<p>C的编译器有很多，主流的有GCC，Clang，MSVC，而GCC是跨平台的，MSVC是Windows独享<del>（都叫MicroSoft Visual C/C++了）</del>，Clang的编译只能在Linux/MacOS这些平台使用</p>
+<p>在本教程中你可以选择安装GCC或Clang，Clang虽然比GCC相比有很多优点（速度快，占用小），但是可能需要再折腾，在大部分的C语言指导书里普遍使用的是GCC，如果你是一个Newer，在没有把握的前提下，我推荐你使用GCC而不是Clang</p>
+<h3 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list <span class="hljs-comment">#切换阿里云镜像，也可以不切换（X</span><br>sudo apt update -y <span class="hljs-comment">#更新软件包清单</span><br>sudo apt upgrade -y <span class="hljs-comment">#升级软件包</span><br>sudo apt-get install build-essential gdb<br></code></pre></td></tr></table></figure>
 
-<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">whereis g++<br>whereis gdb<br></code></pre></td></tr></table></figure>
+<p>安装完后请检查安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">whereis g++<br>whereis gdb<br></code></pre></td></tr></table></figure>
 
-<p>至此，如果有成功显示路径，WSL + GCC就算是安装好了。</p>
-<h2 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h2><p>VSCode应用商店搜索WSL，安装有MicroSoft认证的那一个，然后点击底部栏最左侧的图标，选择连接至WSL，然后安装搜索C/C++插件，安装语言扩展包，之后再同时安装至WSL。</p>
-<p>调试的时候选择GCC即可，如果是C++的话，调试的时候请选择G++，至此就完成了WSL + GCC + VSCode的开发环境配置。</p>
-<h2 id="补记：交叉编译"><a href="#补记：交叉编译" class="headerlink" title="补记：交叉编译"></a>补记：交叉编译</h2><h3 id="交叉编译是什么"><a href="#交叉编译是什么" class="headerlink" title="交叉编译是什么"></a>交叉编译是什么</h3><p>简单来说，就是跨平台编译，这里的平台包括但不限于系统架构（x86-64,aarch64……），操作系统（Windows，Linux……）。</p>
+<h3 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list <span class="hljs-comment">#切换阿里云镜像，也可以不切换（X</span><br>sudo apt update -y <span class="hljs-comment">#更新软件包清单</span><br>sudo apt upgrade -y <span class="hljs-comment">#升级软件包</span><br>sudo apt-get install clang clangd lldb cmake<br></code></pre></td></tr></table></figure>
+
+<p>安装完后请检查安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">whereis clang<br>whereis clangd<br>whereis lldb<br>whereis cmake<br></code></pre></td></tr></table></figure>
+
+<p>如果你愿意可以选择再装一个build-essential，以后可能会用到</p>
+<h2 id="安装VSCode"><a href="#安装VSCode" class="headerlink" title="安装VSCode"></a>安装VSCode</h2><p>请认准 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a> 下载</p>
+<p>如果下的太慢可以扔进去这个链接下载 <a target="_blank" rel="noopener" href="https://d.serctl.com/">https://d.serctl.com/</a> 或者自寻安装包</p>
+<h3 id="安装VSCode插件"><a href="#安装VSCode插件" class="headerlink" title="安装VSCode插件"></a>安装VSCode插件</h3><p>如果你需要中文的VSCode，你可以安装一个Chinese (Simplified)插件</p>
+<p>当你准备好后，安装一个 WSL 插件，然后点击位于左下角的打开远程窗口选择<code>连接到WSL</code></p>
+<p>之后就可以安装C/C++的插件</p>
+<p>下面是我推荐的插件(不包含make插件)</p>
+<ul>
+<li>C/C++<ul>
+<li>Clangd依赖于此</li>
+</ul>
+</li>
+<li>Clangd<ul>
+<li>代码分析提示</li>
+</ul>
+</li>
+<li>Code Runner<ul>
+<li>C/C++ Runner运行有点纸张，建议用这个运行，不支持调试</li>
+</ul>
+</li>
+<li>C/C++ Runner<ul>
+<li>建议只用于调试</li>
+</ul>
+</li>
+<li>CodeLLDB<ul>
+<li>C/C++ Runner依赖于此</li>
+</ul>
+</li>
+</ul>
+<p>下面这些不是必须的，但是可以改进体验</p>
+<ul>
+<li>VSCodeSnap<ul>
+<li>截图插件</li>
+</ul>
+</li>
+<li>C/C++ Snippets<ul>
+<li>代码模板</li>
+</ul>
+</li>
+<li>FiraCode<ul>
+<li>连字字体</li>
+</ul>
+</li>
+<li>Error Lens<ul>
+<li>改进错误信息的外观</li>
+</ul>
+</li>
+</ul>
+<h3 id="开始开发"><a href="#开始开发" class="headerlink" title="开始开发"></a>开始开发</h3><p>你需要先在你的 home 目录新建一个英文文件夹用于存放你的源代码，然后用VSCode连接到WSL打开此文件夹即可。</p>
+<p>打开文件夹后，新建<code>main.c</code>或者叫<code>test.c</code>什么样都可以，但不要使用中文名称，之后就可以开始你的编写了！</p>
+<h2 id="补记：交叉编译"><a href="#补记：交叉编译" class="headerlink" title="补记：交叉编译"></a>补记：交叉编译</h2><h3 id="交叉编译是什么"><a href="#交叉编译是什么" class="headerlink" title="交叉编译是什么"></a>交叉编译是什么</h3><p>简单来说，就是跨平台编译，从平台A编译平台B可以用的二进制文件，这里的平台包括但不限于系统架构（x86-64,aarch64……），操作系统（Windows，Linux……）。</p>
 <h3 id="WSL交叉编译Windows可执行程序"><a href="#WSL交叉编译Windows可执行程序" class="headerlink" title="WSL交叉编译Windows可执行程序"></a>WSL交叉编译Windows可执行程序</h3><h4 id="安装MinGW"><a href="#安装MinGW" class="headerlink" title="安装MinGW"></a>安装MinGW</h4><p>只需一行命令即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install mingw-w64<br></code></pre></td></tr></table></figure>
 
@@ -395,11 +446,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/C/" class="print-no-link">#C</a>
+      
         <a href="/tags/WSL/" class="print-no-link">#WSL</a>
       
         <a href="/tags/Linux/" class="print-no-link">#Linux</a>
-      
-        <a href="/tags/GCC/" class="print-no-link">#GCC</a>
       
         <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
       
@@ -413,8 +464,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用WSL来运行GCC配合VSCode进行C的开发</div>
-      <div>http://h2sxxa.github.io/2023/08/10/wsl-gcc-vscode/</div>
+      <div>在VSCode里通过WSL进行C的开发</div>
+      <div>http://h2sxxa.github.io/2023/08/10/wsl_c_dev_vscode/</div>
     </div>
     <div class="license-meta">
       
