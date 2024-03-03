@@ -221,9 +221,17 @@ class Animal(ABC):
     def eat(self): ...
 
 
-class Pig(Animal)
+class Pig(Animal):...
 class Dog(Animal):...
 ```
+
+虽然抽象但抽象也不是百利而无，下面说说
+
+
+
+#### 依赖注入
+
+什么是依赖注入？我第一次接触到依赖注入在 NoneBot
 
 
 
