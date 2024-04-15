@@ -75,6 +75,26 @@ message DataOutput {
 }
 ```
 
+如果你需要一个数组或者可选参数
+
+```proto
+message Foo {
+    repeated string vec = 1;
+    optional string opt = 2;
+}
+```
+
+如果需要引用其他proto文件中的类型
+
+```proto
+import "path/to/foo.proto";
+
+message Bar {
+    foo.Foo data = 1;
+}
+
+```
+
 写完之后，根目录运行`rinf message`就可以看到文件生成了
 
 ### Rust侧的编写
@@ -142,10 +162,19 @@ class MyAppState extends State<MyApp> {
 class FooPageState extends State<FooPage> {
   void update(DataOutput data) => ...
 
+  late StreamSubscription<RustSignal<DataOutput>> _streamDataOutput;
+
   @override
   void initState(){
     super.initState();
-    DataOutput.rustSignalStream.listen((signal) => update(signal.message));
+    _streamDataOutput = DataOutput.rustSignalStream.listen((signal) => update(signal.message));
+  }
+
+
+  @override
+  void dispose(){
+    super.dispose();
+    _streamDataOutput.cancel();
   }
 
   @override
