@@ -16,26 +16,27 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="构建环境何为构建环境？在了解构建环境之前，你需要知道一个名为 ForgeGradle 的东西，它的作用如下   部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种： 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（setupDecompWorkspace task) 持续集成服务器（CI）经常使用的用于自动">
+    <meta name="description" content="方法链不着急来看什么是方法链，思考一下，如果让你使用Python设计一个Person类，需要带有名字与年龄，你会如何去设计？ 如果你写的漂亮点就是这样。 123class Person:    age &#x3D; 17    name &#x3D; &quot;Yakumo&quot;  人的年龄是逐年增长的，如果你想要修改你Person实例的年龄，一般会怎么做呢？如果你懒一点直接person.age +&#x3D; 1，勤">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC">
-<meta property="og:url" content="http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-1/index.html">
+<meta property="og:title" content="通过方法链（链式调用）简单来在面向对象中使用函数式编程">
+<meta property="og:url" content="http://h2sxxa.github.io/2024/05/08/oop_with_fp_via_method_chain/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="构建环境何为构建环境？在了解构建环境之前，你需要知道一个名为 ForgeGradle 的东西，它的作用如下   部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种： 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（setupDecompWorkspace task) 持续集成服务器（CI）经常使用的用于自动">
+<meta property="og:description" content="方法链不着急来看什么是方法链，思考一下，如果让你使用Python设计一个Person类，需要带有名字与年龄，你会如何去设计？ 如果你写的漂亮点就是这样。 123class Person:    age &#x3D; 17    name &#x3D; &quot;Yakumo&quot;  人的年龄是逐年增长的，如果你想要修改你Person实例的年龄，一般会怎么做呢？如果你懒一点直接person.age +&#x3D; 1，勤">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pixiv.nl/79639404-1.jpg">
-<meta property="article:published_time" content="2022-10-16T06:00:00.000Z">
+<meta property="og:image" content="https://pixiv.nl/105589501.jpg">
+<meta property="article:published_time" content="2024-05-08T12:58:00.000Z">
 <meta property="article:modified_time" content="2024-05-08T13:33:56.244Z">
 <meta property="article:author" content="H2Sxxa">
-<meta property="article:tag" content="Forge">
-<meta property="article:tag" content="Minecraft">
-<meta property="article:tag" content="1.12.2">
+<meta property="article:tag" content="Code Aesthetic">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="FP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pixiv.nl/79639404-1.jpg">
+<meta name="twitter:image" content="https://pixiv.nl/105589501.jpg">
   
   
   
-  <title>MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC - H2Sxxa&#39;s Blog</title>
+  <title>通过方法链（链式调用）简单来在面向对象中使用函数式编程 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,13 +220,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://pixiv.nl/79639404-1.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('https://pixiv.nl/105589501.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC"></span>
+            <span id="subtitle" data-typed-text="通过方法链（链式调用）简单来在面向对象中使用函数式编程"></span>
           
         </div>
 
@@ -236,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-16 14:00" pubdate>
-          2022年10月16日 下午
+        <time datetime="2024-05-08 20:58" pubdate>
+          2024年5月8日 晚上
         </time>
       </span>
     
@@ -248,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          449 字
         
       </span>
     
@@ -259,7 +260,7 @@
         
         
         
-          11 分钟
+          4 分钟
         
       </span>
     
@@ -296,95 +297,29 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</h1>
+            <h1 id="seo-header">通过方法链（链式调用）简单来在面向对象中使用函数式编程</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="构建环境"><a href="#构建环境" class="headerlink" title="构建环境"></a>构建环境</h2><h3 id="何为构建环境？"><a href="#何为构建环境？" class="headerlink" title="何为构建环境？"></a>何为构建环境？</h3><p>在了解构建环境之前，你需要知道一个名为 <strong>ForgeGradle</strong> 的东西，它的作用如下</p>
-<blockquote>
-<ul>
-<li>部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种：</li>
-<li>基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（<code>setupDecompWorkspace</code> task)</li>
-<li>持续集成服务器（CI）经常使用的用于自动构建 Mod 的环境（<code>setupCIWorkspace</code> task）</li>
-<li>不太常用的仅有反混淆后的 Minecraft 的开发环境（<code>setupDevWorkspace</code> task）</li>
-<li>依赖处理<ul>
-<li>用于反混淆依赖项目的 scope（<code>deobfCompile</code> 和 <code>deobfProvided</code>），在开发跨 Mod 兼容或扩展 Mod 时经常用到</li>
-</ul>
-</li>
-<li>IDE 相关<ul>
-<li>自动生成 IntelliJ IDEA 的 Run/Debug Configuration（<code>genIntellijRuns</code> task）</li>
-</ul>
-</li>
-<li>连带当前项目一起运行 Minecraft（不常用）：<ul>
-<li>运行服务器（<code>runServer</code> task）</li>
-<li>运行客户端（<code>runClient</code> task）</li>
-</ul>
-</li>
-<li>在执行 Gradle Java 插件的 <code>build</code> task 时可自动完成对源码的重混淆</li>
-</ul>
-<p>作者：3TUSK 出处：<a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/chapter-01/forgegradle.html">https://harbinger.covertdragon.team/chapter-01/forgegradle.html</a></p>
-</blockquote>
-<p>简单来说，构建环境就是把整个MC下到.gradle缓存里，同时进行几轮的反编译反混淆，便于 <code>runClient</code> 运行客户端调试与执行其他Gradle命令</p>
-<h3 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h3><p>在开始之前，你需要清楚以下几点</p>
-<ul>
-<li>Forge的maven仓库位于国外，下载极易失败 (指某fastutil.jar 20MB+)</li>
-<li>由于某些硬件软件问题，并不是所有人配置开发环境都能顺利 (1G/环境变量/……)</li>
-<li>由于各种奇怪的操作，版本问题……只要有一个环节出了问题，基本就可以看见 <code>Build Failed</code> 了</li>
-</ul>
-<p>难道真的没有办法了吗？</p>
-<p>答案是否，在长期的开发者开发过程中已经形成了几套优秀的方案，下文提供2个解决方案来解决构建环境的绝大多数网络问题，当然如果并非是网络问题，可以删除.gradle再次重试</p>
-<blockquote>
-<p>是的，因为各种乱七八糟的原因，部署环境的过程总是会有各种莫名其妙的问题。一般情况下， –debug、–stacktrace 直接莽拿到的信息足够 debug 用了。但有一点请注意：部署环境的过程中，因为涉及到几轮 mapping 和下载 Minecraft 的 assets，所以在没有预先部署好的环境留下的缓存的情况行，这个过程不会特别快。要有耐心。</p>
-<p>然而，由于某些特殊原因，即使你有足够的耐心也不一定能部署成功。遇到这种情况时，你可以尝试通过为 Gradle 配置代理。相关资料很容易找到，这里不再赘述。</p>
-<p>此外，还要明确一点：不是所有的错误都和网络有关系。请不要盲目尝试各种所谓的解决方案——虽然，直接删了 .gradle 缓存目录可以解决 90% 的非网络因素引发的问题。</p>
-<p>作者：3TUSK 出处：<a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/chapter-02/">https://harbinger.covertdragon.team/chapter-02/</a></p>
-</blockquote>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/IAXRetailer/MCreator_Setup/wiki/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BB%A3%E7%90%86Forge(java)%E6%9D%A5%E5%8A%A0%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83">Proxifier or TUN模式代理Gradle</a></p>
-</li>
-<li><p>使用代理镜像Maven源，类似于阿里云….，也有现成的框架，类似于<a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework">IDF</a>，不过你可能需要把<a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/build.gradle#L42">build.gradle这部分</a>改为下文那样，从而使用2847版本的MDK，不过2768其实也影响不大…看个人选择吧</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">minecraft &#123;<br>    version = <span class="hljs-string">&quot;1.12.2-14.23.5.2847&quot;</span> <span class="hljs-comment">//改为1.12.2-14.23.5.2847，此处已更改</span><br>    runDir = <span class="hljs-string">&quot;run&quot;</span><br><br>    <span class="hljs-comment">// the mappings can be changed at any time, and must be in the following format.</span><br>    <span class="hljs-comment">// snapshot_YYYYMMDD   snapshot are built nightly.</span><br>    <span class="hljs-comment">// stable_#            stables are built at the discretion of the MCP team.</span><br>    <span class="hljs-comment">// Use non-default mappings at your own risk. they may not always work.</span><br>    <span class="hljs-comment">// simply re-run your setup task after changing the mappings to update your workspace.</span><br>    mappings = <span class="hljs-string">&quot;snapshot_20171003&quot;</span><br>    <span class="hljs-comment">// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+                <h1 id="方法链"><a href="#方法链" class="headerlink" title="方法链"></a>方法链</h1><p>不着急来看什么是方法链，思考一下，如果让你使用Python设计一个<code>Person</code>类，需要带有名字与年龄，你会如何去设计？</p>
+<p>如果你写的漂亮点就是这样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>:</span><br>    age = <span class="hljs-number">17</span><br>    name = <span class="hljs-string">&quot;Yakumo&quot;</span><br></code></pre></td></tr></table></figure>
 
+<p>人的年龄是逐年增长的，如果你想要修改你<code>Person</code>实例的年龄，一般会怎么做呢？如果你懒一点直接<code>person.age += 1</code>，勤快的就再写个<code>set_age</code>方法，调用<code>person.set_age(17)</code>，如果又要修改名字呢？是重复以上的 <code>person.name = ...</code>吗，那未免有些啰嗦。</p>
+<p>此时试想一下如果你在<code>set_age</code>返回<code>self</code>会怎么样？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> Self<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>:</span><br>    age = <span class="hljs-number">17</span><br>    name = <span class="hljs-string">&quot;Yakumo&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_name</span>(<span class="hljs-params">self, name: <span class="hljs-built_in">str</span></span>) -&gt; Self:</span>...<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_age</span>(<span class="hljs-params">self, age: <span class="hljs-built_in">int</span></span>) -&gt; Self:</span><br>        self.age = age<br>        <span class="hljs-keyword">return</span> self<br></code></pre></td></tr></table></figure>
 
+<p>通过返回<code>self</code>你就可以继续调用<code>set_name</code>调用<code>set_age</code>…还可以写出下面这样的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">person = Person().set_name(<span class="hljs-string">&quot;Reimu&quot;</span>).set_age(<span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
 
+<p>这就是方法链，这样的调用方法也就是链式调用！</p>
+<h1 id="不可变性"><a href="#不可变性" class="headerlink" title="不可变性"></a>不可变性</h1><p>在方法链中返回一个新的实例而不是实例本身，这也就是不可变性，一旦值确定后就不对其更改。</p>
+<p>大多数情况下你需要为你的类实现一下构造方法和复制方法，请看代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> Self<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>:</span><br>    age = <span class="hljs-number">17</span><br>    name = <span class="hljs-string">&quot;Yakumo&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_name</span>(<span class="hljs-params">self, name: <span class="hljs-built_in">str</span></span>) -&gt; Self:</span><br>        <span class="hljs-keyword">return</span> Person.copy(self.age, name)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_age</span>(<span class="hljs-params">self, age: <span class="hljs-built_in">int</span></span>) -&gt; Self:</span><br>        <span class="hljs-keyword">return</span> Person.copy(age, self.name)<br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">copy</span>(<span class="hljs-params">age: <span class="hljs-built_in">int</span>, name: <span class="hljs-built_in">str</span></span>) -&gt; &quot;Person&quot;:</span><br>        <span class="hljs-keyword">return</span> Person().set_age(age).set_name(name)<br></code></pre></td></tr></table></figure>
 
+<p>间接来看，此时你的年龄与名称都是不可变的，并非修改实例而是创建新的实例，旧的实例通过某些机制回收释放，这也就是函数式的不可变性，对于Python这种写法可能没有多大的意义，但对于Dart来说可以为你的类打上<code>const</code>从而进行优化。</p>
 
-</li>
-</ul>
-<h3 id="一些修改建议"><a href="#一些修改建议" class="headerlink" title="一些修改建议"></a>一些修改建议</h3><h4 id="修改Gradle版本至4-9"><a href="#修改Gradle版本至4-9" class="headerlink" title="修改Gradle版本至4.9"></a>修改Gradle版本至4.9</h4><ol>
-<li>打开MDK目录下gradle\wrapper文件夹</li>
-<li>打开gradle-wrapper.properties文件</li>
-<li>将内容改为下文所述，其中distributionUrl的是否使用腾讯云镜像是可选的，如果不需要使用镜像，可以把distributionUrl的值改为<code>https\://services.gradle.org/distributions/gradle-4.9-all.zip</code></li>
-</ol>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">distributionBase</span>=<span class="hljs-string">GRADLE_USER_HOME</span><br><span class="hljs-attr">distributionPath</span>=<span class="hljs-string">wrapper/dists</span><br><span class="hljs-comment"># Tecent cloud mirror</span><br><span class="hljs-attr">distributionUrl</span>=<span class="hljs-string">https\://mirrors.cloud.tencent.com/gradle/gradle-4.9-all.zip</span><br><span class="hljs-comment"># Source address</span><br><span class="hljs-comment">#distributionUrl=https\://services.gradle.org/distributions/gradle-4.9-all.zip</span><br><span class="hljs-attr">zipStoreBase</span>=<span class="hljs-string">GRADLE_USER_HOME</span><br><span class="hljs-attr">zipStorePath</span>=<span class="hljs-string">wrapper/dists</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="开始构建！"><a href="#开始构建！" class="headerlink" title="开始构建！"></a>开始构建！</h3><p>打开MDK目录下的README.txt，你会看到以下内容</p>
-<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs vhdl">Step <span class="hljs-number">1</span>: <span class="hljs-keyword">Open</span> your command-<span class="hljs-literal">line</span> <span class="hljs-keyword">and</span> browse <span class="hljs-keyword">to</span> the folder where you extracted the zip <span class="hljs-keyword">file</span>.<br><br>Step <span class="hljs-number">2</span>: Once you have a command window up <span class="hljs-keyword">in</span> the folder that the downloaded material was placed, <span class="hljs-keyword">type</span>:<br><br>Windows: <span class="hljs-string">&quot;gradlew setupDecompWorkspace&quot;</span><br>Linux/Mac OS: <span class="hljs-string">&quot;./gradlew setupDecompWorkspace&quot;</span><br><br>Step <span class="hljs-number">3</span>: <span class="hljs-keyword">After</span> <span class="hljs-keyword">all</span> that finished, you<span class="hljs-symbol">&#x27;re</span> left <span class="hljs-keyword">with</span> a choice.<br><span class="hljs-keyword">For</span> eclipse, run <span class="hljs-string">&quot;gradlew eclipse&quot;</span> (./gradlew eclipse <span class="hljs-keyword">if</span> you are <span class="hljs-keyword">on</span> Mac/Linux)<br><br><span class="hljs-keyword">If</span> you prefer <span class="hljs-keyword">to</span> <span class="hljs-keyword">use</span> IntelliJ, steps are a little different.<br><span class="hljs-number">1</span>. <span class="hljs-keyword">Open</span> IDEA, <span class="hljs-keyword">and</span> import project.<br><span class="hljs-number">2</span>. <span class="hljs-keyword">Select</span> your build.gradle <span class="hljs-keyword">file</span> <span class="hljs-keyword">and</span> have it import.<br><span class="hljs-number">3</span>. Once it<span class="hljs-symbol">&#x27;s</span> finished you must close IntelliJ <span class="hljs-keyword">and</span> run the following command:<br><br><span class="hljs-string">&quot;gradlew genIntellijRuns&quot;</span> (./gradlew genIntellijRuns <span class="hljs-keyword">if</span> you are <span class="hljs-keyword">on</span> Mac/Linux)<br><br>Step <span class="hljs-number">4</span>: The final step <span class="hljs-keyword">is</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">open</span> Eclipse <span class="hljs-keyword">and</span> switch your workspace <span class="hljs-keyword">to</span> /eclipse/ (<span class="hljs-keyword">if</span> you <span class="hljs-keyword">use</span> IDEA, it should automatically start <span class="hljs-keyword">on</span> your project)<br><br></code></pre></td></tr></table></figure>
-
-<p>大致的意思由以下几个步骤组成</p>
-<ol>
-<li><p>在你的mdk目录下打开CMD或者PowerShell窗口</p>
-</li>
-<li><p>输入<code>gradlew setupDecompWorkspace</code></p>
-</li>
-<li><p>如果你使用eclipse等上述任务结束后输入<code>gradlew eclipse</code></p>
-</li>
-<li><p>如果你使用IntelliJ IDEA，等上述任务结束，<strong>先选择build.gradle把项目导入IDEA后关闭IDEA</strong>，在确保IDEA关闭后输入<code>gradlew genIntellijRuns</code> </p>
-<ul>
-<li>如何导入build.gradle? File-&gt;Open-&gt;选择你的build.gradle后点击ok，把作为项目打开</li>
-</ul>
-</li>
-<li><p>VSCode在ForgeGradle2.3没有相应的Gradle Task，如果你使用LCF，此处你直接导入即可（记得装Gradle插件）</p>
-</li>
-</ol>
-<h3 id="构建失败？"><a href="#构建失败？" class="headerlink" title="构建失败？"></a>构建失败？</h3><p>如果你构建成功了请跳过此步</p>
-<p>先前往<a target="_blank" rel="noopener" href="https://mouse0w0.github.io/setup-mdk-guide">这里</a>查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助</p>
-<h2 id="在IDE中启动MC"><a href="#在IDE中启动MC" class="headerlink" title="在IDE中启动MC"></a>在IDE中启动MC</h2><h3 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h3><p>IDEA入成功后，拉出右边的Gradle标签，会有对应的任务，运行<code>runClient</code>即可启动客户端</p>
-<h3 id="VSCode-不支持FG2-3"><a href="#VSCode-不支持FG2-3" class="headerlink" title="VSCode(不支持FG2.3)"></a>VSCode(不支持FG2.3)</h3><p>安装Gradle插件后，在Gradle选项卡处可以找到你的<code>runClient</code></p>
-<h3 id="手动启动"><a href="#手动启动" class="headerlink" title="手动启动"></a>手动启动</h3><p>在项目目录打开终端运行<code>.\gradlew runClient</code></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Harbinger <a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team</a>
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -402,7 +337,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Minecraft-Forge-1-12-2-Development-Tutorial/" class="category-chain-item">Minecraft Forge 1.12.2 Development Tutorial</a>
+  <a href="/categories/Development-Progarmming/" class="category-chain-item">Development &amp; Progarmming</a>
   
   
 
@@ -417,11 +352,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Forge/" class="print-no-link">#Forge</a>
+        <a href="/tags/Code-Aesthetic/" class="print-no-link">#Code Aesthetic</a>
       
-        <a href="/tags/Minecraft/" class="print-no-link">#Minecraft</a>
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
       
-        <a href="/tags/1-12-2/" class="print-no-link">#1.12.2</a>
+        <a href="/tags/OOP/" class="print-no-link">#OOP</a>
+      
+        <a href="/tags/FP/" class="print-no-link">#FP</a>
       
     </div>
   
@@ -433,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</div>
-      <div>http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-1/</div>
+      <div>通过方法链（链式调用）简单来在面向对象中使用函数式编程</div>
+      <div>http://h2sxxa.github.io/2024/05/08/oop_with_fp_via_method_chain/</div>
     </div>
     <div class="license-meta">
       
@@ -446,7 +383,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月16日</div>
+          <div>2024年5月8日</div>
         </div>
       
       
@@ -478,18 +415,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/06/aimp_stereo_install/" title="记一次AIMP的DSP Stereo Tool插件安装">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">记一次AIMP的DSP Stereo Tool插件安装</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/16/mcforge1.12.2-0/" title="MineCraft 1.12.2 开发教程 —— 0.准备工作">
-                        <span class="hidden-mobile">MineCraft 1.12.2 开发教程 —— 0.准备工作</span>
+                      <a href="/2024/02/10/how_to_use_rinf/" title="使用rinf进行Rust与Flutter的集成与通信">
+                        <span class="hidden-mobile">使用rinf进行Rust与Flutter的集成与通信</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
