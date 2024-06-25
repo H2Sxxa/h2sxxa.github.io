@@ -104,7 +104,7 @@ wsl -l -o
 输入这行就会自动开始安装WSL了
 
 ```powershell
- wsl --install -d Ubuntu
+wsl --install -d Ubuntu
 ```
 
 ### 配置账户密码
@@ -124,7 +124,7 @@ C的编译器有很多，主流的有GCC，Clang，MSVC，而GCC是跨平台的�
 ### GCC
 
 ```sh
-sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像，也可以不切换（X
+sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.lis #切换SJTU镜像 https://mirror.sjtu.edu.cn/docs/ubuntu
 sudo apt update -y #更新软件包清单
 sudo apt upgrade -y #升级软件包
 sudo apt-get install build-essential gdb
@@ -141,7 +141,7 @@ whereis gdb
 
 
 ```sh
-sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list #切换阿里云镜像，也可以不切换（X
+sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list #切换SJTU镜像，详见 https://mirror.sjtu.edu.cn/docs/ubuntu
 sudo apt update -y #更新软件包清单
 sudo apt upgrade -y #升级软件包
 sudo apt-get install clang clangd lldb cmake
