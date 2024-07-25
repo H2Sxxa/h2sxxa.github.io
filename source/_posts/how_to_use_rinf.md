@@ -21,31 +21,23 @@ Flutter和Rust之间的跨语言调用做着有一段时间了，从去年开始
 
 ### 添加依赖
 
-找到你的flutter项目根目录(下面简称根目录)运行下面这个命令添加依赖，或者你也可以手动安装
+找到你的 Flutter 项目根目录(下面简称根目录)运行下面这个命令添加依赖，或者你也可以手动安装
 
 ```bash
 flutter pub add rinf
 ```
 
-### 安装CLI工具
-
-在根目录运行这个命令，通过Cargo安装rinf的cli工具
-
-```bash
-cargo install rinf
-```
-
-安装之后可以再用`rinf --help`看看详细帮助
+安装之后可以使用`rinf --help`看看详细帮助
 
 ### 生成模板文件
 
-使用这个命令来一键生成模板文件，模板代码也是文档的一部分，可以参考参考
+使用这个命令来生成模板文件，模板代码也是文档的一部分，推荐进行参考
 
 ```bash
 rinf template
 ```
 
-Rust相关的代码编写主要是在 `native/hub/src` 下的，其他的`sample_crate`之类的，可以根据你的需求删除
+Rust相关的代码编写主要是在 `native/hub/src` 下
 
 ## 使用
 
@@ -131,19 +123,21 @@ fn main {
 
 Flutter侧的代码默认会生成在`lib/messages`中，只需要关心`generated.dart`里的内容即可
 
-需要先在主函数添加初始化Rust，并且添加生命周期确保关闭，具体怎么关闭随意，此处仅供参考
+需要先在主函数添加初始化Rust，并且添加生命周期确保关闭
+
+在生成模板时，会帮你自动添加初始化的代码
 
 ```dart
 void main() async {
   //...
-  await initializeRust();
+  await initializeRust(assignRustSignal);
   //...
 }
 
 class MyAppState extends State<MyApp> {
   final _appLifecycleListener = AppLifecycleListener(
-    onExitRequested: () async {
-      await finalizeRust();
+    onExitRequested: () {
+      finalizeRust();
       return AppExitResponse.exit;
     },
   );
@@ -156,7 +150,7 @@ class MyAppState extends State<MyApp> {
 }
 ```
 
-然后就可以进行调用了！下面是一个简单的例子
+然后就可以进行调用了！下面是一个简单的例子。
 
 ```dart
 class FooPageState extends State<FooPage> {
@@ -182,9 +176,43 @@ class FooPageState extends State<FooPage> {
     return Button(onTap: () => DataInput(
         username: "Foo",
         password: "Bar",
-      ).sendSignalToRust(null)
+      ).sendSignalToRust()
     );
   }
 }
 ```
 
+更推荐使用 `StreamBuilder`，代码更加清晰。
+
+
+```dart
+class FooPageState extends State<FooPage> {
+  @override
+  void initState(){
+    super.initState();
+    DataInput(
+      username: "Foo",
+      password: "Bar",
+    ).sendSignalToRust()
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: DataOutput.rustSignalStream, 
+      builder: (context, snapshot){
+        var signal = snapshot.data;
+        if (signal == null){
+          return ...
+        }
+
+        return Button(onTap: () => DataInput(
+            username: "Foo",
+            password: "Bar",
+          ).sendSignalToRust()
+        );
+      }
+    );    
+  }
+}
+```
