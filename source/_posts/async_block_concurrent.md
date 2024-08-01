@@ -9,7 +9,7 @@ banner_img: https://pixiv.nl/120811830.jpg
 
 # 阻塞
 
-## 什么是 `await`
+## 引言: 什么是 `await` ?
 
 在异步编程中，`await` 是一个很重要的语法，使用 `await` 来解析异步操作等待获取值是很常见的事情，因此，初学异步编程时，我们会理所当然地在所有地方使用 `await`。
 
@@ -69,7 +69,7 @@ async fn await_block() {
 >
 > https://docs.rs/tokio/latest/tokio/macro.join.html#runtime-characteristics
 
-`join` 具有并发性, `spawn` 还具有并行性，对于I/O密集型任务，`join`/`spawn`性能差异不大，这也是异步在I/O密集型场景高效的原因。
+`join` 具有并发性, `spawn` 还具有并行性，对于I/O密集型任务，有一段等待返回数据的时间，`join`/`spawn`性能差异不大，这也是异步在I/O密集型场景高效的原因。
 
 CPU密集型任务请使用 `spawn`。
 
