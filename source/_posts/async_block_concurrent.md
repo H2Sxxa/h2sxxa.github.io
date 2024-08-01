@@ -69,7 +69,7 @@ async fn await_block() {
 >
 > https://docs.rs/tokio/latest/tokio/macro.join.html#runtime-characteristics
 
-`join` 具有并发性, `spawn` 还具有并行性，对于I/O密集型任务，有一段等待返回数据的时间，`join`/`spawn`性能差异不大，这也是异步在I/O密集型场景高效的原因。
+`join` 具有并发性, `spawn` 还具有并行性，对于I/O密集型任务，有一段等待数据的时间，`join`/`spawn`性能差异不大，这也是异步在I/O密集型场景高效的原因。
 
 CPU密集型任务请使用 `spawn`。
 
