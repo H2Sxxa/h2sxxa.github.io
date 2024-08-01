@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pixiv.nl/120811830.jpg">
 <meta property="article:published_time" content="2024-07-25T07:47:00.000Z">
-<meta property="article:modified_time" content="2024-08-01T02:03:37.454Z">
+<meta property="article:modified_time" content="2024-08-01T02:06:16.371Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Rust">
 <meta property="article:tag" content="Dart">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          622 字
+          673 字
         
       </span>
     
@@ -327,6 +327,9 @@
 <p>下面这个例子会输出 <code>1 2 3</code></p>
 <p>如果在所有调用 <code>foo</code> 的地方加上 <code>await</code>，那就会变成 <code>3 2 1</code></p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() <span class="hljs-keyword">async</span> &#123;<br>    foo(<span class="hljs-built_in">int</span> sec) <span class="hljs-keyword">async</span> =&gt;<br>        Future.delayed(<span class="hljs-built_in">Duration</span>(seconds: sec)).then((_) =&gt; <span class="hljs-built_in">print</span>(sec));<br><br>    foo(<span class="hljs-number">3</span>);<br>    foo(<span class="hljs-number">2</span>);<br>    foo(<span class="hljs-number">1</span>);<br><br>    <span class="hljs-keyword">await</span> Future.delayed(<span class="hljs-keyword">const</span> <span class="hljs-built_in">Duration</span>(seconds: <span class="hljs-number">6</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果你关注异步任务的返回值，你可以使用 <code>Future.wait</code>.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() <span class="hljs-keyword">async</span> &#123;<br>    foo(<span class="hljs-built_in">int</span> sec) <span class="hljs-keyword">async</span> =&gt;<br>        Future.delayed(<span class="hljs-built_in">Duration</span>(seconds: sec)).then((_) =&gt; <span class="hljs-built_in">print</span>(sec));<br><br>    <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> Future.wait(<span class="hljs-built_in">List</span>.generate(<span class="hljs-number">3</span>, (index) =&gt; Future(()<span class="hljs-keyword">async</span>=&gt; foo(index))));<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>下面这两篇文章写的非常清晰，推荐阅读</p>
 <p><a target="_blank" rel="noopener" href="https://bingowith.me/2021/05/09/translation-async-what-is-blocking/">https://bingowith.me/2021/05/09/translation-async-what-is-blocking/</a></p>
