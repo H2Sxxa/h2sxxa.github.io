@@ -96,6 +96,17 @@ void main() async {
 }
 ```
 
+如果你关注异步任务的返回值，你可以使用 `Future.wait`.
+
+```dart
+void main() async {
+    foo(int sec) async =>
+        Future.delayed(Duration(seconds: sec)).then((_) => print(sec));
+
+    var data = await Future.wait(List.generate(3, (index) => Future(()async=> foo(index))));
+}
+```
+
 # 参考
 
 下面这两篇文章写的非常清晰，推荐阅读
