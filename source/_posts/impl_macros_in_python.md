@@ -75,6 +75,8 @@ import ...
 
 Saleyo 提供了一套工具，推荐尝试使用😊
 
+https://pypi.org/project/saleyo/
+
 ```python
 # targetmodule
 def generate(name):
