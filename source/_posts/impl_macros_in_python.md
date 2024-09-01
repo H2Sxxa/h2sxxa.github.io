@@ -43,11 +43,11 @@ int main(void){
 
 Python 的模块是这样引入的
 
-import -> finder/loader -> [compile to py_code] -> write to __py_cache__
+import -> finder/loader -> [compile to py_code] -> write to `__py_cache__`
 
 是否重新编译写入 `py_code` 到缓存拥有校验，校验的标准可能是文件的时间戳或是哈希值
 
-如果校验结果相同，会尝试复用 __py_cache__，而 `sys.dont_write_bytecode` 会影响读写 __py_cache__
+如果校验结果相同，会尝试复用 `__py_cache__`，而 `sys.dont_write_bytecode` 会影响读写 `__py_cache__`
 
 ## Python 与 编译
 
