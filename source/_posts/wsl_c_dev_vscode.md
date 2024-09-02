@@ -124,7 +124,7 @@ C的编译器有很多，主流的有GCC，Clang，MSVC，而GCC是跨平台的�
 ### GCC
 
 ```sh
-sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.lis #切换SJTU镜像 https://mirror.sjtu.edu.cn/docs/ubuntu
+sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list #切换SJTU镜像 https://mirror.sjtu.edu.cn/docs/ubuntu
 sudo apt update -y #更新软件包清单
 sudo apt upgrade -y #升级软件包
 sudo apt-get install build-essential gdb
