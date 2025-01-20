@@ -1021,7 +1021,12 @@ links:
         link: "https://blog.lliiooll.cn/",
         avatar: "https://avatars.githubusercontent.com/u/44719954",
       }
-
+    - {
+        title: "MiaoMint",
+        intro: "樱丘女子高等学校轻音部平泽唯",
+        link: "http://0u0.ren/",
+        avatar: "https://avatars.githubusercontent.com/u/44718819",
+      }
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
   onerror_avatar: /img/avatar.png
