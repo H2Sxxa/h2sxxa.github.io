@@ -3,8 +3,8 @@ title: 使用rinf进行Rust与Flutter的集成与通信
 date: 2024-2-10 20:33:00
 tags: ["Flutter","Rust","rinf","FFI"]
 categories: Development & Progarmming
-index_img: https://pixiv.nl/115766745.jpg
-banner_img: https://pixiv.nl/115766745.jpg
+index_img: https://wsrv.nl/?url=pixiv.nl/115766745.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=pixiv.nl/115766745.jpg&w=800&h=800
 ---
 
 # 使用rinf进行Rust与Flutter的集成与通信

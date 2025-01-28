@@ -3,8 +3,8 @@ title: ROSA开发总结
 date: 2023-7-11 14:00:00
 tags: ["Dart","Flutter","Gradle"]
 categories: Development & Progarmming
-index_img: https://pixiv.nl/85603133.jpg
-banner_img: https://pixiv.nl/85603133.jpg
+index_img: https://wsrv.nl/?url=pixiv.nl/85603133.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=pixiv.nl/85603133.jpg&w=800&h=800
 ---
 
 # 关于ROSA

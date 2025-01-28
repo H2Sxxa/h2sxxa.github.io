@@ -3,8 +3,8 @@ title: 浅谈面向对象与面向过程
 date: 2023-9-17 20:10:00
 tags: ["OOP","Rust","Python","C"]
 categories: Development & Progarmming
-index_img: https://pixiv.nl/111639285-2.jpg
-banner_img: https://pixiv.nl/111639285-2.jpg
+index_img: https://wsrv.nl/?url=pixiv.nl/111639285-2.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=pixiv.nl/111639285-2.jpg&w=800&h=800
 ---
 
 # 浅谈面向对象与面向过程

@@ -3,8 +3,8 @@ title: 通过方法链（链式调用）简单来在面向对象中使用函数�
 date: 2024-5-8 20:58:00
 tags: ["Code Aesthetic","Python","OOP","FP"]
 categories: Development & Progarmming
-index_img: https://pixiv.nl/105589501.jpg
-banner_img: https://pixiv.nl/105589501.jpg
+index_img: https://wsrv.nl/?url=pixiv.nl/105589501.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=pixiv.nl/105589501.jpg&w=800&h=800
 ---
 
 # 方法链

@@ -3,8 +3,8 @@ title: 异步编程中的阻塞、并发与并行
 date: 2024-7-25 15:47:00
 tags: ["Dart","Rust","Programming","Async","Tokio"]
 categories: Development & Progarmming
-index_img: https://pixiv.nl/120811830.jpg
-banner_img: https://pixiv.nl/120811830.jpg
+index_img: https://wsrv.nl/?url=pixiv.nl/120811830.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=pixiv.nl/120811830.jpg&w=800&h=800
 ---
 
 # 阻塞
