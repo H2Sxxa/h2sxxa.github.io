@@ -16,26 +16,28 @@
   <meta name="author" content="H2Sxxa">
   <meta name="keywords" content="">
   
-    <meta name="description" content="构建环境何为构建环境？在了解构建环境之前，你需要知道一个名为 ForgeGradle 的东西，它的作用如下   部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种： 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（setupDecompWorkspace task) 持续集成服务器（CI）经常使用的用于自动">
+    <meta name="description" content="引言最近在思考如何不阻塞 UI 地做到调用 Rust 的异步方法，先前的处理都是使用 tokio::runtime::Runtime::block_on 把异步方法转换成同步处理，这样处理没什么问题但是把UI卡了留给了另一方处理不太好。 受到 Dart 的 Future.then 启发，也许可以同样传递一个回调给异步任务来接收返回值。 Rust 部分1. 创建异步运行时首先需要运行异步代码需要 R">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC">
-<meta property="og:url" content="http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-1/index.html">
+<meta property="og:title" content="借用回调在不阻塞地执行 Rust 异步方法">
+<meta property="og:url" content="http://h2sxxa.github.io/2025/01/28/use_callback_to_run_async/index.html">
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
-<meta property="og:description" content="构建环境何为构建环境？在了解构建环境之前，你需要知道一个名为 ForgeGradle 的东西，它的作用如下   部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种： 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（setupDecompWorkspace task) 持续集成服务器（CI）经常使用的用于自动">
+<meta property="og:description" content="引言最近在思考如何不阻塞 UI 地做到调用 Rust 的异步方法，先前的处理都是使用 tokio::runtime::Runtime::block_on 把异步方法转换成同步处理，这样处理没什么问题但是把UI卡了留给了另一方处理不太好。 受到 Dart 的 Future.then 启发，也许可以同样传递一个回调给异步任务来接收返回值。 Rust 部分1. 创建异步运行时首先需要运行异步代码需要 R">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wsrv.nl/?url=pixiv.nl/79639404-1.jpg&w=800&h=800">
-<meta property="article:published_time" content="2022-10-16T06:00:00.000Z">
+<meta property="og:image" content="https://wsrv.nl/?url=pixiv.nl/126570679.jpg&w=800&h=800">
+<meta property="article:published_time" content="2025-01-28T03:15:00.000Z">
 <meta property="article:modified_time" content="2025-01-28T03:39:53.063Z">
 <meta property="article:author" content="H2Sxxa">
-<meta property="article:tag" content="Forge">
-<meta property="article:tag" content="Minecraft">
-<meta property="article:tag" content="1.12.2">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Async">
+<meta property="article:tag" content="Tokio">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wsrv.nl/?url=pixiv.nl/79639404-1.jpg&w=800&h=800">
+<meta name="twitter:image" content="https://wsrv.nl/?url=pixiv.nl/126570679.jpg&w=800&h=800">
   
   
   
-  <title>MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC - H2Sxxa&#39;s Blog</title>
+  <title>借用回调在不阻塞地执行 Rust 异步方法 - H2Sxxa&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,13 +221,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://wsrv.nl/?url=pixiv.nl/79639404-1.jpg&w=800&h=800') no-repeat center center; background-size: cover;">
+     style="background: url('https://wsrv.nl/?url=pixiv.nl/126570679.jpg&w=800&h=800') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC"></span>
+            <span id="subtitle" data-typed-text="借用回调在不阻塞地执行 Rust 异步方法"></span>
           
         </div>
 
@@ -236,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-16 14:00" pubdate>
-          2022年10月16日 下午
+        <time datetime="2025-01-28 11:15" pubdate>
+          2025年1月28日 上午
         </time>
       </span>
     
@@ -248,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          469 字
         
       </span>
     
@@ -259,7 +261,7 @@
         
         
         
-          11 分钟
+          4 分钟
         
       </span>
     
@@ -296,95 +298,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</h1>
+            <h1 id="seo-header">借用回调在不阻塞地执行 Rust 异步方法</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="构建环境"><a href="#构建环境" class="headerlink" title="构建环境"></a>构建环境</h2><h3 id="何为构建环境？"><a href="#何为构建环境？" class="headerlink" title="何为构建环境？"></a>何为构建环境？</h3><p>在了解构建环境之前，你需要知道一个名为 <strong>ForgeGradle</strong> 的东西，它的作用如下</p>
-<blockquote>
-<ul>
-<li>部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种：</li>
-<li>基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（<code>setupDecompWorkspace</code> task)</li>
-<li>持续集成服务器（CI）经常使用的用于自动构建 Mod 的环境（<code>setupCIWorkspace</code> task）</li>
-<li>不太常用的仅有反混淆后的 Minecraft 的开发环境（<code>setupDevWorkspace</code> task）</li>
-<li>依赖处理<ul>
-<li>用于反混淆依赖项目的 scope（<code>deobfCompile</code> 和 <code>deobfProvided</code>），在开发跨 Mod 兼容或扩展 Mod 时经常用到</li>
-</ul>
-</li>
-<li>IDE 相关<ul>
-<li>自动生成 IntelliJ IDEA 的 Run/Debug Configuration（<code>genIntellijRuns</code> task）</li>
-</ul>
-</li>
-<li>连带当前项目一起运行 Minecraft（不常用）：<ul>
-<li>运行服务器（<code>runServer</code> task）</li>
-<li>运行客户端（<code>runClient</code> task）</li>
-</ul>
-</li>
-<li>在执行 Gradle Java 插件的 <code>build</code> task 时可自动完成对源码的重混淆</li>
-</ul>
-<p>作者：3TUSK 出处：<a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/chapter-01/forgegradle.html">https://harbinger.covertdragon.team/chapter-01/forgegradle.html</a></p>
-</blockquote>
-<p>简单来说，构建环境就是把整个MC下到.gradle缓存里，同时进行几轮的反编译反混淆，便于 <code>runClient</code> 运行客户端调试与执行其他Gradle命令</p>
-<h3 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h3><p>在开始之前，你需要清楚以下几点</p>
-<ul>
-<li>Forge的maven仓库位于国外，下载极易失败 (指某fastutil.jar 20MB+)</li>
-<li>由于某些硬件软件问题，并不是所有人配置开发环境都能顺利 (1G/环境变量/……)</li>
-<li>由于各种奇怪的操作，版本问题……只要有一个环节出了问题，基本就可以看见 <code>Build Failed</code> 了</li>
-</ul>
-<p>难道真的没有办法了吗？</p>
-<p>答案是否，在长期的开发者开发过程中已经形成了几套优秀的方案，下文提供2个解决方案来解决构建环境的绝大多数网络问题，当然如果并非是网络问题，可以删除.gradle再次重试</p>
-<blockquote>
-<p>是的，因为各种乱七八糟的原因，部署环境的过程总是会有各种莫名其妙的问题。一般情况下， –debug、–stacktrace 直接莽拿到的信息足够 debug 用了。但有一点请注意：部署环境的过程中，因为涉及到几轮 mapping 和下载 Minecraft 的 assets，所以在没有预先部署好的环境留下的缓存的情况行，这个过程不会特别快。要有耐心。</p>
-<p>然而，由于某些特殊原因，即使你有足够的耐心也不一定能部署成功。遇到这种情况时，你可以尝试通过为 Gradle 配置代理。相关资料很容易找到，这里不再赘述。</p>
-<p>此外，还要明确一点：不是所有的错误都和网络有关系。请不要盲目尝试各种所谓的解决方案——虽然，直接删了 .gradle 缓存目录可以解决 90% 的非网络因素引发的问题。</p>
-<p>作者：3TUSK 出处：<a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/chapter-02/">https://harbinger.covertdragon.team/chapter-02/</a></p>
-</blockquote>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/IAXRetailer/MCreator_Setup/wiki/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BB%A3%E7%90%86Forge(java)%E6%9D%A5%E5%8A%A0%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83">Proxifier or TUN模式代理Gradle</a></p>
-</li>
-<li><p>使用代理镜像Maven源，类似于阿里云….，也有现成的框架，类似于<a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework">IDF</a>，不过你可能需要把<a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/build.gradle#L42">build.gradle这部分</a>改为下文那样，从而使用2847版本的MDK，不过2768其实也影响不大…看个人选择吧</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">minecraft &#123;<br>    version = <span class="hljs-string">&quot;1.12.2-14.23.5.2847&quot;</span> <span class="hljs-comment">//改为1.12.2-14.23.5.2847，此处已更改</span><br>    runDir = <span class="hljs-string">&quot;run&quot;</span><br><br>    <span class="hljs-comment">// the mappings can be changed at any time, and must be in the following format.</span><br>    <span class="hljs-comment">// snapshot_YYYYMMDD   snapshot are built nightly.</span><br>    <span class="hljs-comment">// stable_#            stables are built at the discretion of the MCP team.</span><br>    <span class="hljs-comment">// Use non-default mappings at your own risk. they may not always work.</span><br>    <span class="hljs-comment">// simply re-run your setup task after changing the mappings to update your workspace.</span><br>    mappings = <span class="hljs-string">&quot;snapshot_20171003&quot;</span><br>    <span class="hljs-comment">// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+                <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>最近在思考如何不阻塞 UI 地做到调用 Rust 的异步方法，先前的处理都是使用 <code>tokio::runtime::Runtime::block_on</code> 把异步方法转换成同步处理，这样处理没什么问题但是把UI卡了留给了另一方处理不太好。</p>
+<p>受到 Dart 的 <code>Future.then</code> 启发，也许可以同样传递一个回调给异步任务来接收返回值。</p>
+<h2 id="Rust-部分"><a href="#Rust-部分" class="headerlink" title="Rust 部分"></a>Rust 部分</h2><h3 id="1-创建异步运行时"><a href="#1-创建异步运行时" class="headerlink" title="1. 创建异步运行时"></a>1. 创建异步运行时</h3><p>首先需要运行异步代码需要 <code>Runtime</code>，因为我们没有 <code>tokio::main</code>，所以我们需要创建并锁定一个共用的 <code>Runtime</code>，这里采用了 <code>LazyLock</code>，也可以用别的。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;<br><span class="hljs-keyword">use</span> tokio::runtime::Runtime;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">static</span> RT: LazyLock&lt;Runtime&gt; =<br>    LazyLock::new(|| Runtime::new().expect(<span class="hljs-string">&quot;Create Tokio Runtime failed!&quot;</span>));<br></code></pre></td></tr></table></figure>
 
+<h3 id="2-编写异步方法"><a href="#2-编写异步方法" class="headerlink" title="2. 编写异步方法"></a>2. 编写异步方法</h3><p><code>extern &quot;C&quot; fn()</code> 可以表示以 C 的 ABI 标准传递来的函数，用 <code>sleep</code> 模拟一下耗时操作然后就调用回调吧。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::time::Duration;<br><span class="hljs-keyword">use</span> tokio::time::sleep;<br><br><span class="hljs-meta">#[no_mangle]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">call_when_complete_future</span></span>(callback: <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span></span>()) &#123;<br>    RT.spawn(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Will Call callback after 3secs&quot;</span>);<br>        sleep(Duration::from_secs(<span class="hljs-number">3</span>)).<span class="hljs-keyword">await</span>; <span class="hljs-comment">// Complex Operation here</span><br>        callback();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h3 id="3-完整代码"><a href="#3-完整代码" class="headerlink" title="3. 完整代码"></a>3. 完整代码</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;<br><span class="hljs-keyword">use</span> std::time::Duration;<br><span class="hljs-keyword">use</span> tokio::runtime::Runtime;<br><span class="hljs-keyword">use</span> tokio::time::sleep;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">static</span> RT: LazyLock&lt;Runtime&gt; =<br>    LazyLock::new(|| Runtime::new().expect(<span class="hljs-string">&quot;Create Tokio Runtime failed!&quot;</span>));<br><br><span class="hljs-meta">#[no_mangle]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">call_when_complete_future</span></span>(callback: <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span></span>()) &#123;<br>    RT.spawn(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Will Call callback after 3secs&quot;</span>);<br>        sleep(Duration::from_secs(<span class="hljs-number">3</span>)).<span class="hljs-keyword">await</span>; <span class="hljs-comment">// Complex Operation here</span><br>        callback();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h2 id="Python-部分"><a href="#Python-部分" class="headerlink" title="Python 部分"></a>Python 部分</h2><p>Python 部分随便写写，用过 <code>ctypes</code> 的用户应该都会，注意<code>dll.call_when_complete_future(STATIC_CALLBACK)</code>中的<code>STATIC_CALLBACK</code>最好设置为全局变量，否则离开作用域后调用可能会崩溃…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> ctypes <span class="hljs-keyword">import</span> CDLL, CFUNCTYPE, c_void_p<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep<br><br>dll = CDLL(<span class="hljs-string">&quot;.../path/to/dynamic/library/so/or/dll&quot;</span>)<br>CNativeCallbackType = CFUNCTYPE(restype=c_void_p)<br>dll.call_when_complete_future.argtypes = [CNativeCallbackType]<br><br>stop_logic = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">native_func_impl</span>():</span><br>    <span class="hljs-keyword">global</span> stop_logic<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Hello world, I am callback!&quot;</span>)<br>    stop_logic = <span class="hljs-literal">True</span><br><br><br>STATIC_CALLBACK = CNativeCallbackType(native_func_impl)<br>dll.call_when_complete_future(STATIC_CALLBACK)<br><br>frame = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> stop_logic:<br>    <span class="hljs-comment"># Render UI/...</span><br>    frame += <span class="hljs-number">1</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;render frame: <span class="hljs-subst">&#123;frame&#125;</span>&quot;</span>)<br>    sleep(<span class="hljs-number">1</span>)<br><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;frame: <span class="hljs-subst">&#123;frame&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
 
+<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">render</span> frame: <span class="hljs-number">1</span><br><span class="hljs-attribute">Will</span> Call callback after <span class="hljs-number">3</span>secs<br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">2</span><br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">3</span><br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">4</span><br><span class="hljs-attribute">Hello</span> world, I am callback!<br></code></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<h3 id="一些修改建议"><a href="#一些修改建议" class="headerlink" title="一些修改建议"></a>一些修改建议</h3><h4 id="修改Gradle版本至4-9"><a href="#修改Gradle版本至4-9" class="headerlink" title="修改Gradle版本至4.9"></a>修改Gradle版本至4.9</h4><ol>
-<li>打开MDK目录下gradle\wrapper文件夹</li>
-<li>打开gradle-wrapper.properties文件</li>
-<li>将内容改为下文所述，其中distributionUrl的是否使用腾讯云镜像是可选的，如果不需要使用镜像，可以把distributionUrl的值改为<code>https\://services.gradle.org/distributions/gradle-4.9-all.zip</code></li>
-</ol>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">distributionBase</span>=<span class="hljs-string">GRADLE_USER_HOME</span><br><span class="hljs-attr">distributionPath</span>=<span class="hljs-string">wrapper/dists</span><br><span class="hljs-comment"># Tecent cloud mirror</span><br><span class="hljs-attr">distributionUrl</span>=<span class="hljs-string">https\://mirrors.cloud.tencent.com/gradle/gradle-4.9-all.zip</span><br><span class="hljs-comment"># Source address</span><br><span class="hljs-comment">#distributionUrl=https\://services.gradle.org/distributions/gradle-4.9-all.zip</span><br><span class="hljs-attr">zipStoreBase</span>=<span class="hljs-string">GRADLE_USER_HOME</span><br><span class="hljs-attr">zipStorePath</span>=<span class="hljs-string">wrapper/dists</span><br></code></pre></td></tr></table></figure>
+<p>也许这样的回调处理也是跨语言的解决方案之一，留着日后再研究了。</p>
 
-<h3 id="开始构建！"><a href="#开始构建！" class="headerlink" title="开始构建！"></a>开始构建！</h3><p>打开MDK目录下的README.txt，你会看到以下内容</p>
-<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs vhdl">Step <span class="hljs-number">1</span>: <span class="hljs-keyword">Open</span> your command-<span class="hljs-literal">line</span> <span class="hljs-keyword">and</span> browse <span class="hljs-keyword">to</span> the folder where you extracted the zip <span class="hljs-keyword">file</span>.<br><br>Step <span class="hljs-number">2</span>: Once you have a command window up <span class="hljs-keyword">in</span> the folder that the downloaded material was placed, <span class="hljs-keyword">type</span>:<br><br>Windows: <span class="hljs-string">&quot;gradlew setupDecompWorkspace&quot;</span><br>Linux/Mac OS: <span class="hljs-string">&quot;./gradlew setupDecompWorkspace&quot;</span><br><br>Step <span class="hljs-number">3</span>: <span class="hljs-keyword">After</span> <span class="hljs-keyword">all</span> that finished, you<span class="hljs-symbol">&#x27;re</span> left <span class="hljs-keyword">with</span> a choice.<br><span class="hljs-keyword">For</span> eclipse, run <span class="hljs-string">&quot;gradlew eclipse&quot;</span> (./gradlew eclipse <span class="hljs-keyword">if</span> you are <span class="hljs-keyword">on</span> Mac/Linux)<br><br><span class="hljs-keyword">If</span> you prefer <span class="hljs-keyword">to</span> <span class="hljs-keyword">use</span> IntelliJ, steps are a little different.<br><span class="hljs-number">1</span>. <span class="hljs-keyword">Open</span> IDEA, <span class="hljs-keyword">and</span> import project.<br><span class="hljs-number">2</span>. <span class="hljs-keyword">Select</span> your build.gradle <span class="hljs-keyword">file</span> <span class="hljs-keyword">and</span> have it import.<br><span class="hljs-number">3</span>. Once it<span class="hljs-symbol">&#x27;s</span> finished you must close IntelliJ <span class="hljs-keyword">and</span> run the following command:<br><br><span class="hljs-string">&quot;gradlew genIntellijRuns&quot;</span> (./gradlew genIntellijRuns <span class="hljs-keyword">if</span> you are <span class="hljs-keyword">on</span> Mac/Linux)<br><br>Step <span class="hljs-number">4</span>: The final step <span class="hljs-keyword">is</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">open</span> Eclipse <span class="hljs-keyword">and</span> switch your workspace <span class="hljs-keyword">to</span> /eclipse/ (<span class="hljs-keyword">if</span> you <span class="hljs-keyword">use</span> IDEA, it should automatically start <span class="hljs-keyword">on</span> your project)<br><br></code></pre></td></tr></table></figure>
-
-<p>大致的意思由以下几个步骤组成</p>
-<ol>
-<li><p>在你的mdk目录下打开CMD或者PowerShell窗口</p>
-</li>
-<li><p>输入<code>gradlew setupDecompWorkspace</code></p>
-</li>
-<li><p>如果你使用eclipse等上述任务结束后输入<code>gradlew eclipse</code></p>
-</li>
-<li><p>如果你使用IntelliJ IDEA，等上述任务结束，<strong>先选择build.gradle把项目导入IDEA后关闭IDEA</strong>，在确保IDEA关闭后输入<code>gradlew genIntellijRuns</code> </p>
-<ul>
-<li>如何导入build.gradle? File-&gt;Open-&gt;选择你的build.gradle后点击ok，把作为项目打开</li>
-</ul>
-</li>
-<li><p>VSCode在ForgeGradle2.3没有相应的Gradle Task，如果你使用LCF，此处你直接导入即可（记得装Gradle插件）</p>
-</li>
-</ol>
-<h3 id="构建失败？"><a href="#构建失败？" class="headerlink" title="构建失败？"></a>构建失败？</h3><p>如果你构建成功了请跳过此步</p>
-<p>先前往<a target="_blank" rel="noopener" href="https://mouse0w0.github.io/setup-mdk-guide">这里</a>查询有无与你相似的错误，使用对应的方案解决，如果没有可以选择向他人求助</p>
-<h2 id="在IDE中启动MC"><a href="#在IDE中启动MC" class="headerlink" title="在IDE中启动MC"></a>在IDE中启动MC</h2><h3 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h3><p>IDEA入成功后，拉出右边的Gradle标签，会有对应的任务，运行<code>runClient</code>即可启动客户端</p>
-<h3 id="VSCode-不支持FG2-3"><a href="#VSCode-不支持FG2-3" class="headerlink" title="VSCode(不支持FG2.3)"></a>VSCode(不支持FG2.3)</h3><p>安装Gradle插件后，在Gradle选项卡处可以找到你的<code>runClient</code></p>
-<h3 id="手动启动"><a href="#手动启动" class="headerlink" title="手动启动"></a>手动启动</h3><p>在项目目录打开终端运行<code>.\gradlew runClient</code></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Harbinger <a target="_blank" rel="noopener" href="https://harbinger.covertdragon.team/">https://harbinger.covertdragon.team</a>
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -402,7 +337,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Minecraft-Forge-1-12-2-Development-Tutorial/" class="category-chain-item">Minecraft Forge 1.12.2 Development Tutorial</a>
+  <a href="/categories/Development-Progarmming/" class="category-chain-item">Development &amp; Progarmming</a>
   
   
 
@@ -417,11 +352,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Forge/" class="print-no-link">#Forge</a>
+        <a href="/tags/Rust/" class="print-no-link">#Rust</a>
       
-        <a href="/tags/Minecraft/" class="print-no-link">#Minecraft</a>
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
       
-        <a href="/tags/1-12-2/" class="print-no-link">#1.12.2</a>
+        <a href="/tags/Programming/" class="print-no-link">#Programming</a>
+      
+        <a href="/tags/Async/" class="print-no-link">#Async</a>
+      
+        <a href="/tags/Tokio/" class="print-no-link">#Tokio</a>
       
     </div>
   
@@ -433,8 +372,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC</div>
-      <div>http://h2sxxa.github.io/2022/10/16/mcforge1.12.2-1/</div>
+      <div>借用回调在不阻塞地执行 Rust 异步方法</div>
+      <div>http://h2sxxa.github.io/2025/01/28/use_callback_to_run_async/</div>
     </div>
     <div class="license-meta">
       
@@ -446,7 +385,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月16日</div>
+          <div>2025年1月28日</div>
         </div>
       
       
@@ -478,18 +417,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/06/aimp_stereo_install/" title="记一次AIMP的DSP Stereo Tool插件安装">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">记一次AIMP的DSP Stereo Tool插件安装</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/16/mcforge1.12.2-0/" title="MineCraft 1.12.2 开发教程 —— 0.准备工作">
-                        <span class="hidden-mobile">MineCraft 1.12.2 开发教程 —— 0.准备工作</span>
+                      <a href="/2024/09/01/impl_macros_in_python/" title="如何在 Python 中实现宏展开?">
+                        <span class="hidden-mobile">如何在 Python 中实现宏展开?</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

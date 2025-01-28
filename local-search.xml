@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>借用回调在不阻塞地执行 Rust 异步方法</title>
+    <link href="/2025/01/28/use_callback_to_run_async/"/>
+    <url>/2025/01/28/use_callback_to_run_async/</url>
+    
+    <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>最近在思考如何不阻塞 UI 地做到调用 Rust 的异步方法，先前的处理都是使用 <code>tokio::runtime::Runtime::block_on</code> 把异步方法转换成同步处理，这样处理没什么问题但是把UI卡了留给了另一方处理不太好。</p><p>受到 Dart 的 <code>Future.then</code> 启发，也许可以同样传递一个回调给异步任务来接收返回值。</p><h2 id="Rust-部分"><a href="#Rust-部分" class="headerlink" title="Rust 部分"></a>Rust 部分</h2><h3 id="1-创建异步运行时"><a href="#1-创建异步运行时" class="headerlink" title="1. 创建异步运行时"></a>1. 创建异步运行时</h3><p>首先需要运行异步代码需要 <code>Runtime</code>，因为我们没有 <code>tokio::main</code>，所以我们需要创建并锁定一个共用的 <code>Runtime</code>，这里采用了 <code>LazyLock</code>，也可以用别的。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;<br><span class="hljs-keyword">use</span> tokio::runtime::Runtime;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">static</span> RT: LazyLock&lt;Runtime&gt; =<br>    LazyLock::new(|| Runtime::new().expect(<span class="hljs-string">&quot;Create Tokio Runtime failed!&quot;</span>));<br></code></pre></td></tr></table></figure><h3 id="2-编写异步方法"><a href="#2-编写异步方法" class="headerlink" title="2. 编写异步方法"></a>2. 编写异步方法</h3><p><code>extern &quot;C&quot; fn()</code> 可以表示以 C 的 ABI 标准传递来的函数，用 <code>sleep</code> 模拟一下耗时操作然后就调用回调吧。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::time::Duration;<br><span class="hljs-keyword">use</span> tokio::time::sleep;<br><br><span class="hljs-meta">#[no_mangle]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">call_when_complete_future</span></span>(callback: <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span></span>()) &#123;<br>    RT.spawn(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Will Call callback after 3secs&quot;</span>);<br>        sleep(Duration::from_secs(<span class="hljs-number">3</span>)).<span class="hljs-keyword">await</span>; <span class="hljs-comment">// Complex Operation here</span><br>        callback();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="3-完整代码"><a href="#3-完整代码" class="headerlink" title="3. 完整代码"></a>3. 完整代码</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;<br><span class="hljs-keyword">use</span> std::time::Duration;<br><span class="hljs-keyword">use</span> tokio::runtime::Runtime;<br><span class="hljs-keyword">use</span> tokio::time::sleep;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">static</span> RT: LazyLock&lt;Runtime&gt; =<br>    LazyLock::new(|| Runtime::new().expect(<span class="hljs-string">&quot;Create Tokio Runtime failed!&quot;</span>));<br><br><span class="hljs-meta">#[no_mangle]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">call_when_complete_future</span></span>(callback: <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span></span>()) &#123;<br>    RT.spawn(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Will Call callback after 3secs&quot;</span>);<br>        sleep(Duration::from_secs(<span class="hljs-number">3</span>)).<span class="hljs-keyword">await</span>; <span class="hljs-comment">// Complex Operation here</span><br>        callback();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="Python-部分"><a href="#Python-部分" class="headerlink" title="Python 部分"></a>Python 部分</h2><p>Python 部分随便写写，用过 <code>ctypes</code> 的用户应该都会，注意<code>dll.call_when_complete_future(STATIC_CALLBACK)</code>中的<code>STATIC_CALLBACK</code>最好设置为全局变量，否则离开作用域后调用可能会崩溃…</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> ctypes <span class="hljs-keyword">import</span> CDLL, CFUNCTYPE, c_void_p<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep<br><br>dll = CDLL(<span class="hljs-string">&quot;.../path/to/dynamic/library/so/or/dll&quot;</span>)<br>CNativeCallbackType = CFUNCTYPE(restype=c_void_p)<br>dll.call_when_complete_future.argtypes = [CNativeCallbackType]<br><br>stop_logic = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">native_func_impl</span>():</span><br>    <span class="hljs-keyword">global</span> stop_logic<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Hello world, I am callback!&quot;</span>)<br>    stop_logic = <span class="hljs-literal">True</span><br><br><br>STATIC_CALLBACK = CNativeCallbackType(native_func_impl)<br>dll.call_when_complete_future(STATIC_CALLBACK)<br><br>frame = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> stop_logic:<br>    <span class="hljs-comment"># Render UI/...</span><br>    frame += <span class="hljs-number">1</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;render frame: <span class="hljs-subst">&#123;frame&#125;</span>&quot;</span>)<br>    sleep(<span class="hljs-number">1</span>)<br><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;frame: <span class="hljs-subst">&#123;frame&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure><h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">render</span> frame: <span class="hljs-number">1</span><br><span class="hljs-attribute">Will</span> Call callback after <span class="hljs-number">3</span>secs<br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">2</span><br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">3</span><br><span class="hljs-attribute">render</span> frame: <span class="hljs-number">4</span><br><span class="hljs-attribute">Hello</span> world, I am callback!<br></code></pre></td></tr></table></figure><p>也许这样的回调处理也是跨语言的解决方案之一，留着日后再研究了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Development &amp; Progarmming</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Rust</tag>
+      
+      <tag>Python</tag>
+      
+      <tag>Programming</tag>
+      
+      <tag>Async</tag>
+      
+      <tag>Tokio</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>如何在 Python 中实现宏展开?</title>
     <link href="/2024/09/01/impl_macros_in_python/"/>
     <url>/2024/09/01/impl_macros_in_python/</url>
@@ -268,9 +301,9 @@
       
       <tag>Dart</tag>
       
-      <tag>Gradle</tag>
-      
       <tag>Flutter</tag>
+      
+      <tag>Gradle</tag>
       
     </tags>
     
