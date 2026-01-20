@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
 <meta property="og:description" content="使用rinf进行Rust与Flutter的集成与通信前言Flutter和Rust之间的跨语言调用做着有一段时间了，从去年开始尝试手动写外部函数接口(FFI)，把动态库通过交叉编译手动放进文件夹到现在找一些便利的lib直接用起来，起初用的是FRB(flutter_rust_bridge)，但FRB这东西说实话有点繁重，直接生成一堆文件，我不太喜欢 这几天看到了rinf，觉得用的挺不错的，看了看关于r">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wsrv.nl/?url=pixiv.nl/115766745.jpg&w=800&h=800">
+<meta property="og:image" content="http://h2sxxa.github.io/img/pixiv/115766745.jpg">
 <meta property="article:published_time" content="2024-02-10T12:33:00.000Z">
-<meta property="article:modified_time" content="2025-08-18T04:31:30.350Z">
+<meta property="article:modified_time" content="2026-01-20T07:33:18.021Z">
 <meta property="article:author" content="H2Sxxa">
-<meta property="article:tag" content="Rust">
-<meta property="article:tag" content="Flutter">
-<meta property="article:tag" content="rinf">
 <meta property="article:tag" content="FFI">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="rinf">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wsrv.nl/?url=pixiv.nl/115766745.jpg&w=800&h=800">
+<meta name="twitter:image" content="http://h2sxxa.github.io/img/pixiv/115766745.jpg">
   
   
   
@@ -87,7 +87,7 @@
 
 
   
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -220,7 +220,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://wsrv.nl/?url=pixiv.nl/115766745.jpg&w=800&h=800') no-repeat center center; background-size: cover;">
+     style="background: url('/img/pixiv/115766745.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          813 字
+          800 字
         
       </span>
     
@@ -303,7 +303,7 @@
               <div class="markdown-body">
                 
                 <h1 id="使用rinf进行Rust与Flutter的集成与通信"><a href="#使用rinf进行Rust与Flutter的集成与通信" class="headerlink" title="使用rinf进行Rust与Flutter的集成与通信"></a>使用rinf进行Rust与Flutter的集成与通信</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Flutter和Rust之间的跨语言调用做着有一段时间了，从去年开始尝试手动写外部函数接口(FFI)，把动态库通过交叉编译手动放进文件夹到现在找一些便利的lib直接用起来，起初用的是FRB(flutter_rust_bridge)，但FRB这东西说实话有点繁重，直接生成一堆文件，我不太喜欢</p>
-<p>这几天看到了rinf，觉得用的挺不错的，看了看关于rinf的文章不是很多，于是就稍微写写，如何使用还是建议参考<a target="_blank" rel="noopener" href="https://rinf.cunarist.com/">官方文档</a></p>
+<p>这几天看到了rinf，觉得用的挺不错的，看了看关于rinf的文章不是很多，于是就稍微写写，如何使用还是建议参考<a href="https://rinf.cunarist.com/">官方文档</a></p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装非常方便，当然了，你得先装好Flutter和Rust</p>
 <h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><p>找到你的 Flutter 项目根目录(下面简称根目录)运行下面这个命令添加依赖，或者你也可以手动安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flutter pub add rinf<br></code></pre></td></tr></table></figure>
@@ -313,24 +313,24 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">rinf template<br></code></pre></td></tr></table></figure>
 
 <p>Rust相关的代码编写主要是在 <code>native/hub/src</code> 下</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="编写ProtoBuf"><a href="#编写ProtoBuf" class="headerlink" title="编写ProtoBuf"></a>编写ProtoBuf</h3><p>不会编写请先参考<a target="_blank" rel="noopener" href="https://protobuf.dev/programming-guides/proto3/">文档</a></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="编写ProtoBuf"><a href="#编写ProtoBuf" class="headerlink" title="编写ProtoBuf"></a>编写ProtoBuf</h3><p>不会编写请先参考<a href="https://protobuf.dev/programming-guides/proto3/">文档</a></p>
 <p>在messages文件夹下新建<code>foo.proto</code>(名称随意)，使用<code>proto3</code>进行编写即可</p>
 <p>下面这段代码可以进行参考</p>
 <p>其中<code>[RINF:DART-SIGNAL]</code>(从Dart向Rust传递的信息)和<code>[RINF:RUST-SIGNAL]</code>(从Rust向Dart发送的信息)并不是无意义的，rinf会根据这个来生成文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs proto">syntax &#x3D; &quot;proto3&quot;;<br>package foo;<br><br>&#x2F;&#x2F; [RINF:DART-SIGNAL]<br>message DataInput &#123;<br>    string username &#x3D; 1;<br>    string password &#x3D; 2;<br>&#125;;<br><br>&#x2F;&#x2F; [RINF:RUST-SIGNAL]<br>message DataOutput &#123;<br>    string data &#x3D; 1;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight proto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs proto">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><span class="hljs-keyword">package</span> foo;<br><br><span class="hljs-comment">// [RINF:DART-SIGNAL]</span><br><span class="hljs-keyword">message </span><span class="hljs-title class_">DataInput</span> &#123;<br>    <span class="hljs-type">string</span> username = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">string</span> password = <span class="hljs-number">2</span>;<br>&#125;;<br><br><span class="hljs-comment">// [RINF:RUST-SIGNAL]</span><br><span class="hljs-keyword">message </span><span class="hljs-title class_">DataOutput</span> &#123;<br>    <span class="hljs-type">string</span> data = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>如果你需要一个数组或者可选参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs proto">message Foo &#123;<br>    repeated string vec &#x3D; 1;<br>    optional string opt &#x3D; 2;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight proto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs proto"><span class="hljs-keyword">message </span><span class="hljs-title class_">Foo</span> &#123;<br>    <span class="hljs-keyword">repeated</span> <span class="hljs-type">string</span> vec = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">optional</span> <span class="hljs-type">string</span> opt = <span class="hljs-number">2</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>如果需要引用其他proto文件中的类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs proto">import &quot;path&#x2F;to&#x2F;foo.proto&quot;;<br><br>message Bar &#123;<br>    foo.Foo data &#x3D; 1;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight proto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs proto"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;path/to/foo.proto&quot;</span>;<br><br><span class="hljs-keyword">message </span><span class="hljs-title class_">Bar</span> &#123;<br>    foo.Foo data = <span class="hljs-number">1</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
 <p>写完之后，根目录运行<code>rinf message</code>就可以看到文件生成了</p>
 <h3 id="Rust侧的编写"><a href="#Rust侧的编写" class="headerlink" title="Rust侧的编写"></a>Rust侧的编写</h3><p>首先可以在<code>hub/src</code>下新建一个<code>foo.rs</code></p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// foo.rs</span><br><br><span class="hljs-keyword">use</span> crate::messages::foo::&#123;DataInput, DataOutput&#125;;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">handle_data</span></span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> rev = DataInput::get_dart_signal_receiver();<br>    <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Some</span>(dart_signal) = rev.recv().<span class="hljs-keyword">await</span> &#123;<br>        <span class="hljs-comment">// 处理接受来的信息</span><br>        <span class="hljs-keyword">let</span> output: DataOutput = foo(dart_signal.message);<br>        <span class="hljs-comment">// 发送</span><br>        output.send_signal_to_dart(<span class="hljs-literal">None</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// foo.rs</span><br><br><span class="hljs-keyword">use</span> crate::messages::foo::&#123;DataInput, DataOutput&#125;;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">handle_data</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">rev</span> = DataInput::<span class="hljs-title function_ invoke__">get_dart_signal_receiver</span>();<br>    <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(dart_signal) = rev.<span class="hljs-title function_ invoke__">recv</span>().<span class="hljs-keyword">await</span> &#123;<br>        <span class="hljs-comment">// 处理接受来的信息</span><br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">output</span>: DataOutput = <span class="hljs-title function_ invoke__">foo</span>(dart_signal.message);<br>        <span class="hljs-comment">// 发送</span><br>        output.<span class="hljs-title function_ invoke__">send_signal_to_dart</span>(<span class="hljs-literal">None</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>然后还需要在主函数里添加一行<code>spawn</code>，这样rust侧的编写就完成了</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// ...</span><br><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span> &#123;</span><br><span class="hljs-function">    // ...</span><br><span class="hljs-function">    <span class="hljs-title">tokio</span>::<span class="hljs-title">spawn</span></span>(handle_data());<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// ...</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span> &#123;<br>    <span class="hljs-comment">// ...</span><br>    tokio::<span class="hljs-title function_ invoke__">spawn</span>(<span class="hljs-title function_ invoke__">handle_data</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="Flutter侧的编写"><a href="#Flutter侧的编写" class="headerlink" title="Flutter侧的编写"></a>Flutter侧的编写</h3><p>Flutter侧的代码默认会生成在<code>lib/messages</code>中，只需要关心<code>generated.dart</code>里的内容即可</p>
 <p>需要先在主函数添加初始化Rust，并且添加生命周期确保关闭</p>
@@ -447,8 +447,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/17/about_code_aesthetic/" title="谈谈代码美学">
-                        <span class="hidden-mobile">谈谈代码美学</span>
+                      <a href="/2023/09/17/about_oo_and_po/" title="浅谈面向对象与面向过程">
+                        <span class="hidden-mobile">浅谈面向对象与面向过程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

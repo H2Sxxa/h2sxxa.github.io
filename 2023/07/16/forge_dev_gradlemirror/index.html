@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
 <meta property="og:description" content="前言这个教程旨在教你使构建环境完全在镜像下运行，摆脱对代理的依赖。 更换Gradle下载地址Gradle本体的下载地址位于项目文件夹\gradle\wrapper\gradle-wrapper.properties中。 打开gradle-wrapper.properties，你会看到类似以下的文本 12345distributionBase&#x3D;GRADLE_USER_HOMEdistribution">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wsrv.nl/?url=pixiv.nl/99637717.jpg&w=800&h=800">
+<meta property="og:image" content="http://h2sxxa.github.io/img/pixiv/99637717.jpg">
 <meta property="article:published_time" content="2023-07-16T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-18T04:31:30.350Z">
+<meta property="article:modified_time" content="2026-01-20T07:33:18.021Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Forge">
-<meta property="article:tag" content="Groovy">
 <meta property="article:tag" content="Gradle">
+<meta property="article:tag" content="Groovy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wsrv.nl/?url=pixiv.nl/99637717.jpg&w=800&h=800">
+<meta name="twitter:image" content="http://h2sxxa.github.io/img/pixiv/99637717.jpg">
   
   
   
@@ -86,7 +86,7 @@
 
 
   
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -219,7 +219,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://wsrv.nl/?url=pixiv.nl/99637717.jpg&w=800&h=800') no-repeat center center; background-size: cover;">
+     style="background: url('/img/pixiv/99637717.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -310,8 +310,8 @@
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">distributionBase=GRADLE_USER_HOME<br>distributionPath=<span class="hljs-keyword">wrapper</span>/dists<br>distributionUrl=https\://mirrors.cloud.tencent.com/gradle/gradle<span class="hljs-number">-8.1</span><span class="hljs-number">.1</span>-bin.zip<br>zipStoreBase=GRADLE_USER_HOME<br>zipStorePath=<span class="hljs-keyword">wrapper</span>/dists<br></code></pre></td></tr></table></figure>
 
 <p>注意：示例中的<code>gradle-8.1.1-bin.zip</code>取决于你自己<code>gradle-wrapper.properties</code>，没有把握请勿随便更改！</p>
-<h1 id="ROSA"><a href="#ROSA" class="headerlink" title="ROSA"></a>ROSA</h1><p>下载地址 <a target="_blank" rel="noopener" href="https://github.com/H2Sxxa/Rosa/releases/latest">https://github.com/H2Sxxa/Rosa/releases/latest</a></p>
-<p>镜像测试的报告 <a target="_blank" rel="noopener" href="https://github.com/H2Sxxa/Rosa/blob/bin/forgegradle/class/TEST_REPORT.md">https://github.com/H2Sxxa/Rosa/blob/bin/forgegradle/class/TEST_REPORT.md</a></p>
+<h1 id="ROSA"><a href="#ROSA" class="headerlink" title="ROSA"></a>ROSA</h1><p>下载地址 <a href="https://github.com/H2Sxxa/Rosa/releases/latest">https://github.com/H2Sxxa/Rosa/releases/latest</a></p>
+<p>镜像测试的报告 <a href="https://github.com/H2Sxxa/Rosa/blob/bin/forgegradle/class/TEST_REPORT.md">https://github.com/H2Sxxa/Rosa/blob/bin/forgegradle/class/TEST_REPORT.md</a></p>
 <p>下载后配置好它的镜像修补就行，教程看Rosa首页的图片教程</p>
 <p>（PS:觉得好用不妨给项目点个Star）</p>
 <h1 id="新版-Gradle"><a href="#新版-Gradle" class="headerlink" title="新版 Gradle"></a>新版 Gradle</h1><p>要改的地方一共有3个，这3个文件都在项目文件夹下</p>

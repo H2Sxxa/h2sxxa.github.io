@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="H2Sxxa&#39;s Blog">
 <meta property="og:description" content="关于ROSAROSA其实并不是我写出来的第一个配置环境的工具，但可能是最后一个，因为ROSA的功能将会完备，不需要再去立项了，这就是所谓的继承前者并拓展，我开发Kekkai的时候也是抱着这种想法。 为什么叫ROSA？我当初立项的时候想到了一张符卡「Subterranean Rose」，但因为Rose念得不顺口就改成了它的异变体Rosa（笑）。 注意本博客仅代表个人观点，可能有些错误，请自行辨别，欢">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wsrv.nl/?url=pixiv.nl/85603133.jpg&w=800&h=800">
+<meta property="og:image" content="http://h2sxxa.github.io/img/pixiv/85603133.jpg">
 <meta property="article:published_time" content="2023-07-11T06:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-18T04:31:30.350Z">
+<meta property="article:modified_time" content="2026-01-20T07:33:18.021Z">
 <meta property="article:author" content="H2Sxxa">
 <meta property="article:tag" content="Dart">
-<meta property="article:tag" content="Gradle">
 <meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Gradle">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wsrv.nl/?url=pixiv.nl/85603133.jpg&w=800&h=800">
+<meta name="twitter:image" content="http://h2sxxa.github.io/img/pixiv/85603133.jpg">
   
   
   
@@ -86,7 +86,7 @@
 
 
   
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -219,7 +219,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://wsrv.nl/?url=pixiv.nl/85603133.jpg&w=800&h=800') no-repeat center center; background-size: cover;">
+     style="background: url('/img/pixiv/85603133.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -304,8 +304,8 @@
                 <h1 id="关于ROSA"><a href="#关于ROSA" class="headerlink" title="关于ROSA"></a>关于ROSA</h1><p>ROSA其实并不是我写出来的第一个配置环境的工具，但可能是最后一个，因为ROSA的功能将会完备，不需要再去立项了，这就是所谓的继承前者并拓展，我开发Kekkai的时候也是抱着这种想法。</p>
 <p>为什么叫ROSA？我当初立项的时候想到了一张符卡「Subterranean Rose」，但因为Rose念得不顺口就改成了它的异变体Rosa（笑）。</p>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p><strong>本博客仅代表个人观点，可能有些错误，请自行辨别，欢迎评论指出。</strong></p>
-<h1 id="关于开发中研究"><a href="#关于开发中研究" class="headerlink" title="关于开发中研究"></a>关于开发中研究</h1><p>ROSA镜像修补功能的想法起初是我看到了IDF中炸鸭写的<a target="_blank" rel="noopener" href="https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/mirror.gradle">mirror.gradle</a>，结合了此前知道jar的本质是一个zip，可使用zip的方法对其进行操作，我就想那我重新编译一些class然后注入jar中是不是就可以实现镜像修补？</p>
-<p>我就尝试Fork了FG、RFG并编译，但由于编译失败（后来成功了，但用不上了 X），我与<a target="_blank" rel="noopener" href="https://github.com/cdc12345">cdc12345</a>（后文简称cdc）深度讨论研究了一下，他给了我另一种思路，直接提取class来用jbytemod来修改字符串，再重新弄进jar中。</p>
+<h1 id="关于开发中研究"><a href="#关于开发中研究" class="headerlink" title="关于开发中研究"></a>关于开发中研究</h1><p>ROSA镜像修补功能的想法起初是我看到了IDF中炸鸭写的<a href="https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/mirror.gradle">mirror.gradle</a>，结合了此前知道jar的本质是一个zip，可使用zip的方法对其进行操作，我就想那我重新编译一些class然后注入jar中是不是就可以实现镜像修补？</p>
+<p>我就尝试Fork了FG、RFG并编译，但由于编译失败（后来成功了，但用不上了 X），我与<a href="https://github.com/cdc12345">cdc12345</a>（后文简称cdc）深度讨论研究了一下，他给了我另一种思路，直接提取class来用jbytemod来修改字符串，再重新弄进jar中。</p>
 <h2 id="Gradle生成缓存顺序"><a href="#Gradle生成缓存顺序" class="headerlink" title="Gradle生成缓存顺序"></a>Gradle生成缓存顺序</h2><p>我们都知道Gradle下载的包在<code>.gradle/caches/modules-2/file-2.1</code>中，但<code>.gradle/caches/jar-9</code>中也能找到几倍大于前者的同名jar。</p>
 <p>我又和cdc讨论了一下，他使用工具帮我确定了一下Gradle使用jar位于jar-9中（感谢cdc），我尝试把jar-9给删了，然后重新运行<code>./gradlew</code>，结果是jar-9重新生成了，我就推测jar-9来源于file-2.1，并且在Gradle初始化时生成，事实证明应该我想的没错。</p>
 <p>（后来又研究了一下jar-9的jar为什么体积能达到file-2.1的三倍之多，原因是压缩时算法不同，jar-9可能是使用了STORE模式来压缩（仅存储），而file-2.1（打包jar）则是使用了特定的算法来进行压缩）</p>
@@ -318,7 +318,7 @@
 <h3 id="感觉不如7za-exe"><a href="#感觉不如7za-exe" class="headerlink" title="感觉不如7za.exe"></a>感觉不如7za.exe</h3><p>由于我之前有过开发压缩软件的经验，我就选择了<code>Process.runSync</code>与7-zip中提取的<code>7za.exe</code>来实行我的解压缩，事实证明这很成功，感觉Windows平台上archive库真打不过<code>Process.runSync(7za.exe,[&quot;a&quot;,...])</code></p>
 <p>（不用Dart调用C而是直接用exe同时有水平不够和懒的原因 X）</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>ROSA开发还是让我学到了不少东西，希望我踩的坑对你有帮助，感谢阅读，也感谢cdc对我的帮助。</p>
-<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/H2Sxxa/Rosa">https://github.com/H2Sxxa/Rosa</a> 欢迎Star，issue，PR与使用。</p>
+<p>项目地址：<a href="https://github.com/H2Sxxa/Rosa">https://github.com/H2Sxxa/Rosa</a> 欢迎Star，issue，PR与使用。</p>
 
                 
               </div>
