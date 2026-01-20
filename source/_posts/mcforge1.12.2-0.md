@@ -3,8 +3,8 @@ title: MineCraft 1.12.2 开发教程 —— 0.准备工作
 date: 2022-10-16 8:00:00
 tags: ["Minecraft","Forge","1.12.2"]
 categories: Minecraft Forge 1.12.2 Development Tutorial
-index_img: https://wsrv.nl/?url=pixiv.nl/101891205.jpg&w=800&h=800
-banner_img: https://wsrv.nl/?url=pixiv.nl/101891205.jpg&w=800&h=800
+index_img: /img/pixiv/101891205.jpg
+banner_img: /img/pixiv/101891205.jpg
 ---
 
 ## 须知

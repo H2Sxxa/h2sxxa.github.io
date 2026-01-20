@@ -3,8 +3,8 @@ title: 谈谈代码美学
 date: 2023-9-17 20:10:00
 tags: ["Code Aesthetic","Rust","Python","C"]
 categories: Development & Progarmming
-index_img: https://wsrv.nl/?url=pixiv.nl/96078807.jpg&w=800&h=800
-banner_img: https://wsrv.nl/?url=pixiv.nl/96078807.jpg&w=800&h=800
+index_img: /img/pixiv/96078807.jpg
+banner_img: /img/pixiv/96078807.jpg
 ---
 
 # 谈谈代码美学

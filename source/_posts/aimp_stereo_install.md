@@ -3,8 +3,8 @@ title: 记一次AIMP的DSP Stereo Tool插件安装
 date: 2022-11-06 8:00:00
 tags: ["Music","AIMP","DSP"]
 categories: Share & Misc
-index_img: https://wsrv.nl/?url=pixiv.nl/93025943.jpg&w=800&h=800
-banner_img: https://wsrv.nl/?url=pixiv.nl/93025943.jpg&w=800&h=800
+index_img: /img/pixiv/93025943.jpg
+banner_img: /img/pixiv/93025943.jpg
 ---
 
 ## 前言

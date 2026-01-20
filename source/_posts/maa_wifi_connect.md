@@ -3,8 +3,8 @@ title: MAA通过无线调试连接手机运行
 date: 2023-03-18 18:30:00
 tags: ["Arknights","MAA","Android"]
 categories: Share & Misc
-index_img: https://wsrv.nl/?url=pixiv.nl/97389556.jpg&w=800&h=800
-banner_img: https://wsrv.nl/?url=pixiv.nl/97389556.jpg&w=800&h=800
+index_img: /img/pixiv/97389556.jpg
+banner_img: /img/pixiv/97389556.jpg
 ---
 
 ## 1.前言
