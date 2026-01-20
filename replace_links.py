@@ -10,10 +10,10 @@ def replace_links(file_path):
         content = f.read()
     
     # 替换 index_img 和 banner_img
-    pattern = r'(index_img|banner_img):\s*https://wsrv\.nl/\?url=pixiv\.nl/([^&\s]+)&w=800&h=800'
+    pattern = r'(index_img|banner_img):\s*/img/pixiv/([^&\s]+)'
     def repl(match):
         img_name = match.group(2)
-        return f'{match.group(1)}: /img/pixiv/{img_name}'
+        return f'{match.group(1)}: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/{img_name}&w=800&h=800'
     
     new_content = re.sub(pattern, repl, content)
     

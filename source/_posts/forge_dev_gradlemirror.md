@@ -3,8 +3,8 @@ title: Forge镜像补全计划（教程向）
 date: 2023-7-16 12:00:00
 tags: ["Forge","Groovy","Gradle"]
 categories: Development & Progarmming
-index_img: /img/pixiv/99637717.jpg
-banner_img: /img/pixiv/99637717.jpg
+index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/99637717.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/99637717.jpg&w=800&h=800
 ---
 
 # 前言

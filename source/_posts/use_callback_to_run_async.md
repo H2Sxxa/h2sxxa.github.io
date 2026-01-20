@@ -3,8 +3,8 @@ title: 借用回调在不阻塞地执行 Rust 异步方法
 date: 2025-1-28 11:15:00
 tags: ["Python","Rust","Programming","Async","Tokio"]
 categories: Development & Progarmming
-index_img: /img/pixiv/126570679.jpg
-banner_img: /img/pixiv/126570679.jpg
+index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/126570679.jpg&w=800&h=800
+banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/126570679.jpg&w=800&h=800
 ---
 
 # 引言
