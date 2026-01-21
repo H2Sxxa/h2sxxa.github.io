@@ -1027,6 +1027,12 @@ links:
         link: "http://0u0.ren/",
         avatar: "https://avatars.githubusercontent.com/u/44718819",
       }
+    - {
+        title: "Enonya's Blog",
+        intro: "black_trees's -> Enonya's Blog",
+        link: "https://en0nya.github.io/",
+        avatar: "https://avatars.githubusercontent.com/u/77879721",
+      }
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
   onerror_avatar: /img/avatar.png
