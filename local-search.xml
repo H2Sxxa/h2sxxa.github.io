@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>重构原则</title>
+    <link href="/2026/01/20/refactor_principle/"/>
+    <url>/2026/01/20/refactor_principle/</url>
+    
+    <content type="html"><![CDATA[<h1 id="重构原则"><a href="#重构原则" class="headerlink" title="重构原则"></a>重构原则</h1><blockquote><p>如果你写过代码，你会知道，越简单的东西往往越可靠，能够复用的代码总是优于重复的代码，可维护的代码总是简单、易读、能够复用的。</p></blockquote><h2 id="为什么要做重构"><a href="#为什么要做重构" class="headerlink" title="为什么要做重构"></a>为什么要做重构</h2><p>重构（Refactor）就是为了帮助我们写出更好的代码而存在的，新的功能套进旧的架构总是不那么适配，所以我们常常写更多的if、更多的else、更多的特判从而让我们的代码能够跑起来实现我们的功能。</p><p>随着时间的推移，这些代码会变得越来越臃肿，越来越难以维护，越来越难以阅读，研发新的功能需要大量的工作量，最终导致我们不得不放弃这个项目或者继续无限量地增加代码量，让后面的工作更加难以继续。这就是大家常说的“技术债务”，而重构就是为了偿还这些技术债务而存在的。</p><p>但是我们不想放弃这个项目，因为它还有用，我们想要让它变得更好、更可靠、更易于维护，所以我们就要进行重构。</p><p>我想说：重构是必须的，正如没有人能够一开始就能设计出完美的架构、完美的代码。</p><h2 id="怎么做重构"><a href="#怎么做重构" class="headerlink" title="怎么做重构"></a>怎么做重构</h2><p>重构无非就是让代码变得简单，删除冗余的代码，多处相似的设计抽象成一个通用的设计，让代码更易读、更易维护、更易复用。</p><p>所以要做重构无非就是，删代码、抽象、简化。</p><p>我来为你展示一个例子</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 重构前的代码</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">User</span> &#123;<br>    name: <span class="hljs-type">String</span>,<br>    age: <span class="hljs-type">u8</span>,<br>    email: <span class="hljs-type">String</span>,<br>    is_admin: <span class="hljs-type">bool</span>,<br>    permissions: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">String</span>&gt;,<br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">BackendUser</span> &#123;<br>    name: <span class="hljs-type">String</span>,<br>    age: <span class="hljs-type">u8</span>,<br>    email: <span class="hljs-type">String</span>,<br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">BackendAdmin</span> &#123;<br>    name: <span class="hljs-type">String</span>,<br>    age: <span class="hljs-type">u8</span>,<br>    email: <span class="hljs-type">String</span>,<br>    permissions: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">String</span>&gt;,<br>&#125;<br><br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_user</span>() <span class="hljs-punctuation">-&gt;</span> User &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">user</span> = User::<span class="hljs-title function_ invoke__">default</span>();<br><br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">backend_user</span> = <span class="hljs-title function_ invoke__">get_user_from_backend</span>();<br>    <span class="hljs-keyword">if</span> backend_user.is_admin &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">backend_admin</span> = <span class="hljs-title function_ invoke__">get_admin_from_backend</span>();<br>        user.name = backend_admin.name;<br>        user.age = backend_admin.age;<br>        user.email = backend_admin.email;<br>        user.is_admin = <span class="hljs-literal">true</span>;<br>        user.permissions = backend_admin.permissions;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        user.name = backend_user.name;<br>        user.age = backend_user.age;<br>        user.email = backend_user.email;<br>        user.is_admin = <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    user<br>&#125;<br><br><span class="hljs-comment">// 重构后的代码</span><br><span class="hljs-meta">#[serde(untagged)]</span><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-title function_ invoke__">Admin</span>(BackendAdmin),<br>    <span class="hljs-title function_ invoke__">Regular</span>(BackendUser),<br>&#125;<br><br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_user</span>() <span class="hljs-punctuation">-&gt;</span> User &#123;<br>    <span class="hljs-title function_ invoke__">get_user_from_backend</span>()<br>&#125;<br></code></pre></td></tr></table></figure><p>当然这段代码是跑不通的，因为 rust 语法不允许这样的情况出现，我们假定<code>get_user_from_backend()</code>函数会根据用户类型返回不同的结构体实例。</p><p>重构前，我们需要处理两种用户类型，代码冗长且难以维护，后面获取到新的用户类型还需要继续添加代码，同时在别的地方调用这个函数也要做相应的判断处理。</p><p>重构后，我们使用枚举类型来表示不同的用户类型，简化了代码逻辑，提升了代码的可读性和可维护性，后续添加新的用户类型，不需要再继续添加字段，只需要添加一个新的枚举类型。</p><p>这就是成功的重构。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>重构是一个持续的过程，重构的工作量总是比功能更新大很多，如果现在不重构，后面的工作量会更大。</p><p>我想应该把重构作为日常开发的一部分，持续地进行重构，而不是等到代码变得难以维护时才去重构，这样才能让我们的代码保持良好的状态，提升我们的开发效率和代码质量。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Development &amp; Progarmming</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Rust</tag>
+      
+      <tag>Code Aesthetic</tag>
+      
+      <tag>Programming</tag>
+      
+      <tag>Refactor</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>借用回调在不阻塞地执行 Rust 异步方法</title>
     <link href="/2025/01/28/use_callback_to_run_async/"/>
     <url>/2025/01/28/use_callback_to_run_async/</url>
@@ -299,11 +330,11 @@
     
     <tags>
       
+      <tag>Flutter</tag>
+      
       <tag>Dart</tag>
       
       <tag>Gradle</tag>
-      
-      <tag>Flutter</tag>
       
     </tags>
     
