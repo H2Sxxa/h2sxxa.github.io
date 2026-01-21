@@ -20,9 +20,9 @@
     
     <tags>
       
-      <tag>Rust</tag>
-      
       <tag>Code Aesthetic</tag>
+      
+      <tag>Rust</tag>
       
       <tag>Programming</tag>
       
@@ -146,11 +146,11 @@
     
     <tags>
       
-      <tag>OOP</tag>
+      <tag>Code Aesthetic</tag>
       
       <tag>Python</tag>
       
-      <tag>Code Aesthetic</tag>
+      <tag>OOP</tag>
       
       <tag>FP</tag>
       
@@ -192,37 +192,6 @@
   
   
   <entry>
-    <title>浅谈面向对象与面向过程</title>
-    <link href="/2023/09/17/about_oo_and_po/"/>
-    <url>/2023/09/17/about_oo_and_po/</url>
-    
-    <content type="html"><![CDATA[<h1 id="浅谈面向对象与面向过程"><a href="#浅谈面向对象与面向过程" class="headerlink" title="浅谈面向对象与面向过程"></a>浅谈面向对象与面向过程</h1><p>本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。</p><h2 id="面向对象（OO）"><a href="#面向对象（OO）" class="headerlink" title="面向对象（OO）"></a>面向对象（OO）</h2><h3 id="对象是什么"><a href="#对象是什么" class="headerlink" title="对象是什么"></a>对象是什么</h3><p>对象是什么这个问题曾经困惑了我许久，Rust的<code>struct</code>和Python的<code>class</code>都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程中组合优于继承，所以我认为对象最基本的特征还是在于是否可实例化和封装。</p><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>例如定义一个生物的类</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Living</span> &#123;<br>    name: <span class="hljs-type">String</span>, <span class="hljs-comment">// 私有属性，不是pub name，用于封装name</span><br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Living</span> &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(name: &amp;<span class="hljs-type">str</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &#123;<br>        <span class="hljs-keyword">Self</span> &#123;<br>            name: name.<span class="hljs-title function_ invoke__">to_string</span>(),<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_name</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.name.<span class="hljs-title function_ invoke__">clone</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">set_name</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, name: &amp;<span class="hljs-type">str</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name = name.<span class="hljs-title function_ invoke__">to_string</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Living</span>:<br>    __name:<span class="hljs-built_in">str</span> <span class="hljs-comment"># 会把这个变量转化为 _Living__name，无法通过__name访问，实现封装</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-variable language_">self</span>.__name = name<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_name</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.__name<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set_name</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-variable language_">self</span>.__name = name<br></code></pre></td></tr></table></figure><p>在上述2段代码中，我们都对<code>name</code>做了私有化处理，并且定义了2个方法<code>get_name</code>和<code>set_name</code>，这是很经典的封装，这两个方法叫做<code>getter</code>和<code>setter</code>，但很多情况下，我们也无需强制自己把所有成员属性私有化并且加上<code>getter</code>和<code>setter</code>，这是很死的做法。</p><h4 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h4><p>实例化就是把一类东西转化为一种东西（这个东西是前面的东西的一个例子，例如<code>human</code>是<code>Living</code>的一个例子），后者相比前者往往范围更小更精确，还是刚才那个<code>Living</code>，让我们实例化一种名为<code>human</code>的生物，在很多语言中<code>new</code>是作为实例化的关键字，Python的<code>class</code>有2个魔法方法，分别是<code>__init__</code>和<code>__new__</code>，通过字面意思理解，前者是初始化，后者是实例化，C++和Java都有构造函数且都是在<code>new</code>时被调用（不考虑C++的其他实例化方法）。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>()&#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">human</span> = Living::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-string">&quot;human&quot;</span>); <span class="hljs-comment">// 人是有名字的生物的一种实例</span><br>    human.<span class="hljs-title function_ invoke__">set_name</span>(<span class="hljs-string">&quot;human_i&quot;</span>);<br>    <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,human.<span class="hljs-title function_ invoke__">get_name</span>())<br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">human = Living(<span class="hljs-string">&quot;human&quot;</span>)<br>human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>)<br><span class="hljs-built_in">print</span>(human.get_name())<br></code></pre></td></tr></table></figure><p>上面2段运行结果都是输出<code>human_i</code>，我们可以看得出来<code>Living</code>的实例有能力为你保存一个<code>name</code>的属性，并且通过内置方法来控制。</p><h2 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h2><p>我接触的面向过程的语言不多，目前只有C，虽然说可以通过其他语言的多范式编程来实现面向过程，那未免有点不地道。</p><h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>有过程就必然有结果，下方是一个求字符串长度的例子</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> <span class="hljs-type">const</span> *argv[])</span><br>&#123;<br>    <span class="hljs-type">char</span> x[] = <span class="hljs-string">&quot;string&quot;</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%i\n&quot;</span>, (<span class="hljs-type">int</span>) <span class="hljs-built_in">strlen</span>(x));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><p>因为我们对<code>x</code>使用了<code>strlen</code>，<code>strlen</code>是一个求解过程，所以得到了<code>6</code>这个结果，这看起来远没有面向对象复杂。</p><h2 id="面向对象的语言与面向过程的语言对比"><a href="#面向对象的语言与面向过程的语言对比" class="headerlink" title="面向对象的语言与面向过程的语言对比"></a>面向对象的语言与面向过程的语言对比</h2><p>还是求字符串长度的例子，Python是一门可以进行面向对象的语言，<code>str</code>是一类，<code>str()</code>&#x2F;<code>&quot;string&quot;</code>都是<code>str</code>的实例，如果我们用面向对象的方法来求字符串长度那就是<code>&quot;string&quot;.__len__()</code>，如果面向过程，那就是<code>len(&quot;string&quot;)</code>，在C里我们用的是后者这种写法，其中的不同，还是很明显的。</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>Development &amp; Progarmming</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>OOP</tag>
-      
-      <tag>Rust</tag>
-      
-      <tag>Python</tag>
-      
-      <tag>C</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>谈谈代码美学</title>
     <link href="/2023/09/17/about_code_aesthetic/"/>
     <url>/2023/09/17/about_code_aesthetic/</url>
@@ -239,13 +208,44 @@
     
     <tags>
       
+      <tag>Code Aesthetic</tag>
+      
       <tag>Rust</tag>
       
       <tag>Python</tag>
       
       <tag>C</tag>
       
-      <tag>Code Aesthetic</tag>
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>浅谈面向对象与面向过程</title>
+    <link href="/2023/09/17/about_oo_and_po/"/>
+    <url>/2023/09/17/about_oo_and_po/</url>
+    
+    <content type="html"><![CDATA[<h1 id="浅谈面向对象与面向过程"><a href="#浅谈面向对象与面向过程" class="headerlink" title="浅谈面向对象与面向过程"></a>浅谈面向对象与面向过程</h1><p>本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。</p><h2 id="面向对象（OO）"><a href="#面向对象（OO）" class="headerlink" title="面向对象（OO）"></a>面向对象（OO）</h2><h3 id="对象是什么"><a href="#对象是什么" class="headerlink" title="对象是什么"></a>对象是什么</h3><p>对象是什么这个问题曾经困惑了我许久，Rust的<code>struct</code>和Python的<code>class</code>都能够实现一个对象，有人说对象是一个属性和方法集的融合体，也有人说面向对象三大基本特征在于封装，继承，多态，多态和继承都是对于子类和父类关系来说，Rust里没有很好的方法来实现这2个特性，在现代编程中组合优于继承，所以我认为对象最基本的特征还是在于是否可实例化和封装。</p><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>例如定义一个生物的类</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Living</span> &#123;<br>    name: <span class="hljs-type">String</span>, <span class="hljs-comment">// 私有属性，不是pub name，用于封装name</span><br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Living</span> &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(name: &amp;<span class="hljs-type">str</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &#123;<br>        <span class="hljs-keyword">Self</span> &#123;<br>            name: name.<span class="hljs-title function_ invoke__">to_string</span>(),<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_name</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.name.<span class="hljs-title function_ invoke__">clone</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">set_name</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, name: &amp;<span class="hljs-type">str</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name = name.<span class="hljs-title function_ invoke__">to_string</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Living</span>:<br>    __name:<span class="hljs-built_in">str</span> <span class="hljs-comment"># 会把这个变量转化为 _Living__name，无法通过__name访问，实现封装</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-variable language_">self</span>.__name = name<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_name</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.__name<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set_name</span>(<span class="hljs-params">self,name:<span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-variable language_">self</span>.__name = name<br></code></pre></td></tr></table></figure><p>在上述2段代码中，我们都对<code>name</code>做了私有化处理，并且定义了2个方法<code>get_name</code>和<code>set_name</code>，这是很经典的封装，这两个方法叫做<code>getter</code>和<code>setter</code>，但很多情况下，我们也无需强制自己把所有成员属性私有化并且加上<code>getter</code>和<code>setter</code>，这是很死的做法。</p><h4 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h4><p>实例化就是把一类东西转化为一种东西（这个东西是前面的东西的一个例子，例如<code>human</code>是<code>Living</code>的一个例子），后者相比前者往往范围更小更精确，还是刚才那个<code>Living</code>，让我们实例化一种名为<code>human</code>的生物，在很多语言中<code>new</code>是作为实例化的关键字，Python的<code>class</code>有2个魔法方法，分别是<code>__init__</code>和<code>__new__</code>，通过字面意思理解，前者是初始化，后者是实例化，C++和Java都有构造函数且都是在<code>new</code>时被调用（不考虑C++的其他实例化方法）。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>()&#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">human</span> = Living::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-string">&quot;human&quot;</span>); <span class="hljs-comment">// 人是有名字的生物的一种实例</span><br>    human.<span class="hljs-title function_ invoke__">set_name</span>(<span class="hljs-string">&quot;human_i&quot;</span>);<br>    <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,human.<span class="hljs-title function_ invoke__">get_name</span>())<br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">human = Living(<span class="hljs-string">&quot;human&quot;</span>)<br>human.set_name(<span class="hljs-string">&quot;human_i&quot;</span>)<br><span class="hljs-built_in">print</span>(human.get_name())<br></code></pre></td></tr></table></figure><p>上面2段运行结果都是输出<code>human_i</code>，我们可以看得出来<code>Living</code>的实例有能力为你保存一个<code>name</code>的属性，并且通过内置方法来控制。</p><h2 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h2><p>我接触的面向过程的语言不多，目前只有C，虽然说可以通过其他语言的多范式编程来实现面向过程，那未免有点不地道。</p><h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>有过程就必然有结果，下方是一个求字符串长度的例子</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> <span class="hljs-type">const</span> *argv[])</span><br>&#123;<br>    <span class="hljs-type">char</span> x[] = <span class="hljs-string">&quot;string&quot;</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%i\n&quot;</span>, (<span class="hljs-type">int</span>) <span class="hljs-built_in">strlen</span>(x));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><p>因为我们对<code>x</code>使用了<code>strlen</code>，<code>strlen</code>是一个求解过程，所以得到了<code>6</code>这个结果，这看起来远没有面向对象复杂。</p><h2 id="面向对象的语言与面向过程的语言对比"><a href="#面向对象的语言与面向过程的语言对比" class="headerlink" title="面向对象的语言与面向过程的语言对比"></a>面向对象的语言与面向过程的语言对比</h2><p>还是求字符串长度的例子，Python是一门可以进行面向对象的语言，<code>str</code>是一类，<code>str()</code>&#x2F;<code>&quot;string&quot;</code>都是<code>str</code>的实例，如果我们用面向对象的方法来求字符串长度那就是<code>&quot;string&quot;.__len__()</code>，如果面向过程，那就是<code>len(&quot;string&quot;)</code>，在C里我们用的是后者这种写法，其中的不同，还是很明显的。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Development &amp; Progarmming</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Rust</tag>
+      
+      <tag>Python</tag>
+      
+      <tag>C</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -330,11 +330,11 @@
     
     <tags>
       
-      <tag>Flutter</tag>
-      
       <tag>Dart</tag>
       
       <tag>Gradle</tag>
+      
+      <tag>Flutter</tag>
       
     </tags>
     
