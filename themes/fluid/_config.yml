@@ -998,13 +998,13 @@ links:
   # Member item of page
   items:
     - {
-        title: "black_trees's Blog",
+        title: "black_trees",
         intro: "幻想乡算法研究所",
         link: "https://enonya.github.io/",
         avatar: "https://avatars.githubusercontent.com/u/77879721",
       }
     - {
-        title: "NanodaOvO's Blog",
+        title: "NanodaOvO",
         intro: "NanodaOvO's Blog",
         link: "https://nanodaovo.github.io/",
         avatar: "https://avatars.githubusercontent.com/u/106482877",
@@ -1028,13 +1028,13 @@ links:
         avatar: "https://avatars.githubusercontent.com/u/44718819",
       }
     - {
-        title: "Enonya's Blog",
+        title: "Enonya",
         intro: "black_trees's -> Enonya's Blog",
         link: "https://en0nya.github.io/",
         avatar: "https://avatars.githubusercontent.com/u/77879721",
       }
     - {
-        title: "YOO_koishi's blog",
+        title: "YOO_koishi",
         intro: "YOO_koishi's blog",
         link: "https://blog.yookoishi.com/",
         avatar: "https://avatars.githubusercontent.com/u/115394813",
