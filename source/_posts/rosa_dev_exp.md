@@ -2,7 +2,7 @@
 title: ROSA开发总结
 date: 2023-7-11 14:00:00
 tags: ["Dart","Flutter","Gradle"]
-categories: Development & Progarmming
+categories: Development & Programming
 index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/85603133.jpg&w=800&h=800
 banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/85603133.jpg&w=800&h=800
 ---

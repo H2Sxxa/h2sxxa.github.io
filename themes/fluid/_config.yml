@@ -1033,6 +1033,12 @@ links:
         link: "https://en0nya.github.io/",
         avatar: "https://avatars.githubusercontent.com/u/77879721",
       }
+    - {
+        title: "YOO_koishi's blog",
+        intro: "YOO_koishi's blog",
+        link: "https://blog.yookoishi.com/",
+        avatar: "https://avatars.githubusercontent.com/u/115394813",
+      }
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
   onerror_avatar: /img/avatar.png

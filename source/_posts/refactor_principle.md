@@ -2,7 +2,7 @@
 title: 重构原则
 date: 2026-1-20 19:49:00
 tags: ["Code Aesthetic","Rust", "Refactor", "Programming"]
-categories: Development & Progarmming
+categories: Development & Programming
 index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/139123166.jpg&w=800&h=800
 banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/139123166.jpg&w=800&h=800
 ---

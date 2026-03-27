@@ -2,7 +2,7 @@
 title: 谈谈代码美学
 date: 2023-9-17 20:10:00
 tags: ["Code Aesthetic","Rust","Python","C"]
-categories: Development & Progarmming
+categories: Development & Programming
 index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/96078807.jpg&w=800&h=800
 banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/96078807.jpg&w=800&h=800
 ---

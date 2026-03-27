@@ -2,7 +2,7 @@
 title: 在VSCode里通过WSL进行C的开发
 date: 2023-8-10 17:00:00
 tags: ["WSL","Linux","C","VSCode"]
-categories: Development & Progarmming
+categories: Development & Programming
 index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/99637663.jpg&w=800&h=800
 banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/99637663.jpg&w=800&h=800
 ---

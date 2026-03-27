@@ -2,7 +2,7 @@
 title: 浅谈面向对象与面向过程
 date: 2023-9-17 20:10:00
 tags: ["OOP","Rust","Python","C"]
-categories: Development & Progarmming
+categories: Development & Programming
 index_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/111639285-2.jpg&w=800&h=800
 banner_img: https://wsrv.nl/?url=https://h2sxxa.github.io/img/pixiv/111639285-2.jpg&w=800&h=800
 ---
