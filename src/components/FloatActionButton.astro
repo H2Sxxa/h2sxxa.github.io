@@ -1,0 +1,82 @@
+---
+import { Icon } from "astro-icon/components";
+import FloatActionButtonItem from "./FloatActionButtonItem.astro";
+
+---
+
+<div class="fixed
+		bottom-5
+		right-5
+		z-50">
+    <div
+        id="fab-menu"
+        class="absolute
+			bottom-18
+			right-0
+			flex
+			flex-col
+			gap-3
+			opacity-0
+			translate-y-4
+			pointer-events-none
+			transition-all
+			duration-200"
+    >
+        <FloatActionButtonItem href="/blog" icon="mdi:blog" />
+        <FloatActionButtonItem href="/about" icon="mdi:account" />
+        <FloatActionButtonItem href="/rss.xml" icon="mdi:rss" />
+    </div>
+
+    <button
+        id="fab-toggle"
+        class="flex
+			h-14
+			w-14
+			items-center
+			justify-center
+			rounded-2xl
+			bg-primary
+			text-primary-foreground
+			shadow-lg
+			transition-all
+			hover:scale-105
+			active:scale-95"
+    >
+        <Icon name="mdi:menu" />
+    </button>
+</div>
+
+<script>
+    const toggle = document.getElementById("fab-toggle");
+    const menu = document.getElementById("fab-menu");
+
+    toggle?.addEventListener("click", () => {
+        const opened = menu?.classList.contains("opacity-100");
+
+        if (opened) {
+            menu?.classList.remove(
+                "opacity-100",
+                "translate-y-0",
+                "pointer-events-auto",
+            );
+
+            menu?.classList.add(
+                "opacity-0",
+                "translate-y-4",
+                "pointer-events-none",
+            );
+        } else {
+            menu?.classList.remove(
+                "opacity-0",
+                "translate-y-4",
+                "pointer-events-none",
+            );
+
+            menu?.classList.add(
+                "opacity-100",
+                "translate-y-0",
+                "pointer-events-auto",
+            );
+        }
+    });
+</script>

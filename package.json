@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "blog",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -15,7 +15,11 @@
     "@astrojs/mdx": "^6.0.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.4.2",
-    "sharp": "^0.34.3"
+    "astro-icon": "^1.1.5",
+    "sharp": "^0.34.3",
+    "tailwindcss": "^4.3.0"
   }
 }
