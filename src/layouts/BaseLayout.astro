@@ -1,0 +1,48 @@
+---
+import { ClientRouter } from "astro:transitions";
+import BaseHead from "../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import FloatActionButton from "../components/FloatActionButton.astro";
+---
+
+<html>
+    <head>
+        <!-- Theme (dark/light) -->
+        <script is:inline>
+            const colorSchemeQuery = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+            );
+
+            const setColorScheme = (element, dark) => {
+                element.classList.toggle("dark", dark);
+            };
+
+            const applyColorScheme = () => {
+                setColorScheme(
+                    document.documentElement,
+                    colorSchemeQuery.matches,
+                );
+            };
+
+            const applyColorSchemeToNextDocument = (event) => {
+                setColorScheme(
+                    event.newDocument.documentElement,
+                    colorSchemeQuery.matches,
+                );
+            };
+
+            applyColorScheme();
+            colorSchemeQuery.addEventListener("change", applyColorScheme);
+            document.addEventListener(
+                "astro:before-swap",
+                applyColorSchemeToNextDocument,
+            );
+        </script>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <ClientRouter />
+        <slot />
+        <FloatActionButton />
+    </body>
+</html>

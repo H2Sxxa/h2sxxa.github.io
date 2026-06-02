@@ -1,13 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
 import FloatActionButtonItem from "./FloatActionButtonItem.astro";
-
+import { FAB_LINKS } from "../consts";
 ---
 
 <div class="fixed
 		bottom-5
 		right-5
-		z-50">
+		z-50" transition:persist>
     <div
         id="fab-menu"
         class="absolute
@@ -22,9 +22,11 @@ import FloatActionButtonItem from "./FloatActionButtonItem.astro";
 			transition-all
 			duration-200"
     >
-        <FloatActionButtonItem href="/blog" icon="mdi:blog" />
-        <FloatActionButtonItem href="/about" icon="mdi:account" />
-        <FloatActionButtonItem href="/rss.xml" icon="mdi:rss" />
+        {
+            FAB_LINKS.map((link) => (
+                <FloatActionButtonItem href={link.href} icon={link.icon} />
+            ))
+        }
     </div>
 
     <button
