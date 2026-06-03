@@ -3,15 +3,12 @@ import { ClientRouter } from "astro:transitions";
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FloatActionButton from "../components/FloatActionButton.astro";
-import { Font } from "astro:assets";
 ---
 
 <html>
     <head>
         <!-- Theme (dark/light) -->
-        <Font cssVariable="--font-lato" preload />
-        <Font cssVariable="--font-lora" preload />
-        <Font cssVariable="--font-fira-code" preload />
+
         <script is:inline>
             const colorSchemeQuery = window.matchMedia(
                 "(prefers-color-scheme: dark)",

@@ -1,6 +1,7 @@
 ---
 import { SITE_OWNER } from "../consts";
 import { Image } from "astro:assets";
+import Avatar from "../components/Avatar.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BackgroundGrid from "../components/BackgroundGrid.astro";
 ---
@@ -30,22 +31,7 @@ import BackgroundGrid from "../components/BackgroundGrid.astro";
 					md:items-center
 					md:text-left"
 		>
-			<!-- Avatar come from GitHub -->
-			<div
-				class="rounded-full border-4 border-primary/50 inline-block pointer-events-none"
-			>
-				<Image
-					src={SITE_OWNER.avatar}
-					alt="Avatar"
-					inferSize
-					loading="eager"
-					class="h-28
-						w-28
-						rounded-full
-						md:h-36
-						md:w-36"
-				/>
-			</div>
+			<Avatar src={SITE_OWNER.avatar} alt="Avatar" />
 			<h1 class="mt-6
 						text-3xl
 						font-bold">{SITE_OWNER.name}</h1>

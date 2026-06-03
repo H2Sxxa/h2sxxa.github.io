@@ -31,3 +31,17 @@ export const FAB_LINKS = [
     },
 ]
 
+export const SITE_OWNER_LINKS = [
+    {
+        href: "https://github.com/H2Sxxa",
+        icon: "mdi:github",
+    },
+    {
+        href: "https://steamcommunity.com/profiles/76561199187367033/",
+        icon: "mdi:steam",
+    },
+    {
+        href: "mailto:h2sxxa0w0@gmail.com",
+        icon: "mdi:email",
+    }
+]

@@ -1,254 +1,117 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BackgroundGrid from "../components/BackgroundGrid.astro";
 import Text from "../components/Text.astro";
+import Avatar from "../components/Avatar.astro";
+import { SITE_OWNER, SITE_OWNER_LINKS } from "../consts";
+import { Icon } from "astro-icon/components";
 
 <BaseLayout>
-	<Text>
----
-__Advertisement :)__
+    <BackgroundGrid />
+    <div class="flex flex-col items-center mt-12">
+      <Avatar src={SITE_OWNER.avatar} />
+      <h1 class="mt-4 text-3xl font-bold">About Me</h1>
+      <nav>
+        <ul class="flex space-x-4 mt-4">
+          {
+            SITE_OWNER_LINKS.map(link => (
+              <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.href}>
+                <Icon name={link.icon} class="w-8 h-8 text-foreground hover:text-foreground/90" />
+              </a>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <Text>
+      <div class="font-serif font-bold">
+      *Hi there, I am {SITE_OWNER.name}! 👋*
+      </div>
 
-- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image
-  resize in browser.
-- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly
-  i18n with plurals support and easy syntax.
+      I am a full-stack developer and technology enthusiast. 
+      
+      Major in Artificial Intelligence, but I am more interested in making applications.
 
-You will like those projects!
+      ## Badges
 
----
+      <p class="flex flex-wrap gap-2 mt-0">
+      <a href="https://img.shields.io/github/followers/H2Sxxa?label=Follow&style=social"><img src="https://img.shields.io/github/followers/H2Sxxa?label=Follow&style=social" /></a>
+      <a href="https://img.shields.io/github/stars/H2Sxxa?affiliations=OWNER&style=social"><img src="https://img.shields.io/github/stars/H2Sxxa?affiliations=OWNER&style=social" /></a>
+      <a href="https://wakatime.com/@2cbbd499-4c2f-44d5-8b4e-813449cabaf3"><img src="https://wakatime.com/badge/user/2cbbd499-4c2f-44d5-8b4e-813449cabaf3.svg" /></a>
+      <a href="https://gist.github.com/H2Sxxa/40e3e504dbafc860b8f516db3ffc53cd"><img src="https://img.shields.io/badge/Gist-VSCode%20Extensions-blue" /></a>
+      </p>
 
-# h1 Heading 8-)
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
+      [![Skills](https://skillicons.dev/icons?i=github,vscode,idea,rust,flutter,dart,python,javascript,typescript,react,nextjs,java,bash,c,ps,ai,markdown)](https://skillicons.dev)
 
+      ## My Programming Journey
+      
+      I first got access to a computer when I was a little kid, and Scratch was my introduction to programming.
 
-## Horizontal Rules
+      At the end of 2020, I started learning programming with Python and Java because I wanted to make Minecraft mods. Back then, I didn't even understand what OOP was. Writing Java code and getting a Gradle project to run felt incredibly difficult.
 
-___
+      Eventually, I gave up on Java for a while and started writing some terrible Python scripts to scrape things from the internet. Those small experiments helped me understand what programming was really about.
 
----
+      In 2021, I still wanted to make Minecraft mods, so I started using MCreator. To be honest, I don't think it's a very good tool. I spent more than half a year building questionable mods and unfinished projects before finally abandoning it and returning to Python.
 
-***
+      By late 2021 and throughout 2022, I started using NoneBot and deployed a zhenxun_bot instance. Influenced by the NoneBot ecosystem, I also used NonePrompt to build a tool that helped MCreator users set up their mod development environments, especially the infamous `gradlew setupDecompWorkspace` process.
 
+      *(NoneBot's codebase is excellent. Its design and coding style still influence how I write Python today.)*
 
-## Typographic replacements
+      **MCreator_Setup:** [https://github.com/H2Sxxa/MCreator_Setup](https://github.com/H2Sxxa/MCreator_Setup)
 
-Enable typographer option to see result.
+      During late 2022 and 2023, I started building my own bot from scratch and created my first Minecraft mod, Kekkai.
 
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+      **RanBot:** [https://github.com/TeamGensouSpark/RanBot](https://github.com/TeamGensouSpark/RanBot)
+      *(I even used Stable Diffusion to generate its avatar!)*
 
-test.. test... test..... test?..... test!....
+      **Kekkai:** [https://github.com/TeamGensouSpark/kekkai](https://github.com/TeamGensouSpark/kekkai)
 
-!!!!!! ???? ,,  -- ---
+      You can also find my Minecraft mods on Modrinth.
 
-"Smartypants, double quotes" and 'single quotes'
+      In the second half of 2023, I began learning Flutter and Rust.
 
+      Flutter was amazing. The idea that you could build a polished application in just a few hours completely changed my perspective on app development. With Flutter, I refactored MCreator_Setup and explored some unconventional approaches to solving mod development environment issues, including JAR class patching.
 
-## Emphasis
+      **Rosa:** [https://github.com/H2Sxxa/Rosa](https://github.com/H2Sxxa/Rosa)
 
-**This is bold text**
+      In late 2023 and throughout 2024, I founded CCZU-OSSA. Honestly, I just wanted to find some like-minded people. Looking back, I'd say it was a success.
 
-__This is bold text__
+      2024 became a major milestone in my programming journey. I learned how Python actually works under the hood and discovered some crazy ways to patch and extend it. I learned how to combine Rust and Flutter using rinf, built several interesting applications, met many amazing people, and made some great friends along the way.
 
-*This is italic text*
+      I'm truly grateful for everything I experienced during 2024.
 
-_This is italic text_
+      **Saleyo:** [https://github.com/H2Sxxa/saleyo](https://github.com/H2Sxxa/saleyo)
 
-~~Strikethrough~~
+      **CCZU Helper:** [https://github.com/CCZU-OSSA/cczu-helper](https://github.com/CCZU-OSSA/cczu-helper)
 
+      From late 2024 to the first half of 2025, I joined Reflex AI Limited and worked with the team on Sekai App, an AI companion application built with Flutter.
 
-## Blockquotes
+      **Sekai App:** [https://apps.apple.com/us/app/sekai-chat-with-twiiists](https://apps.apple.com/us/app/sekai-chat-with-twiiists) *(expired)*
 
+      From August 2025 to April 2026, I worked at Kazama Inc. as a Next.js developer and helped build kusart.com (formerly kusa.pics).
 
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
+      During this period, I learned how to use AI-assisted development effectively. More importantly, my front-end development skills gradually matured through real-world product development and collaboration.
 
+      After leaving Kazama, I returned to working on open-source projects.
 
-## Lists
+      **Spec-Coding-Skills**
+      Plan with acceptance criteria, self-correct from feedback, and retain reusable project knowledge.
 
-Unordered
+      [https://github.com/H2Sxxa/spec-coding-skills](https://github.com/H2Sxxa/spec-coding-skills)
 
-+ Create a list by starting a line with `+`, `-`, or `*`
-+ Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    * Ac tristique libero volutpat at
-    + Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-+ Very easy!
+      **AnyMirror**
+      A high-performance traffic orchestration gateway with transparent L3 proxying and rule-based request routing.
 
-Ordered
+      [https://github.com/H2Sxxa/AnyMirror](https://github.com/H2Sxxa/AnyMirror)
 
-1. Lorem ipsum dolor sit amet
-2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
+      **Elemental**
+      A modern Minecraft Launcher SDK.
 
+      [https://github.com/ElectronicWave/Elemental](https://github.com/ElectronicWave/Elemental)
 
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
+      ...
 
-Start numbering with offset:
+      I'm still learning, building, and exploring new technologies every day. The world of software development continues to evolve rapidly, and I'm excited to see where it goes next.
 
-57. foo
-1. bar
-
-
-## Code
-
-Inline `code`
-
-Indented code
-
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
-
-
-Block code "fences"
-
-```
-Sample text here...
-```
-
-Syntax highlighting
-
-``` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
-```
-
-## Tables
-
-| Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-Right aligned columns
-
-| Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-
-## Links
-
-[link text](http://dev.nodeca.com)
-
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
-
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
-
-
-## Images
-
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-
-## Plugins
-
-The killer feature of `markdown-it` is very effective support of
-[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
-
-
-### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
-
-> Classic markup: :wink: :cry: :laughing: :yum:
->
-> Shortcuts (emoticons): :-) :-( 8-) ;)
-
-see [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.
-
-
-### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)
-
-- 19^th^
-- H~2~O
-
-
-### [\<ins>](https://github.com/markdown-it/markdown-it-ins)
-
-++Inserted text++
-
-
-### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
-
-==Marked text==
-
-
-### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
-
-Footnote 1 link[^first].
-
-Footnote 2 link[^second].
-
-Inline footnote^[Text of inline footnote] definition.
-
-Duplicated footnote reference[^second].
-
-[^first]: Footnote **can have markup**
-
-    and multiple paragraphs.
-
-[^second]: Footnote text.
-
-
-### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)
-
-Term 1
-
-:   Definition 1
-with lazy continuation.
-
-Term 2 with *inline markup*
-
-:   Definition 2
-
-        \{ some code, part of Definition 2 }
-
-    Third paragraph of definition 2.
-
-_Compact style:_
-
-Term 1
-  ~ Definition 1
-
-Term 2
-  ~ Definition 2a
-  ~ Definition 2b
-
-
-### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
-
-This is HTML abbreviation example.
-
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-
-*[HTML]: Hyper Text Markup Language
-
-### [Custom containers](https://github.com/markdown-it/markdown-it-container)
-
-::: warning
-*here be dragons*
-:::
-
-	</Text>
+      If you'd like to learn more about me or my projects, feel free to reach out through social media or check out my GitHub profile.
+    </Text>
 </BaseLayout>

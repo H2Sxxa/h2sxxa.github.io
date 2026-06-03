@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import { cn } from "../utils/cn";
+
+interface Props {
+    src: string;
+    alt?: string | null;
+    size?: "sm" | "md" | "lg";
+    class?: string;
+}
+
+const { src, alt, size = "md" } = Astro.props;
+
+const sizes = {
+    sm: "h-20 w-20 md:h-24 md:w-24",
+    md: "h-28 w-28 md:h-36 md:w-36",
+    lg: "h-40 w-40 md:h-48 md:w-48",
+};
+---
+
+<div
+    class={cn(
+        "inline-block rounded-full border-4 border-primary/50 pointer-events-none",
+        Astro.props.class,
+    )}
+>
+    <Image
+        src={src}
+        alt={alt ?? "Avatar"}
+        inferSize
+        loading="eager"
+        class:list={["rounded-full", sizes[size]]}
+    />
+</div>
