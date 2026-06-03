@@ -20,30 +20,10 @@ export default defineConfig({
         domains: ['avatars.githubusercontent.com'],
     },
     fonts: [
-        {
-            provider: fontProviders.local(),
-            name: 'Atkinson',
-            cssVariable: '--font-atkinson',
-            fallbacks: ['sans-serif'],
-            options: {
-                variants: [
-                    {
-                        src: ['./src/assets/fonts/atkinson-regular.woff'],
-                        weight: 400,
-                        style: 'normal',
-                        display: 'swap',
-                    },
-                    {
-                        src: ['./src/assets/fonts/atkinson-bold.woff'],
-                        weight: 700,
-                        style: 'normal',
-                        display: 'swap',
-                    },
-                ],
-            },
-        },
+        { provider: fontProviders.fontsource(), name: 'Fira Sans', cssVariable: '--font-lato', fallbacks: ['sans-serif'] },
+        { provider: fontProviders.fontsource(), name: 'Lora', cssVariable: '--font-lora', fallbacks: ['serif'] },
+        { provider: fontProviders.fontsource(), name: 'Fira Code', cssVariable: '--font-fira-code', fallbacks: ['monospace'] },
     ],
-
     vite: {
         plugins: [tailwindcss()],
     },

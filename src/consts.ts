@@ -8,7 +8,7 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 // Home Page
 export const SITE_OWNER = {
     name: "H2Sxxa",
-    bio: "Just Coding for Fun.",
+    bio: "Just Developing for Fun.",
     avatar: "https://avatars.githubusercontent.com/u/88923783",
     description: `
 Full-Stack Developer, Rustacean, Modder, Open-Source Builder...
