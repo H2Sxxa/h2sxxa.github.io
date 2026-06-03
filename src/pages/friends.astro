@@ -1,9 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { FRIENDS_LINKS } from "../consts";
+import { Image } from "astro:assets";
+import BackgroundGrid from "../components/BackgroundGrid.astro";
 ---
 
 <BaseLayout>
+    <BackgroundGrid />
+
     <main>
         <div class="container mx-auto px-4 py-8">
             <h1 class="text-3xl font-bold mb-4 font-serif">Friends</h1>
@@ -19,10 +23,13 @@ import { FRIENDS_LINKS } from "../consts";
                             rel="noopener noreferrer"
                             class="flex items-center p-4 bg-card rounded-lg hover:bg-accent transition-colors"
                         >
-                            <img
+                            <Image
                                 src={friend.avatar}
                                 alt={friend.title}
+                                inferSize
+                                loading="eager"
                                 class="w-16 h-16 rounded-full mr-4"
+                                aria-label={`${friend.title}'s avatar`}
                             />
                             <div>
                                 <h2 class="text-xl font-semibold">
