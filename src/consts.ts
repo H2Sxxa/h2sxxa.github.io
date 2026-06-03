@@ -29,6 +29,10 @@ export const FAB_LINKS = [
         href: "/about",
         icon: "mdi:account",
     },
+    {
+        href: "/friends",
+        icon: "mdi:account-group",
+    }
 ]
 
 export const SITE_OWNER_LINKS = [
@@ -43,5 +47,50 @@ export const SITE_OWNER_LINKS = [
     {
         href: "mailto:h2sxxa0w0@gmail.com",
         icon: "mdi:email",
+    }
+]
+
+export const FRIENDS_LINKS = [
+    {
+        title: "black_trees",
+        intro: "幻想乡算法研究所",
+        link: "https://enonya.github.io/",
+        avatar: "https://avatars.githubusercontent.com/u/77879721",
+    },
+    {
+        title: "NanodaOvO",
+        intro: "NanodaOvO's Blog",
+        link: "https://nanodaovo.github.io/",
+        avatar: "https://avatars.githubusercontent.com/u/106482877",
+    },
+    {
+        title: "Kano",
+        intro: "关注鹿乃喵,关注鹿乃谢谢喵",
+        link: "https://2754lm.github.io/",
+        avatar: "https://avatars.githubusercontent.com/u/86175561",
+    },
+    {
+        title: "lliiooll",
+        intro: "柴柴的技术博客",
+        link: "https://blog.imoli.moe/",
+        avatar: "https://avatars.githubusercontent.com/u/44719954",
+    },
+    {
+        title: "MiaoMint",
+        intro: "樱丘女子高等学校轻音部平泽唯",
+        link: "http://0u0.ren/",
+        avatar: "https://avatars.githubusercontent.com/u/44718819",
+    },
+    {
+        title: "Enonya",
+        intro: "black_trees's -> Enonya's Blog",
+        link: "https://en0nya.github.io/",
+        avatar: "https://avatars.githubusercontent.com/u/77879721",
+    },
+    {
+        title: "YOO_koishi",
+        intro: "YOO_koishi's blog",
+        link: "https://blog.yookoishi.com/",
+        avatar: "https://avatars.githubusercontent.com/u/115394813",
     }
 ]
