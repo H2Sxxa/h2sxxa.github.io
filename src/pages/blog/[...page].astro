@@ -27,6 +27,9 @@ const { page } = Astro.props;
     <BackgroundGrid />
     <main class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 font-serif">Blog</h1>
+        <p class="text-lg text-muted-foreground mb-6">
+            RSS is available at <a href="/rss.xml" class="text-primary font-serif italic focus:underline">rss.xml</a>
+        </p>
         <div class="space-y-4">
             {
                 page.data.map((post, index) => (

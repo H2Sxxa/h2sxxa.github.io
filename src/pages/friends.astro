@@ -20,7 +20,7 @@ import BackgroundGrid from "../components/BackgroundGrid.astro";
                         href={friend.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center p-4 bg-card rounded-lg hover:bg-accent transition-colors font-serif"
+                        class="flex items-center p-4 bg-card rounded-lg hover:bg-accent transition-colors"
                     >
                         <Image
                             src={friend.avatar}
@@ -31,10 +31,10 @@ import BackgroundGrid from "../components/BackgroundGrid.astro";
                             aria-label={`${friend.title}'s avatar`}
                         />
                         <div>
-                            <h2 class="text-xl font-semibold">
+                            <h2 class="text-xl font-semibold font-serif">
                                 {friend.title}
                             </h2>
-                            <p class="text-card-foreground">{friend.intro}</p>
+                            <p class="text-card-foreground font-sans">{friend.intro}</p>
                         </div>
                     </a>
                 ))
