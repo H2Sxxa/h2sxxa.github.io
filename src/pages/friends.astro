@@ -8,41 +8,37 @@ import BackgroundGrid from "../components/BackgroundGrid.astro";
 <BaseLayout>
     <BackgroundGrid />
 
-    <main>
-        <div class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold mb-4 font-serif">Friends</h1>
-            <p class="text-lg text-muted-foreground mb-6">
-                Feel free to add your own blog link!
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {
-                    FRIENDS_LINKS.map((friend) => (
-                        <a
-                            href={friend.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex items-center p-4 bg-card rounded-lg hover:bg-accent transition-colors"
-                        >
-                            <Image
-                                src={friend.avatar}
-                                alt={friend.title}
-                                inferSize
-                                loading="eager"
-                                class="w-16 h-16 rounded-full mr-4"
-                                aria-label={`${friend.title}'s avatar`}
-                            />
-                            <div>
-                                <h2 class="text-xl font-semibold">
-                                    {friend.title}
-                                </h2>
-                                <p class="text-card-foreground">
-                                    {friend.intro}
-                                </p>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4 font-serif">Friends</h1>
+        <p class="text-lg text-muted-foreground mb-6">
+            Feel free to add your own blog link!
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {
+                FRIENDS_LINKS.map((friend) => (
+                    <a
+                        href={friend.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center p-4 bg-card rounded-lg hover:bg-accent transition-colors font-serif"
+                    >
+                        <Image
+                            src={friend.avatar}
+                            alt={friend.title}
+                            inferSize
+                            loading="eager"
+                            class="w-16 h-16 rounded-full mr-4"
+                            aria-label={`${friend.title}'s avatar`}
+                        />
+                        <div>
+                            <h2 class="text-xl font-semibold">
+                                {friend.title}
+                            </h2>
+                            <p class="text-card-foreground">{friend.intro}</p>
+                        </div>
+                    </a>
+                ))
+            }
         </div>
     </main>
 </BaseLayout>

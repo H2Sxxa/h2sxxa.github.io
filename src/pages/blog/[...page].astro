@@ -1,0 +1,134 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BackgroundGrid from "../../components/BackgroundGrid.astro";
+import { PAGE_SIZE } from "../../consts";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    page: Page<CollectionEntry<"blog">>;
+}
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+    const posts = (await getCollection("blog")).sort(
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    );
+    return paginate(posts, {
+        pageSize: PAGE_SIZE,
+    });
+};
+
+const { page } = Astro.props;
+---
+
+<BaseLayout>
+    <BackgroundGrid />
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4 font-serif">Blog</h1>
+        <div class="space-y-4">
+            {
+                page.data.map((post, index) => (
+                    <article class="block p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card transition-colors relative group overflow-hidden">
+                        {/* Image */}
+                        <div class="absolute top-0 right-0 w-72 h-full pointer-events-none">
+                            {post.data.heroImage && (
+                                <Image
+                                    src={post.data.heroImage}
+                                    alt={post.data.title}
+                                    loading={index < 6 ? "eager" : "lazy"}
+                                    class="w-full h-full object-cover mix-blend-multiply rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)]"
+                                />
+                            )}
+                        </div>
+
+                        {/* Date */}
+                        <div class="absolute top-4 right-4 text-base text-muted-foreground z-10 font-serif">
+                            {post.data.pubDate.toLocaleDateString()}
+                        </div>
+
+                        {/* Title and Description */}
+                        <div class="flex flex-col relative">
+                            <h2 class="text-2xl font-semibold font-serif">
+                                <a
+                                    href={`/blog/${post.id}`}
+                                    class="text-primary no-underline hover:underline"
+                                >
+                                    {post.data.title}
+                                </a>
+                            </h2>
+
+                            <p class="text-card-foreground mt-2">
+                                {post.data.description}
+                            </p>
+                            {/* Tags */}
+                            {post.data.tags && (
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    {post.data.tags?.map((tag) => (
+                                        <a
+                                            href={`/blog/tag/${tag}`}
+                                            class="font-serif
+                                        px-3
+                                        py-1
+                                        text-accent-foreground
+                                        pointer-events-auto
+                                        focus:outline-none
+                                        text-sm
+                                        rounded-full
+                                        hover:bg-muted"
+                                        >
+                                            <span class="text-primary font-sans">
+                                                #
+                                            </span>
+                                            {tag}
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </article>
+                ))
+            }
+        </div>
+
+        <div class="flex items-center mt-8">
+            {
+                page.url.prev && (
+                    <a
+                        href={page.url.prev}
+                        class="inline-flex items-center gap-2
+                            px-4 py-2
+                            rounded-full
+                            bg-card
+                            hover:bg-accent
+                            transition-colors
+                            border"
+                    >
+                        <Icon name="mdi:chevron-left" class="w-5 h-5" />
+                        <span class="font-serif font-semibold">Previous</span>
+                    </a>
+                )
+            }
+
+            {
+                page.url.next && (
+                    <a
+                        href={page.url.next}
+                        class="ml-auto
+                            inline-flex items-center gap-2
+                            px-4 py-2
+                            rounded-full
+                            bg-card
+                            hover:bg-accent
+                            transition-colors
+                            border"
+                    >
+                        <span class="font-serif font-semibold">Next</span>
+                        <Icon name="mdi:chevron-right" class="w-5 h-5" />
+                    </a>
+                )
+            }
+        </div>
+    </main>
+</BaseLayout>

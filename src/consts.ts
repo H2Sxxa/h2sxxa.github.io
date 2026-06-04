@@ -16,6 +16,9 @@ I think technology should make the world better, so I keep programming instead o
     `,
 };
 
+
+// Fab
+
 export const FAB_LINKS = [
     {
         href: "/",
@@ -26,14 +29,19 @@ export const FAB_LINKS = [
         icon: "mdi:blog",
     },
     {
-        href: "/about",
-        icon: "mdi:account",
-    },
-    {
         href: "/friends",
         icon: "mdi:account-group",
+    },
+    {
+        href: "/about",
+        icon: "mdi:account",
     }
 ]
+
+// Blog
+export const PAGE_SIZE = 8;
+
+// About
 
 export const SITE_OWNER_LINKS = [
     {
