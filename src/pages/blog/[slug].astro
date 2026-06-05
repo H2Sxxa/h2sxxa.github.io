@@ -1,20 +1,94 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Text from "../../components/Text.astro";
+import { Image } from "astro:assets";
+import BackgroundGrid from "../../components/BackgroundGrid.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection("blog");
 	return posts.map((post) => ({
 		params: { slug: post.id },
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<BaseLayout>
+	<main>
+		<BackgroundGrid />
+		<!-- Hero (If exists) -->
+		{
+			post.data.heroImage && (
+				<div class="w-full h-128 overflow-hidden">
+					<Image
+						src={post.data.heroImage}
+						alt={post.data.title}
+						class="w-full h-full object-cover"
+						loading="eager"
+					/>
+				</div>
+			)
+		}
+		<!-- Title -->
+		<h1 class="text-center
+				text-4xl
+				font-serif
+				font-semibold
+				mt-8
+				mb-4">
+			{post.data.title}
+		</h1>
+		<div class="text-center text-muted-foreground">
+			<p class="text-lg">
+				{post.data.description}
+			</p>
+			<p class="text-sm mt-1">
+				Published on {post.data.pubDate.toLocaleDateString()}
+			</p>
+		</div>
+		<div class="mt-4 mx-auto
+			max-w-7xl
+			lg:grid">
+			<!-- Right -->
+			<aside
+				class="p-4
+				justify-start
+				lg:max-w-none
+				lg:col-start-2
+				lg:row-start-1
+				lg:sticky
+				lg:top-8
+				lg:h-fit"
+			>
+				<h2 class="text-xl font-bold font-serif mb-4">Contents</h2>
+				<ul class="space-y-2">
+					{
+						headings.map((heading) => (
+							<li
+								class:list={[
+									heading.depth === 2 && "ml-4",
+									heading.depth === 3 && "ml-6",
+									heading.depth === 4 && "ml-8",
+								]}
+							>
+								<a href={`#${heading.slug}`}>{heading.text}</a>
+							</li>
+						))
+					}
+				</ul>
+			</aside>
+
+			<!-- Main Content -->
+			<div class="lg:col-start-1 lg:row-start-1 max-w-3xl mx-auto">
+				<Text class="max-w-none p-4">
+					<Content />
+				</Text>
+			</div>
+		</div>
+	</main>
+</BaseLayout>

@@ -3,9 +3,9 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
-
+import { rehypeHeadingIds, unified } from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import tailwindcss from '@tailwindcss/vite';
-
 import icon from 'astro-icon';
 
 // https://astro.build/config
@@ -18,6 +18,19 @@ export default defineConfig({
     })],
     image: {
         domains: ['avatars.githubusercontent.com'],
+    },
+    markdown: {
+        processor: unified({
+            rehypePlugins: [
+                rehypeHeadingIds,
+                [rehypeAutolinkHeadings, {
+                    behavior: "prepend", properties: {
+                        className: ["anchor"],
+                    }
+                }],
+            ],
+        }),
+
     },
     fonts: [
         { provider: fontProviders.fontsource(), name: 'Fira Sans', cssVariable: '--font-lato', fallbacks: ['sans-serif'] },
