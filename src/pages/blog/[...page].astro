@@ -28,7 +28,7 @@ const { page } = Astro.props;
     <main class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 font-serif">Blog</h1>
         <p class="text-lg text-muted-foreground mb-6">
-            RSS is available at <a href="/rss.xml" class="text-primary font-serif italic focus:underline">rss.xml</a>
+            RSS is available at <a href="/rss.xml" class="text-primary font-serif italic focus:underline">rss.xml</a>!
         </p>
         <div class="space-y-4">
             {
@@ -47,7 +47,7 @@ const { page } = Astro.props;
                         </div>
 
                         {/* Date */}
-                        <div class="absolute top-4 right-4 text-base text-muted-foreground z-10 font-serif">
+                        <div class="absolute top-2 right-2 text-base text-muted-foreground z-10 font-serif">
                             {post.data.pubDate.toLocaleDateString()}
                         </div>
 
