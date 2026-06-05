@@ -9,7 +9,7 @@ const blog = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
-			description: z.string(),
+			description: z.string().optional(),
 			tags: z.array(z.string()).optional(),
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
@@ -18,16 +18,4 @@ const blog = defineCollection({
 		}),
 });
 
-
-const pages = defineCollection({
-	loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string().optional(),
-			pubDate: z.coerce.date(),
-		})
-});
-
-
-export const collections = { blog, pages };
+export const collections = { blog };

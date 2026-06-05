@@ -40,7 +40,7 @@ const { page } = Astro.props;
                                 <Image
                                     src={post.data.heroImage}
                                     alt={post.data.title}
-                                    loading={index < 6 ? "eager" : "lazy"}
+                                    loading={index < 5 ? "eager" : "lazy"}
                                     class="w-full h-full object-cover mix-blend-multiply rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)]"
                                 />
                             )}
