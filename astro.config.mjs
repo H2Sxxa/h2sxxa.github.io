@@ -26,6 +26,7 @@ export default defineConfig({
                 [rehypeAutolinkHeadings, {
                     behavior: "prepend", properties: {
                         className: ["anchor"],
+                        ariaHidden: "true",
                     }
                 }],
             ],

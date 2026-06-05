@@ -3,6 +3,7 @@ title: 'First post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jul 08 2022'
 heroImage: '../../assets/blog-placeholder-1.jpg'
+tags: ['tag1', 'tag2']
 ---
 
 # 一级标题
