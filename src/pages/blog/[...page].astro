@@ -28,7 +28,11 @@ const { page } = Astro.props;
     <main class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 font-serif">Blog</h1>
         <p class="text-lg text-muted-foreground mb-6">
-            RSS is available at <a href="/rss.xml" class="text-primary font-serif italic focus:underline">rss.xml</a>!
+            RSS is available at <a
+                href="/rss.xml"
+                class="text-primary font-serif italic focus:underline"
+                >rss.xml</a
+            >!
         </p>
         <div class="space-y-4">
             {
@@ -46,14 +50,9 @@ const { page } = Astro.props;
                             )}
                         </div>
 
-                        {/* Date */}
-                        <div class="absolute top-4 right-4 text-base text-muted-foreground z-10 font-serif">
-                            {post.data.pubDate.toLocaleDateString()}
-                        </div>
-
-                        {/* Title and Description */}
+                        {/* Title and Date */}
                         <div class="flex flex-col relative">
-                            <h2 class="text-2xl font-semibold font-serif">
+                            <h2 class="text-lg lg:text-2xl font-semibold font-serif">
                                 <a
                                     href={`/blog/${post.id}`}
                                     class="text-primary no-underline hover:underline"
@@ -63,12 +62,12 @@ const { page } = Astro.props;
                             </h2>
 
                             <p class="text-card-foreground mt-1">
-                                {post.data.description}
+                                {post.data.pubDate.toLocaleDateString()}
                             </p>
                             {/* Tags */}
                             {post.data.tags && (
                                 <div class="flex flex-wrap gap-2 mt-4">
-                                    {post.data.tags?.map((tag) => (
+                                    {post.data.tags.slice(0, 3)?.map((tag) => (
                                         <a
                                             href={`/blog/tag/${tag}`}
                                             class="font-serif
