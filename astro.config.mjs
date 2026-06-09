@@ -27,6 +27,7 @@ export default defineConfig({
                     behavior: "prepend", properties: {
                         className: ["anchor"],
                         ariaHidden: "true",
+                        ariaLabel: "Link to this section",
                     }
                 }],
             ],
