@@ -13,13 +13,15 @@ import { Icon } from "astro-icon/components";
       <h1 class="mt-4 text-3xl font-bold font-serif">About Me</h1>
       <nav>
         <ul class="flex space-x-4 mt-4">
-          {
-            SITE_OWNER_LINKS.map(link => (
-              <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.href}>
-                <Icon name={link.icon} class="w-8 h-8 text-foreground hover:text-foreground/90" />
-              </a>
-            ))
-          }
+          <li>
+            {
+              SITE_OWNER_LINKS.map(link => (
+                <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.href}>
+                  <Icon name={link.icon} class="w-8 h-8 text-foreground hover:text-foreground/90" />
+                </a>
+              ))
+            }
+          </li>
         </ul>
       </nav>
     </div>

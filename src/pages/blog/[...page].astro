@@ -6,6 +6,8 @@ import BackgroundGrid from "../../components/BackgroundGrid.astro";
 import { PAGE_SIZE } from "../../consts";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import { snake_case } from "../../utils/snakecase";
+import ArticlesNavigator from "../../components/ArticlesNavigator.astro";
 
 interface Props {
     page: Page<CollectionEntry<"blog">>;
@@ -64,12 +66,13 @@ const { page } = Astro.props;
                             <p class="text-card-foreground mt-1">
                                 {post.data.pubDate.toLocaleDateString()}
                             </p>
+
                             {/* Tags */}
                             {post.data.tags && (
                                 <div class="flex flex-wrap gap-2 mt-4">
                                     {post.data.tags.slice(0, 3)?.map((tag) => (
                                         <a
-                                            href={`/blog/tag/${tag}`}
+                                            href={`/tag/${snake_case(tag)}`}
                                             class="font-serif
                                         px-3
                                         py-1
@@ -95,43 +98,6 @@ const { page } = Astro.props;
             }
         </div>
 
-        <div class="flex items-center mt-8">
-            {
-                page.url.prev && (
-                    <a
-                        href={page.url.prev}
-                        class="inline-flex items-center gap-2
-                            px-4 py-2
-                            rounded-full
-                            bg-card
-                            hover:bg-accent
-                            transition-colors
-                            border"
-                    >
-                        <Icon name="mdi:chevron-left" class="w-5 h-5" />
-                        <span class="font-serif font-semibold">Previous</span>
-                    </a>
-                )
-            }
-
-            {
-                page.url.next && (
-                    <a
-                        href={page.url.next}
-                        class="ml-auto
-                            inline-flex items-center gap-2
-                            px-4 py-2
-                            rounded-full
-                            bg-card
-                            hover:bg-accent
-                            transition-colors
-                            border"
-                    >
-                        <span class="font-serif font-semibold">Next</span>
-                        <Icon name="mdi:chevron-right" class="w-5 h-5" />
-                    </a>
-                )
-            }
-        </div>
+        <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
     </main>
 </BaseLayout>

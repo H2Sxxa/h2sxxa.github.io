@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { snake_case } from "../../utils/snakecase";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+
+    const tags = new Set<string>();
+
+    posts.forEach((post) => {
+        post.data.tags?.forEach((tag) => tags.add(tag));
+    });
+
+    return Array.from(tags).map((tag) => ({
+        params: {
+            slug: snake_case(tag),
+        },
+        props: {
+            tag,
+            posts: posts.filter((post) => post.data.tags?.includes(tag)),
+        },
+    }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout>
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4 font-serif">{tag}</h1>
+    </main>
+</BaseLayout>

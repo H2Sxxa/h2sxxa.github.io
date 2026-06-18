@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Text from "../../components/Text.astro";
 import { Image } from "astro:assets";
 import BackgroundGrid from "../../components/BackgroundGrid.astro";
+import { snake_case } from "../../utils/snakecase";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -41,6 +42,7 @@ const { Content, headings } = await render(post);
 				lg:text-4xl
 				font-serif
 				font-semibold
+				px-4
 				mt-8
 				mb-4"
 		>
@@ -88,7 +90,35 @@ const { Content, headings } = await render(post);
 				<Text class="max-w-none p-4">
 					<Content />
 				</Text>
+				<!-- Tags -->
+				{
+					post.data.tags && (
+						<div class="flex flex-wrap gap-2 mx-4 mt-4">
+							{post.data.tags.map((tag) => (
+								<a
+									href={`/tag/${snake_case(tag)}`}
+									class="font-serif
+                                        px-3
+                                        py-1
+                                        text-accent-foreground
+                                        pointer-events-auto
+                                        focus:outline-none
+                                        text-sm
+                                        rounded-full
+                                        hover:bg-muted
+                                        border"
+								>
+									<span class="text-primary font-sans">
+										#
+									</span>
+									{tag}
+								</a>
+							))}
+						</div>
+					)
+				}
 
+				<!-- Giscus Comments -->
 				<div class="mt-10 p-4">
 					<script
 						src="https://giscus.app/client.js"
@@ -104,8 +134,7 @@ const { Content, headings } = await render(post);
 						data-theme="fro"
 						data-lang="zh-CN"
 						crossorigin="anonymous"
-						async
-					></script>
+						async></script>
 				</div>
 			</div>
 		</div>
