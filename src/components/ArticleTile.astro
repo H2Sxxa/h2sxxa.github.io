@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { snake_case } from "../utils/snakecase";
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    eagerLoading: boolean;
+}
+
+const { post, eagerLoading } = Astro.props as Props;
+---
+
+<article
+    class="block p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card transition-colors relative group overflow-hidden"
+>
+    {/* Image */}
+    <div class="absolute top-0 right-0 w-72 h-full pointer-events-none">
+        {
+            post.data.heroImage && (
+                <Image
+                    src={post.data.heroImage}
+                    alt={post.data.title}
+                    loading={eagerLoading ? "eager" : "lazy"}
+                    class="w-full h-full object-cover mix-blend-multiply rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)]"
+                />
+            )
+        }
+    </div>
+
+    {/* Title and Date */}
+    <div class="flex flex-col relative">
+        <h2 class="text-lg lg:text-2xl font-semibold font-serif">
+            <a
+                href={`/blog/${post.id}`}
+                class="text-primary no-underline hover:underline"
+            >
+                {post.data.title}
+            </a>
+        </h2>
+
+        <p class="text-card-foreground mt-1">
+            {post.data.pubDate.toLocaleDateString()}
+        </p>
+
+        {/* Tags */}
+        {
+            post.data.tags && (
+                <div class="flex flex-wrap gap-2 mt-4">
+                    {post.data.tags.slice(0, 3)?.map((tag) => (
+                        <a
+                            href={`/tag/${snake_case(tag)}`}
+                            class="font-serif
+                                        px-3
+                                        py-1
+                                        text-accent-foreground
+                                        pointer-events-auto
+                                        focus:outline-none
+                                        text-sm
+                                        rounded-full
+                                        hover:bg-muted
+                                        border"
+                        >
+                            <span class="text-primary font-sans">#</span>
+                            {tag}
+                        </a>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+</article>
