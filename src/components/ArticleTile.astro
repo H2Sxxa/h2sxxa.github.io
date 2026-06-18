@@ -15,12 +15,15 @@ const { post, eagerLoading } = Astro.props as Props;
     class="block p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card transition-colors relative group overflow-hidden"
 >
     {/* Image */}
-    <div class="absolute top-0 right-0 w-72 h-full pointer-events-none">
+    <div
+        class="pointer-events-none absolute right-0 top-0 hidden h-full w-72 dark:block md:block"
+        aria-hidden="true"
+    >
         {
             post.data.heroImage && (
                 <Image
                     src={post.data.heroImage}
-                    alt={post.data.title}
+                    alt=""
                     loading={eagerLoading ? "eager" : "lazy"}
                     class="w-full h-full object-cover mix-blend-multiply rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)]"
                 />
