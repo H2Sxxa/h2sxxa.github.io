@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { snake_case } from "../../utils/snakecase";
+import BackgroundGrid from "../../components/BackgroundGrid.astro";
 const posts = await getCollection("blog");
 
 const tags = new Map<string, number>();
@@ -14,6 +15,8 @@ posts.forEach((post) => {
 ---
 
 <BaseLayout>
+    <BackgroundGrid />
+
     <main class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 font-serif">Tags</h1>
         <!-- <p></p> -->
