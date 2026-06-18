@@ -3,6 +3,12 @@ import { ClientRouter } from "astro:transitions";
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FloatActionButton from "../components/FloatActionButton.astro";
+
+interface Props {
+    dontIncludeFABPadding?: boolean;
+}
+
+const { dontIncludeFABPadding } = Astro.props as Props;
 ---
 
 <html>
@@ -45,7 +51,7 @@ import FloatActionButton from "../components/FloatActionButton.astro";
         <ClientRouter />
         <slot />
         <FloatActionButton />
-        <!-- Margin for FAB -->
-        <div class="h-24">
+        <!-- Padding for FAB -->
+        {!dontIncludeFABPadding && <div class="h-24" />}
     </body>
 </html>
