@@ -6,9 +6,19 @@ import FloatActionButton from "../components/FloatActionButton.astro";
 
 interface Props {
     dontIncludeFABPadding?: boolean;
+    description?: string;
+    showDescriptionInTitle?: boolean;
+    title?: string;
+    image?: string | ImageMetadata;
 }
 
-const { dontIncludeFABPadding } = Astro.props as Props;
+const {
+    dontIncludeFABPadding,
+    description,
+    title,
+    showDescriptionInTitle,
+    image,
+} = Astro.props as Props;
 ---
 
 <html>
@@ -45,7 +55,12 @@ const { dontIncludeFABPadding } = Astro.props as Props;
                 applyColorSchemeToNextDocument,
             );
         </script>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <BaseHead
+            title={title || SITE_TITLE}
+            description={description || SITE_DESCRIPTION}
+            showDescriptionInTitle={showDescriptionInTitle}
+            image={image}
+        />
     </head>
     <body>
         <ClientRouter />

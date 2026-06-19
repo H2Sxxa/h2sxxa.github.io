@@ -19,7 +19,11 @@ const post = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<BaseLayout>
+<BaseLayout
+	image={post.data.heroImage}
+	description={post.data.title}
+	showDescriptionInTitle
+>
 	<main>
 		<BackgroundGrid />
 		<!-- Hero (If exists) -->

@@ -2,7 +2,7 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = `H2Sxxa's Blog`;
-export const SITE_DESCRIPTION = 'TODO: Add description';
+export const SITE_DESCRIPTION = 'Just share something interesting.';
 
 
 // Home Page
