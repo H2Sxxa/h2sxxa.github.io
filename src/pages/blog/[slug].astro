@@ -24,7 +24,7 @@ const { Content, headings } = await render(post);
 	image={post.data.heroImage}
 	title={post.data.title}
 	description={post.body ? clip_markdown(post.body, 100) : post.data.title}
-	showDescriptionInTitle
+	showTitleTemplate
 >
 	<main>
 		<BackgroundGrid />

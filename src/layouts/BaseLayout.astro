@@ -7,18 +7,13 @@ import FloatActionButton from "../components/FloatActionButton.astro";
 interface Props {
     dontIncludeFABPadding?: boolean;
     description?: string;
-    showDescriptionInTitle?: boolean;
+    showTitleTemplate?: boolean;
     title?: string;
     image?: string | ImageMetadata;
 }
 
-const {
-    dontIncludeFABPadding,
-    description,
-    title,
-    showDescriptionInTitle,
-    image,
-} = Astro.props as Props;
+const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
+    Astro.props as Props;
 ---
 
 <html>
@@ -58,7 +53,7 @@ const {
         <BaseHead
             title={title || SITE_TITLE}
             description={description || SITE_DESCRIPTION}
-            showDescriptionInTitle={showDescriptionInTitle}
+            showTitleTemplate={showTitleTemplate}
             image={image}
         />
     </head>
