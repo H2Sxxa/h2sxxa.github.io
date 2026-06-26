@@ -5,6 +5,7 @@ import Text from "../../components/Text.astro";
 import { Image } from "astro:assets";
 import BackgroundGrid from "../../components/BackgroundGrid.astro";
 import { snake_case } from "../../utils/snakecase";
+import { clip_markdown } from "../../utils/clip";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -21,7 +22,8 @@ const { Content, headings } = await render(post);
 
 <BaseLayout
 	image={post.data.heroImage}
-	description={post.data.title}
+	title={post.data.title}
+	description={post.body ? clip_markdown(post.body, 100) : post.data.title}
 	showDescriptionInTitle
 >
 	<main>
@@ -137,6 +139,7 @@ const { Content, headings } = await render(post);
 						data-input-position="bottom"
 						data-theme="fro"
 						data-lang="zh-CN"
+						data-loading="lazy"
 						crossorigin="anonymous"
 						async></script>
 				</div>
