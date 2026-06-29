@@ -6,7 +6,7 @@ export function clip_text(text: string, maxLength: number): string {
     return text.slice(0, maxLength) + '...';
 }
 
-export function clip_markdown(text: string, maxLength: number): string {
+export function clip_markdown(text: string = "", maxLength: number = 100): string {
     const plain = text
         .replace(/```[\s\S]*?```/g, '')
         .replace(/`([^`]+)`/g, '$1')

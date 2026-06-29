@@ -1,15 +1,65 @@
 ---
 title: 代理、镜像、AnyMirror
 pubDate: 2026-06-28
-tags: ["Proxy","Mirror","Rust","Transparent Proxy","MITM"]
+tags: ["Proxy","Mirror","Rust","Transparent Proxy","MITM","Minecraft","Forge","Gradle"]
 categories: Development & Programming
 ---
-import Tile from "@/components/inlines/Tile.astro";
-
+import NavigationTile from "@/components/inlines/NavigationTile.astro";
+import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.astro";
 
 
 ## 前言
 
-前几年，我花了很长的一段时间去做一些工具来帮助MC模组开发者们完成他们的开发环境设置。
+前几年，我花了很长的一段时间去做一些工具来帮助 MC 模组开发者们完成他们的开发环境设置。
 
-<Tile/>
+在过去那段时间，如果你没有合适的网络工具，完成你的开发环境设置非常困难，为了解决这种问题，一时也出现了很多教程和方法。
+
+### 1. 最初的经典 - 代理
+
+最开始流行的是使用 [FMLTutor](https://fmltutor.ustc-zzzz.net/1.1-%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83.html) 书中免费提供的代理服务器。
+
+比较经典的用法是使用 Shadowsocks + Proxifier 进行配置，可以参考下面的教程。
+
+<NavigationTile title="Minecraft Forge 构建开发环境网络代理配置教程" subtitle="By ZekerZhayard" href="https://zekerzhayard.gitbook.io/minecraft-forge-gou-jian-kai-fa-huan-jing-wang-luo-dai-li-pei-zhi-jiao-cheng"/>
+
+对于小白来说，特别是 MCreator 的，你并不能够相信这个篇教程能够被他们所理解，我们需要一种更加"自动化"的配置方法，所以 MCreator_Setup 应运而生。
+
+<NavigationTile leadingIcon="mdi:github" title="MCreator_Setup" subtitle="已归档" href="https://github.com/H2Sxxa/MCreator_Setup" />
+
+说实话，这是个很糟糕的工具，用 `aria2c` 处理下载，用 `noneprompt` 处理 TUI 输入，用 pyinstaller 打包，没有代码规范，但是意外地帮助了很多人。
+
+### 2. 失败的探索 - 镜像
+
+做了这个工具之后，我对 Flutter 产生了兴趣，于是使用 `fluent_ui` 重构了这个工具，虽然几乎没有UI设计，但是确实比之前的工具好用一些。
+
+我也开始探索一些更加另类的方法来加速网络环境，相对于代理来说，镜像是更好的方法，不过想要修改 Forge 下载源难如登天。已有的方法是写一个 [`mirror.gradle`](https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/mirror.gradle) 在运行时注入，修改 class。
+不同的 Gradle / Forge Gradle 版本实现方法不同，有没有一种更通用的方法呢？回归原理，这个方法实际就是运行时修改字符串，在运行时之前修改也能达到同样的效果。
+
+但是要求使用 jbytemode 这类工具自行修改并且重新封回 jar 中还是充满了风险，毕竟他们并不清楚自己在做什么，很容易把一切变糟糕，所以我把这个方法集成到了 Rosa 里。几乎支持了
+大部分已知的 Forge Gradle 版本，甚至包括了 RetroForgeGradle，你可以在 [这里](https://github.com/H2Sxxa/Rosa/tree/bin/forgegradle) 看到已经修改过的 class，不建议使用，因为已经有了更好的方法。
+
+下面是 Rosa 的开发笔记。
+
+<ArticleNavigationTile postId="rosa_dev_exp" />
+
+有了这项探索，我们就可以得到了完全镜像的方法，把 Forge Gradle Plugin 的下载源修改为国内的镜像源，再通过工具 patch 这个 Plugin，理论上，我们就得到了完美的镜像方法了...吗？
+
+<ArticleNavigationTile postId="forge_dev_gradlemirror" />
+
+很明显，这个方法由于有些镜像方提供的 `maven-metadata.xml` 不完整，是一个失败的方法。解决的方法是各取一半，使用镜像源下载大部分文件，使用代理下载镜像源有问题的文件。
+
+**显然这是不可能的。** 😭
+
+虽然镜像是一个有趣的尝试，但是门框过高并且有着致命的缺陷，对于大部分人来说，不够友好。
+
+在我学习 Rust 之后，我用 Rust 把修改 jar 中的字符串的方法做成了另一个工具，希望是能够用于翻译又或者其他用途，感兴趣的可以尝试使用。
+
+<NavigationTile leadingIcon="mdi:github" title="JSBP" subtitle="Jar String Bytes Patcher" href="https://github.com/H2Sxxa/jsbp" />
+
+### 3. 最初与最终的代理 - AnyMirror
+
+<NavigationTile leadingIcon="mdi:github" title="AnyMirror" subtitle="High-performance traffic orchestration gateway with transparent L3 proxying and rule-based request routing🪞" href="https://github.com/H2Sxxa/AnyMirror" />
+
+## 我是如何构建这个代理工具的?
+
+TODO

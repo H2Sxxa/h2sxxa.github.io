@@ -1,0 +1,23 @@
+---
+import NavigationTile from "@/components/inlines/NavigationTile.astro";
+import { clip_markdown } from "@/utils/clip";
+import { getCollection } from "astro:content";
+
+interface Props {
+    postId: string;
+}
+
+const { postId } = Astro.props as Props;
+
+const post = (await getCollection("blog")).find((p) => p.id === postId)!;
+---
+
+<article>
+    <NavigationTile
+        title={post.data.title}
+        subtitle={clip_markdown(post.body)}
+        href={`/blog/${post.id}`}
+        leadingIcon="mdi:book-open-page-variant"
+    />
+</article>
+
