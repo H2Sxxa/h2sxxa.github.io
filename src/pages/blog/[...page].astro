@@ -1,11 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import BackgroundGrid from "../../components/BackgroundGrid.astro";
-import { PAGE_SIZE } from "../../consts";
-import ArticlesNavigator from "../../components/ArticlesNavigator.astro";
-import ArticleTile from "../../components/ArticleTile.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BackgroundGrid from "@/components/BackgroundGrid.astro";
+import { PAGE_SIZE } from "@/consts";
+import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
+import ArticleTile from "@/components/ArticleTile.astro";
 
 interface Props {
     page: Page<CollectionEntry<"blog">>;

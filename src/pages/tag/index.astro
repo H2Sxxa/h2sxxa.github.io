@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { snake_case } from "../../utils/snakecase";
-import BackgroundGrid from "../../components/BackgroundGrid.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { snake_case } from "@/utils/snakecase";
+import BackgroundGrid from "@/components/BackgroundGrid.astro";
 const posts = await getCollection("blog");
 
 const tags = new Map<string, number>();

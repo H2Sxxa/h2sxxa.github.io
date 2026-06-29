@@ -1,11 +1,11 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Text from "../../components/Text.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/Text.astro";
 import { Image } from "astro:assets";
-import BackgroundGrid from "../../components/BackgroundGrid.astro";
-import { snake_case } from "../../utils/snakecase";
-import { clip_markdown } from "../../utils/clip";
+import BackgroundGrid from "@/components/BackgroundGrid.astro";
+import { snake_case } from "@/utils/snakecase";
+import { clip_markdown } from "@/utils/clip";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
