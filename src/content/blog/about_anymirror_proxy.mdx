@@ -1,7 +1,7 @@
 ---
 title: 代理、镜像、AnyMirror
 pubDate: 2026-06-28
-tags: ["Proxy","Mirror","Rust","Transparent Proxy","MITM","Minecraft","Forge","Gradle"]
+tags: ["Proxy","Mirror","Rust","Transparent Proxy","MITM","Minecraft","Forge","Gradle","OSI","TUN","WinDivert","Network"]
 categories: Development & Programming
 ---
 import NavigationTile from "@/components/inlines/NavigationTile.astro";
@@ -28,9 +28,11 @@ import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.as
 
 说实话，这是个很糟糕的工具，用 `aria2c` 处理下载，用 `noneprompt` 处理 TUI 输入，用 pyinstaller 打包，没有代码规范，但是意外地帮助了很多人。
 
+在工具的用户反馈中，我发现了代理有一个不可忽视的缺陷，那就是代理服务不可保证稳定性，同时代理服务相对来说非常昂贵。
+
 ### 2. 失败的探索 - 镜像
 
-做了这个工具之后，我对 Flutter 产生了兴趣，于是使用 `fluent_ui` 重构了这个工具，虽然几乎没有UI设计，但是确实比之前的工具好用一些。
+在做了这个工具之后，我对 Flutter 产生了兴趣，于是使用 `fluent_ui` 重构了这个工具，虽然几乎没有UI设计，但是确实比之前的工具好用一些。
 
 我也开始探索一些更加另类的方法来加速网络环境，相对于代理来说，镜像是更好的方法，不过想要修改 Forge 下载源难如登天。已有的方法是写一个 [`mirror.gradle`](https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/mirror.gradle) 在运行时注入，修改 class。
 不同的 Gradle / Forge Gradle 版本实现方法不同，有没有一种更通用的方法呢？回归原理，这个方法实际就是运行时修改字符串，在运行时之前修改也能达到同样的效果。
@@ -58,8 +60,67 @@ import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.as
 
 ### 3. 最初与最终的代理 - AnyMirror
 
+在做出 AnyMirror 很久之前，我就曾想过如果有一种代理工具，能够基于镜像动态响应请求就行了，研究过 `mitmproxy` ，但不适合拿来做这个事情，后来我就想到了自己写一个代理工具。
+
 <NavigationTile leadingIcon="mdi:github" title="AnyMirror" subtitle="High-performance traffic orchestration gateway with transparent L3 proxying and rule-based request routing🪞" href="https://github.com/H2Sxxa/AnyMirror" />
+
+基本上，AnyMirror 在功能上是符合一个代理软件的，例如 MiHomo/Leaf 这些，只不过响应的不是远程服务器，而是本地的 AnyMirror 基于规则进行响应。
+基于 QuickJS 插件也能够实现更复杂的场景，例如在请求中注入一些自定义的内容，或者在响应中注入一些自定义的内容，也可以基于请求进行分发。
+
+另一个做这个工具的契机是，我在做前端工作时，希望有一个工具能够自定义响应请求，类似于 API Mock 的功能，能够在本地模拟一个 API 服务，方便前端开发者进行调试，而不必忍受后端缓慢的响应。
 
 ## 我是如何构建这个代理工具的?
 
-TODO
+总的来说，如果你想要代理并且使用镜像响应，你至少在本地需要两个服务，一个是代理服务，另一个是响应服务。代理负责路由本地请求，响应负责拉取远程资源并且返回给代理服务。
+
+### 1. 如何代理
+
+这是最困难的部分。
+
+代理基本上分别显式代理和透明代理，显式代理就是在客户端配置代理服务器，透明代理就是在网络层面上拦截请求并且转发到代理服务器。
+使用OSI解释的话，显式代理位于L7，透明代理位于L3/L4。
+
+显式代理没什么好说的，基本就是本地开个端口接收请求并且响应就行了，透明代理就比较复杂了，拦截是个非常 Hack 的过程，在 AnyMirror 中，我把拦截的手段称作透明代理后端，
+并且支持了两种后端，分别是 TUN(smoltcp) 和 WinDivert，前者是跨平台的，后者是 Windows 平台的。
+
+透明代理往往需要支持协议栈，因为需要解析请求，才能够知道请求的目标地址和端口，进而转发请求到代理服务器。
+
+WinDivert 通过 Windows Filtering Platform(WFP) 挂载(hook)在系统栈上，基本无需关心协议栈就能够拦截修改请求并且进行响应。
+
+什么是协议栈？网络数据是层层封装的。例如，一个 HTTP 请求会先被封装成 TLS 数据（HTTPS），再封装成 TCP 段，最后封装成 IP 包进行传输。协议栈负责按照这些协议层进行封装和解析，将原始 IP 包逐层还原成 TCP/UDP 数据流，进一步还原为 TLS、HTTP 等上层协议，供应用程序处理。
+TUN 只知道什么是 IP 包(L3)，而不知道 TCP/UDP 包(L4)，所以我们需要协议栈。
+
+我们知道了数据是如何解析的，那么，这两种后端都是如何拦截域名并且转发的呢？答案是 Fake-IP + DNS-hijack。
+这两种后端都依赖了本地的 FakeDNS 服务，FakeDNS 服务会将请求的域名解析为本地的 Fake-IP，然后透明代理后端会拦截这个 Fake-IP 的请求并且转发到代理服务器。
+实现的方法略有不同，WinDivert 可以直接拦截 DNS 查询请求并且返回 Fake-IP，而 TUN 需要修改 DNS 服务，在 Windows 几乎是通过 `netsh` 来设置，在 Linux 上则是可能会通过 `resolvectl` 来修改。
+
+但是，Fake-IP 也有一个问题，那就是可能会和真实的 IP 冲突，我们就需要借助 NAT 表，NAT 表会记录 Fake-IP 和真实 IP 的映射关系，响应时，会把 Fake-IP 还原。
+
+总得来看，代理是这样的：
+客户端请求->FakeDNS解析域名->Fake-IP->透明代理后端拦截->NAT表还原->代理服务器响应
+
+### 2. 如何响应
+
+响应分为两部分，一部分是响应服务，另一部分是可能存在资源拉取的上游动作。
+
+响应服务分为 HTTP 和 HTTPS，HTTPS 需要使用 TLS 证书，证书需要先被信任才能够使用，TLS证书会通过SNI嗅探动态签发对应的子证书，尽可能保证一致性。
+至于如何把HTTPS分发到TLS端口，则是在拦截处判断 dst 是不是 443 端口，如果是，则转发到 TLS 端口，否则转发到 HTTP 端口。
+HTTP(S) 请求进入本地服务器中，按照规则进行响应。任何需要拉取的资源都会通过 Executor 拉取。
+
+上游动作支持资源拉取，为了资源拉取能够尽可能地被自定义并且保持高性能，使用了 Hyper 构建。
+
+### 3. 规则
+
+如何保证规则和请求再复杂再多也不会导致卡顿，这是一个有趣但是很好解决的问题，通过规则编译，把可读的规则编译为各种数据结构，类似于 01-Trie，HashMap，Vec 等等，保证规则的匹配时间复杂度尽可能地小。
+
+### 4. 热重载
+
+借鉴了 Erlang/OTP Supervision Tree。
+
+有 Supervisor 负责启动、重启、优雅退出数个 Workers，而 Workers 负责执行任务，Worker 之间是隔离的，Worker 崩溃不会影响其他 Worker 的运行。
+
+通过定期比对watch的配置文件字段变化来决定哪个 Worker 需要被重启，保证配置文件的热重载。
+
+### 5. 可观测性
+
+通过 tracing-opentelemetry，把日志、指标、追踪等数据发送到 OpenTelemetry Collector，进而发送到 Jaeger 等可视化工具中。
