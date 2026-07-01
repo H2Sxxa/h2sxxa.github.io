@@ -1,0 +1,23 @@
+---
+title: Agent、RAG、Prompt与信息壁垒
+pubDate: 2026-07-01
+tags: ["Agent", "RAG", "Prompt", "LLM"]
+categories: Development & Programming
+---
+
+## 前言
+
+最近在读 [Agentic Design Patterns](https://adp.xindoo.xyz/)，结合之前对LLM本质的理解，我认为这似乎不是什么
+困难的技术，也许这一系列名词是这个方向的护城河，构成了一座信息壁垒。
+
+总得来说，LLM无时无刻都在处理各种各样的字符串。代码、写作、聊天这些都是各种各样的带信息的字符串。
+
+## 现代人工智能的本质
+
+简而言之，LLM 就是一个文本补全机器。
+
+LLM 是没有记忆的，上下文窗口的长度(Context Window)就是 LLM 记忆的最大长度。当上下文非常长时，对于下一个token的预测能力会下降，
+这是因为 LLM 注意力被长上下文所分散从而无法有效利用当前上下文。为了保证输出质量，上下文的简洁是非常重要的，所以大多数Agent都搭配了上下文压缩技术，
+同时这也是 Prompt Engineering 中保证 Prompt 有效性的关键。
+
+TODO
