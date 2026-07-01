@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import { snake_case } from "@/utils/snakecase";
 import { clip_markdown } from "@/utils/clip";
+import FormattedDate from "@/components/FormattedDate.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -18,6 +19,7 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
+post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout
@@ -56,7 +58,7 @@ const { Content, headings } = await render(post);
 		</h1>
 		<div class="text-center text-muted-foreground">
 			<p class="text-sm mt-1">
-				Published on {post.data.pubDate.toLocaleDateString()}
+				Published on {(<FormattedDate date={post.data.pubDate} />)}
 			</p>
 		</div>
 		<div class="mt-4 mx-auto

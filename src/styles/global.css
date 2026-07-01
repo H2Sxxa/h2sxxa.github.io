@@ -8,22 +8,22 @@
 
 :root {
 	/* Colors */
-	--background: oklch(0.98 0.01 120);
-	--foreground: oklch(0.32 0.03 135);
+	--background: oklch(0.985 0.010 124);
+	--foreground: oklch(0.29 0.03 124);
 
-	--primary: oklch(0.60 0.14 126);
-	--primary-foreground: oklch(0.98 0.01 120);
+	--primary: oklch(0.60 0.12 123);
+	--primary-foreground: oklch(0.99 0.008 124);
 
-	--muted: oklch(0.95 0.02 122);
-	--muted-foreground: oklch(0.53 0.05 131);
+	--muted: oklch(0.955 0.020 124);
+	--muted-foreground: oklch(0.51 0.045 123);
 
-	--accent: oklch(0.90 0.04 124);
-	--accent-foreground: oklch(0.32 0.03 135);
+	--accent: oklch(0.89 0.050 123);
+	--accent-foreground: oklch(0.29 0.03 124);
 
-	--border: oklch(0.91 0.03 124);
+	--border: oklch(0.90 0.030 124);
 
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.32 0.03 135);
+	--card: oklch(0.995 0.006 124);
+	--card-foreground: oklch(0.29 0.03 124);
 
 	/* Typography */
 	--font-sans: var(--font-lato);
@@ -35,22 +35,22 @@
 }
 
 .dark {
-	--background: oklch(0.23 0.02 137);
-	--foreground: oklch(0.92 0.03 121);
+	--background: oklch(0.22 0.02 124);
+	--foreground: oklch(0.92 0.025 124);
 
-	--primary: oklch(0.69 0.08 127);
-	--primary-foreground: oklch(0.23 0.02 137);
+	--primary: oklch(0.75 0.11 124);
+	--primary-foreground: oklch(0.21 0.02 124);
 
-	--muted: oklch(0.32 0.03 134);
-	--muted-foreground: oklch(0.75 0.05 129);
+	--muted: oklch(0.30 0.028 124);
+	--muted-foreground: oklch(0.73 0.045 124);
 
-	--accent: oklch(0.37 0.03 133);
-	--accent-foreground: oklch(0.98 0.01 120);
+	--accent: oklch(0.36 0.035 124);
+	--accent-foreground: oklch(0.95 0.012 124);
 
-	--border: oklch(0.37 0.03 133);
+	--border: oklch(0.36 0.030 124);
 
-	--card: oklch(0.27 0.02 135);
-	--card-foreground: oklch(0.92 0.03 121);
+	--card: oklch(0.26 0.022 124);
+	--card-foreground: oklch(0.92 0.025 124);
 }
 
 /* =========================
@@ -186,4 +186,12 @@
 	--tw-prose-pre-bg: var(--card);
 	--tw-prose-th-borders: var(--border);
 	--tw-prose-td-borders: var(--border);
+}
+
+@utility card-border {
+	@apply shadow-sm;
+
+	@variant dark {
+		@apply shadow-none border;
+	}
 }

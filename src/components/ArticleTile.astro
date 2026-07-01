@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { snake_case } from "@/utils/snakecase";
+import FormattedDate from "./FormattedDate.astro";
 
 interface Props {
     post: CollectionEntry<"blog">;
@@ -12,7 +13,7 @@ const { post, eagerLoading } = Astro.props as Props;
 ---
 
 <article
-    class="block p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card transition-colors relative group overflow-hidden"
+    class="block p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card transition-colors relative group overflow-hidden card-border"
 >
     {/* Image */}
     <div
@@ -43,19 +44,21 @@ const { post, eagerLoading } = Astro.props as Props;
         </h2>
 
         <p class="text-card-foreground mt-1">
-            {post.data.pubDate.toLocaleDateString()}
+            <FormattedDate date={post.data.pubDate} />
         </p>
 
         {/* Tags */}
         {
             post.data.tags && (
-                <div class="flex flex-wrap gap-2 mt-4">
-                    {post.data.tags.slice(0, 3)?.map((tag) => (
+                <div class="flex flex-nowrap gap-2 mt-4 overflow-hidden">
+                    {post.data.tags.map((tag) => (
                         <a
                             href={`/tag/${snake_case(tag)}`}
                             class="font-serif
                                         px-3
                                         py-1
+                                        shrink-0
+                                        whitespace-nowrap
                                         text-accent-foreground
                                         pointer-events-auto
                                         focus:outline-none
