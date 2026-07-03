@@ -61,6 +61,21 @@ post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
 				Published on {(<FormattedDate date={post.data.pubDate} />)}
 			</p>
 		</div>
+
+		{
+			post.data.wip && (
+				<div
+					class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mt-4 mx-auto max-w-3xl"
+					role="alert"
+				>
+					<p class="font-bold">Work in Progress</p>
+					<p>
+						This article is still under development and may be
+						incomplete.
+					</p>
+				</div>
+			)
+		}
 		<div class="mt-4 mx-auto
 			max-w-7xl
 			lg:grid">
