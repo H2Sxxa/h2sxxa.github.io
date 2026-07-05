@@ -11,6 +11,8 @@ format conversion (Astro handles delivery-time optimization at build).
 Usage:
     .venv/Scripts/python.exe scripts/automate_compress.py            # dry run
     .venv/Scripts/python.exe scripts/automate_compress.py --apply    # write changes
+    .venv/Scripts/python.exe scripts/automate_compress.py path/to/img.jpg --apply
+    .venv/Scripts/python.exe scripts/automate_compress.py src/content/blog/img
 """
 
 from __future__ import annotations
@@ -23,11 +25,13 @@ from PIL import Image
 
 # Directories to scan, relative to the repo root.
 TARGET_DIRS = ["src/content", "public"]
-MAX_EDGE = 2560          # cap the longest side; plenty for full-bleed display
+MAX_EDGE = 2560  # cap the longest side; plenty for full-bleed display
 JPEG_QUALITY = 85
 SUFFIXES = {".jpg", ".jpeg", ".png"}
 # Skip files already small enough to not be worth touching.
 MIN_BYTES = 200 * 1024
+# Skip re-encodes that shave off less than this fraction; not worth the churn.
+MIN_SAVING = 0.10
 
 
 def human(n: float) -> str:
@@ -75,7 +79,8 @@ def compress(path: Path, apply: bool) -> tuple[int, int]:
         return old, old
 
     new = tmp.stat().st_size
-    if new >= old:
+    # Skip when the win is too small to be worth the churn (covers new >= old).
+    if (old - new) / old < MIN_SAVING:
         tmp.unlink()
         return old, old
 
@@ -86,25 +91,55 @@ def compress(path: Path, apply: bool) -> tuple[int, int]:
     return old, new
 
 
+def collect(targets: list[str], root: Path) -> list[Path]:
+    """Expand CLI targets (files or dirs) into a list of image files.
+
+    Falls back to TARGET_DIRS when no targets are given. Paths may be absolute
+    or relative to the current working directory.
+    """
+    files: list[Path] = []
+    for t in targets or TARGET_DIRS:
+        base = Path(t)
+        if not base.is_absolute():
+            # Try as given (cwd-relative), then relative to the repo root.
+            base = base if base.exists() else root / t
+        if base.is_file():
+            if base.suffix.lower() in SUFFIXES:
+                files.append(base)
+            else:
+                print(f"  ! skip {base}: not an image", file=sys.stderr)
+        elif base.is_dir():
+            files += [
+                p
+                for p in base.rglob("*")
+                if p.is_file() and p.suffix.lower() in SUFFIXES
+            ]
+        else:
+            print(f"  ! skip {t}: not found", file=sys.stderr)
+    return files
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--apply", action="store_true", help="write changes (default: dry run)")
+    ap.add_argument(
+        "targets",
+        nargs="*",
+        help="image files or directories to process (default: TARGET_DIRS)",
+    )
+    ap.add_argument(
+        "--apply", action="store_true", help="write changes (default: dry run)"
+    )
     args = ap.parse_args()
 
     root = Path(__file__).resolve().parent.parent
-    files: list[Path] = []
-    for d in TARGET_DIRS:
-        base = root / d
-        if base.exists():
-            files += [
-                p for p in base.rglob("*")
-                if p.is_file() and p.suffix.lower() in SUFFIXES
-            ]
+    files = collect(args.targets, root)
 
     files.sort(key=lambda p: p.stat().st_size, reverse=True)
 
     mode = "APPLY" if args.apply else "DRY RUN"
-    print(f"[{mode}] scanning {len(files)} images (max edge {MAX_EDGE}px, q{JPEG_QUALITY})\n")
+    print(
+        f"[{mode}] scanning {len(files)} images (max edge {MAX_EDGE}px, q{JPEG_QUALITY})\n"
+    )
 
     total_old = total_new = changed = 0
     for p in files:
@@ -114,7 +149,10 @@ def main() -> int:
         if new < old:
             changed += 1
             pct = (1 - new / old) * 100
-            rel = p.relative_to(root).as_posix()
+            try:
+                rel = p.relative_to(root).as_posix()
+            except ValueError:
+                rel = p.as_posix()
             print(f"  {human(old):>9} -> {human(new):>9}  (-{pct:4.1f}%)  {rel}")
 
     saved = total_old - total_new
