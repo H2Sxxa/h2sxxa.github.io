@@ -188,7 +188,7 @@
 	--tw-prose-td-borders: var(--border);
 }
 
-@utility card-border {
+@utility elevated {
 	@apply shadow-sm;
 
 	@variant dark {

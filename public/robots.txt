@@ -1,0 +1,39 @@
+# robots.txt for https://h2sxxa.github.io
+
+# Content Signals policy (https://contentsignals.org)
+# search=yes: allow use for search indexing
+# ai-input=yes: allow use as input for AI answers (RAG/grounding)
+# ai-train=yes: allow use for training AI models
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+# AI crawlers (explicitly allowed)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://h2sxxa.github.io/sitemap-index.xml
