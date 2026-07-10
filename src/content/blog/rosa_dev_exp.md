@@ -1,7 +1,7 @@
 ---
 title: ROSA开发总结
 pubDate: 2023-7-11
-tags: ["Dart","Flutter","Gradle"]
+tags: ["Dart", "Flutter", "Gradle"]
 categories: Development & Programming
 heroImage: img/pixiv/85603133.jpg
 ---
@@ -29,8 +29,6 @@ ROSA镜像修补功能的想法起初是我看到了IDF中炸鸭写的[mirror.gr
 我又和cdc讨论了一下，他使用工具帮我确定了一下Gradle使用jar位于jar-9中（感谢cdc），我尝试把jar-9给删了，然后重新运行`./gradlew`，结果是jar-9重新生成了，我就推测jar-9来源于file-2.1，并且在Gradle初始化时生成，事实证明应该我想的没错。
 
 （后来又研究了一下jar-9的jar为什么体积能达到file-2.1的三倍之多，原因是压缩时算法不同，jar-9可能是使用了STORE模式来压缩（仅存储），而file-2.1（打包jar）则是使用了特定的算法来进行压缩）
-
-
 
 确定了jar的位置，由于我环境里只有FG的分支RFG，所以我首先先对RFG的常量类下手了，天真的我以为只要修改了常量类中的字符串就可以实现jar全局的修改。
 

@@ -5,63 +5,60 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import FloatActionButton from "@/components/FloatActionButton.astro";
 
 interface Props {
-    dontIncludeFABPadding?: boolean;
-    description?: string;
-    showTitleTemplate?: boolean;
-    title?: string;
-    image?: string | ImageMetadata;
+  dontIncludeFABPadding?: boolean;
+  description?: string;
+  showTitleTemplate?: boolean;
+  title?: string;
+  image?: string | ImageMetadata;
 }
 
 const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
-    Astro.props as Props;
+  Astro.props as Props;
 ---
 
 <html>
-    <head>
-        <!-- Theme (dark/light) -->
+  <head>
+    <!-- Theme (dark/light) -->
 
-        <script is:inline>
-            const colorSchemeQuery = window.matchMedia(
-                "(prefers-color-scheme: dark)",
-            );
+    <script is:inline>
+      const colorSchemeQuery = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      );
 
-            const setColorScheme = (element, dark) => {
-                element.classList.toggle("dark", dark);
-            };
+      const setColorScheme = (element, dark) => {
+        element.classList.toggle("dark", dark);
+      };
 
-            const applyColorScheme = () => {
-                setColorScheme(
-                    document.documentElement,
-                    colorSchemeQuery.matches,
-                );
-            };
+      const applyColorScheme = () => {
+        setColorScheme(document.documentElement, colorSchemeQuery.matches);
+      };
 
-            const applyColorSchemeToNextDocument = (event) => {
-                setColorScheme(
-                    event.newDocument.documentElement,
-                    colorSchemeQuery.matches,
-                );
-            };
+      const applyColorSchemeToNextDocument = (event) => {
+        setColorScheme(
+          event.newDocument.documentElement,
+          colorSchemeQuery.matches,
+        );
+      };
 
-            applyColorScheme();
-            colorSchemeQuery.addEventListener("change", applyColorScheme);
-            document.addEventListener(
-                "astro:before-swap",
-                applyColorSchemeToNextDocument,
-            );
-        </script>
-        <BaseHead
-            title={title || SITE_TITLE}
-            description={description || SITE_DESCRIPTION}
-            showTitleTemplate={showTitleTemplate}
-            image={image}
-        />
-    </head>
-    <body>
-        <ClientRouter />
-        <slot />
-        <FloatActionButton />
-        <!-- Padding for FAB -->
-        {!dontIncludeFABPadding && <div class="h-24" />}
-    </body>
+      applyColorScheme();
+      colorSchemeQuery.addEventListener("change", applyColorScheme);
+      document.addEventListener(
+        "astro:before-swap",
+        applyColorSchemeToNextDocument,
+      );
+    </script>
+    <BaseHead
+      title={title || SITE_TITLE}
+      description={description || SITE_DESCRIPTION}
+      showTitleTemplate={showTitleTemplate}
+      image={image}
+    />
+  </head>
+  <body>
+    <ClientRouter />
+    <slot />
+    <FloatActionButton />
+    <!-- Padding for FAB -->
+    {!dontIncludeFABPadding && <div class="h-24" />}
+  </body>
 </html>

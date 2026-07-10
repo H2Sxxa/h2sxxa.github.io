@@ -1,41 +1,41 @@
 ---
 import { cn } from "@/utils/cn";
 interface Props {
-    class?: string;
+  class?: string;
 }
 
 const { class: className } = Astro.props;
 ---
 
 <article class={cn("prose", className)}>
-    <slot />
+  <slot />
 </article>
 
 <style>
-    article :global(h1),
-    article :global(h2),
-    article :global(h3) {
-        position: relative;
-    }
+  article :global(h1),
+  article :global(h2),
+  article :global(h3) {
+    position: relative;
+  }
 
-    article :global(.anchor) {
-        position: absolute;
-        right: 100%;
-        margin-right: 0.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        opacity: 0;
-        text-decoration: none;
-        transition: opacity 0.2s;
-    }
+  article :global(.anchor) {
+    position: absolute;
+    right: 100%;
+    margin-right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
 
-    article :global(.anchor)::before {
-        content: "#";
-    }
+  article :global(.anchor)::before {
+    content: "#";
+  }
 
-    article :global(h1:hover .anchor),
-    article :global(h2:hover .anchor),
-    article :global(h3:hover .anchor) {
-        opacity: 1;
-    }
+  article :global(h1:hover .anchor),
+  article :global(h2:hover .anchor),
+  article :global(h3:hover .anchor) {
+    opacity: 1;
+  }
 </style>

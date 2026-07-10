@@ -1,7 +1,16 @@
 ---
 title: 从原子组件与状态编排来看组件化
 pubDate: 2026-03-08
-tags: ["Web", "Programming", "Frontend", "React", "ShadcnUI", "Functional Programming", "Software Engineering"]
+tags:
+  [
+    "Web",
+    "Programming",
+    "Frontend",
+    "React",
+    "ShadcnUI",
+    "Functional Programming",
+    "Software Engineering",
+  ]
 categories: Development & Programming
 heroImage: img/pixiv/141961402.png
 ---
@@ -41,7 +50,7 @@ heroImage: img/pixiv/141961402.png
 ```tsx
 // Not Atomic
 function ContactsPage() {
-  // Business State  
+  // Business State
   const { users, setUsers } = useContactsStore();
 
   return (
@@ -57,7 +66,7 @@ function ContactsPage() {
 function UserTile({ user, onClick }: { user: User; onClick: () => void }) {
   return (
     <div className="flex items-center space-x-4">
-      {/* Global Atomic Component */}   
+      {/* Global Atomic Component */}
       <Avatar src={user.avatar} alt={user.name} />
       <div>
         <p className="text-sm font-medium text-foreground">{user.name}</p>
@@ -84,7 +93,15 @@ function UserTile({ user, onClick }: { user: User; onClick: () => void }) {
 
 ```tsx
 // Not DI
-function Foo({ foo, bar, foobar }:{ foo: FooType, bar: BarType, foobar: FooBarType }) {
+function Foo({
+  foo,
+  bar,
+  foobar,
+}: {
+  foo: FooType;
+  bar: BarType;
+  foobar: FooBarType;
+}) {
   return (
     <div>
       <FooComponent foo={foo} />
@@ -93,7 +110,6 @@ function Foo({ foo, bar, foobar }:{ foo: FooType, bar: BarType, foobar: FooBarTy
     </div>
   );
 }
-
 
 // DI
 function Foo() {
@@ -113,7 +129,6 @@ function Foo() {
 
 大多数时候，当一个组件的参数超过3个，这个组件就开始变得地狱了(Prop Drilling)，再加上代码如果很长，你可能要先去看看调用点，再回来看组件的实现，无疑是非常痛苦的。依赖注入很好地解决了这个问题。
 
-~感谢DI帮我摆脱参数地狱。~
+~~感谢DI帮我摆脱参数地狱。~~
 
 状态编排没有太多的内容，一个组件只要能够通过合适的方法，无论是 props 传递还是依赖注入，那就是不错的状态编排。
-

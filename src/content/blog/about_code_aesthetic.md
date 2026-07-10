@@ -1,7 +1,7 @@
 ---
 title: 谈谈代码美学
 pubDate: 2023-9-17
-tags: ["Code Aesthetic","Rust","Python","C"]
+tags: ["Code Aesthetic", "Rust", "Python", "C"]
 categories: Development & Programming
 heroImage: img/pixiv/96078807.jpg
 ---
@@ -74,6 +74,7 @@ let answer = 3 * argument.pow(2) + 2 * argument + 1;
 def func(*args,**kwargs):
     pass
 ```
+
 `args`是`argument`的缩写，`kwargs`是`keyword arguments`的缩写，这些东西都是人们所认可的，不必说也能够理解
 
 简单列举几个缩写（仅供参考）
@@ -146,7 +147,7 @@ def get_animal_name(animal: Animal) -> str:
 
 因此，我认为，类型系统其实也能算作注释或文档的一部分，如果你有一个拥有明确目的的函数名和确切的类型，删除一部分的多余的注释是完全没有问题的
 
-此时再来重写一下之前那段寻找最小值的代码 
+此时再来重写一下之前那段寻找最小值的代码
 
 ```rust
 fn find_min_index(vec: Vec<i32>) -> usize {
@@ -224,10 +225,10 @@ class Pig(Animal):...
 class Dog(Animal):...
 ```
 
-
 ## 参考文献
 
 [^1]: [四种基本的编程命名规范 - 知乎](https://zhuanlan.zhihu.com/p/89909623)
-[^2]: [C#官方文档中的接口](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface)
-[^3]: [Confused about the Interface and Class coding guidelines for TypeScript(StackOverflow)](https://stackoverflow.com/a/41967120/4676238)
 
+[^2]: [C#官方文档中的接口](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface)
+
+[^3]: [Confused about the Interface and Class coding guidelines for TypeScript(StackOverflow)](https://stackoverflow.com/a/41967120/4676238)

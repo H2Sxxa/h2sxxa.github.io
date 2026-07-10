@@ -8,41 +8,40 @@ import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
 
 interface Props {
-    page: Page<CollectionEntry<"blog">>;
+  page: Page<CollectionEntry<"blog">>;
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-    const posts = (await getCollection("blog")).sort(
-        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-    );
-    return paginate(posts, {
-        pageSize: PAGE_SIZE,
-    });
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+  return paginate(posts, {
+    pageSize: PAGE_SIZE,
+  });
 };
 
 const { page } = Astro.props;
 ---
 
 <BaseLayout>
-    <BackgroundGrid />
-    <main class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4 font-serif">Blog</h1>
-        <p class="text-lg text-muted-foreground mb-6">
-            RSS is available at <a
-                href="/rss.xml"
-                class="text-primary font-serif italic focus:underline"
-                >rss.xml</a
-            >!
-        </p>
+  <BackgroundGrid />
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="mb-4 font-serif text-3xl font-bold">Blog</h1>
+    <p class="mb-6 text-lg text-muted-foreground">
+      RSS is available at <a
+        href="/rss.xml"
+        class="font-serif text-primary italic focus:underline">rss.xml</a
+      >!
+    </p>
 
-        <div class="space-y-4">
-            {
-                page.data.map((post, index) => (
-                    <ArticleTile post={post} eagerLoading={index < 5} />
-                ))
-            }
-        </div>
+    <div class="space-y-4">
+      {
+        page.data.map((post, index) => (
+          <ArticleTile post={post} eagerLoading={index < 5} />
+        ))
+      }
+    </div>
 
-        <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
-    </main>
+    <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
+  </main>
 </BaseLayout>

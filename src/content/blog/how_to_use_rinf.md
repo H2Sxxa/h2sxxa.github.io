@@ -1,7 +1,7 @@
 ---
 title: 使用rinf进行Rust与Flutter的集成与通信
 pubDate: 2024-2-10
-tags: ["Flutter","Rust","rinf","FFI"]
+tags: ["Flutter", "Rust", "rinf", "FFI"]
 categories: Development & Programming
 heroImage: img/pixiv/115766745.jpg
 ---
@@ -183,7 +183,6 @@ class FooPageState extends State<FooPage> {
 
 更推荐使用 `StreamBuilder`，代码更加清晰。
 
-
 ```dart
 class FooPageState extends State<FooPage> {
   @override
@@ -198,7 +197,7 @@ class FooPageState extends State<FooPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: DataOutput.rustSignalStream, 
+      stream: DataOutput.rustSignalStream,
       builder: (context, snapshot){
         var signal = snapshot.data;
         if (signal == null){
@@ -211,7 +210,7 @@ class FooPageState extends State<FooPage> {
           ).sendSignalToRust()
         );
       }
-    );    
+    );
   }
 }
 ```

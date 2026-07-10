@@ -1,7 +1,8 @@
 ---
 title: 现代人工智能的构造
 pubDate: 2026-07-01
-tags: ["Agent", "RAG", "MCP", "Prompt", "LLM", "LangChain", "Harness Engineering"]
+tags:
+  ["Agent", "RAG", "MCP", "Prompt", "LLM", "LangChain", "Harness Engineering"]
 categories: Development & Programming
 heroImage: img/pixiv/23464995_p0.jpg
 ---

@@ -1,13 +1,27 @@
 ---
 title: 代理、镜像、AnyMirror
 pubDate: 2026-06-28
-tags: ["Proxy","Mirror","Rust","Transparent Proxy","MITM","Minecraft","Forge","Gradle","OSI","TUN","WinDivert","Network"]
+tags:
+  [
+    "Proxy",
+    "Mirror",
+    "Rust",
+    "Transparent Proxy",
+    "MITM",
+    "Minecraft",
+    "Forge",
+    "Gradle",
+    "OSI",
+    "TUN",
+    "WinDivert",
+    "Network",
+  ]
 categories: Development & Programming
 heroImage: img/pixiv/146453255_p0.png
 ---
+
 import NavigationTile from "@/components/inlines/NavigationTile.astro";
 import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.astro";
-
 
 ## 前言
 
@@ -21,11 +35,20 @@ import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.as
 
 比较经典的用法是使用 Shadowsocks + Proxifier 进行配置，可以参考下面的教程。
 
-<NavigationTile title="Minecraft Forge 构建开发环境网络代理配置教程" subtitle="By ZekerZhayard" href="https://zekerzhayard.gitbook.io/minecraft-forge-gou-jian-kai-fa-huan-jing-wang-luo-dai-li-pei-zhi-jiao-cheng"/>
+<NavigationTile
+  title="Minecraft Forge 构建开发环境网络代理配置教程"
+  subtitle="By ZekerZhayard"
+  href="https://zekerzhayard.gitbook.io/minecraft-forge-gou-jian-kai-fa-huan-jing-wang-luo-dai-li-pei-zhi-jiao-cheng"
+/>
 
 对于小白来说，特别是 MCreator 的，你并不能够相信这篇教程能够被他们所理解，我们需要一种更加"自动化"的配置方法，所以 MCreator_Setup 应运而生。
 
-<NavigationTile leadingIcon="mdi:github" title="MCreator_Setup" subtitle="已归档" href="https://github.com/H2Sxxa/MCreator_Setup" />
+<NavigationTile
+  leadingIcon="mdi:github"
+  title="MCreator_Setup"
+  subtitle="已归档"
+  href="https://github.com/H2Sxxa/MCreator_Setup"
+/>
 
 说实话，这是个很糟糕的工具，用 `aria2c` 处理下载，用 `noneprompt` 处理 TUI 输入，用 pyinstaller 打包，没有代码规范，但是意外地帮助了很多人。
 
@@ -57,13 +80,23 @@ import ArticleNavigationTile from "@/components/inlines/ArticleNavigationTile.as
 
 在我学习 Rust 之后，我用 Rust 把修改 jar 中的字符串的方法做成了另一个工具，希望是能够用于翻译又或者其他用途，感兴趣的可以尝试使用。
 
-<NavigationTile leadingIcon="mdi:github" title="JSBP" subtitle="Jar String Bytes Patcher" href="https://github.com/H2Sxxa/jsbp" />
+<NavigationTile
+  leadingIcon="mdi:github"
+  title="JSBP"
+  subtitle="Jar String Bytes Patcher"
+  href="https://github.com/H2Sxxa/jsbp"
+/>
 
 ### 3. 最初与最终的代理 - AnyMirror
 
 在做出 AnyMirror 很久之前，我就曾想过如果有一种代理工具，能够基于镜像动态响应请求就行了，研究过 `mitmproxy` ，但不适合拿来做这个事情，后来我就想到了自己写一个代理工具。
 
-<NavigationTile leadingIcon="mdi:github" title="AnyMirror" subtitle="High-performance traffic orchestration gateway with transparent L3 proxying and rule-based request routing🪞" href="https://github.com/H2Sxxa/AnyMirror" />
+<NavigationTile
+  leadingIcon="mdi:github"
+  title="AnyMirror"
+  subtitle="High-performance traffic orchestration gateway with transparent L3 proxying and rule-based request routing🪞"
+  href="https://github.com/H2Sxxa/AnyMirror"
+/>
 
 基本上，AnyMirror 在功能上是符合一个代理软件的，例如 MiHomo/Leaf 这些，只不过响应的不是远程服务器，而是本地的 AnyMirror 基于规则进行响应。
 基于 QuickJS 插件也能够实现更复杂的场景，例如在请求中注入一些自定义的内容，或者在响应中注入一些自定义的内容，也可以基于请求进行分发。

@@ -7,10 +7,10 @@ import { SITE_TITLE } from "../consts";
 import { Font } from "astro:assets";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: ImageMetadata | string;
-	showTitleTemplate?: boolean;
+  title: string;
+  description: string;
+  image?: ImageMetadata | string;
+  showTitleTemplate?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -27,10 +27,10 @@ const imageSrc = typeof image === "string" ? image : image?.src;
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL("rss.xml", Astro.site)}
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE_TITLE}
+  href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 
@@ -55,8 +55,8 @@ const imageSrc = typeof image === "string" ? image : image?.src;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta
-	property="twitter:image"
-	content={imageSrc && new URL(imageSrc, Astro.url)}
+  property="twitter:image"
+  content={imageSrc && new URL(imageSrc, Astro.url)}
 />
 
 <!-- Fonts -->

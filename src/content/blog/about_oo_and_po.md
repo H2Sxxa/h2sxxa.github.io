@@ -1,7 +1,7 @@
 ---
 title: 浅谈面向对象与面向过程
 pubDate: 2023-9-17
-tags: ["OOP","Rust","Python","C"]
+tags: ["OOP", "Rust", "Python", "C"]
 categories: Development & Programming
 heroImage: img/pixiv/111639285-2.jpg
 ---
@@ -10,7 +10,7 @@ heroImage: img/pixiv/111639285-2.jpg
 
 本人阅历有限，本篇博客如有错误请不吝指出，也欢迎在下方发布你的看法。
 
-## 面向对象（OO） 
+## 面向对象（OO）
 
 ### 对象是什么
 
@@ -45,13 +45,13 @@ impl Living {
 ```python
 class Living:
     __name:str # 会把这个变量转化为 _Living__name，无法通过__name访问，实现封装
-    
+
     def __init__(self,name:str) -> None:
         self.__name = name
-        
+
     def get_name(self) -> str:
         return self.__name
-    
+
     def set_name(self,name:str) -> str:
         self.__name = name
 ```
@@ -100,8 +100,6 @@ int main(int argc, char const *argv[])
 ```
 
 因为我们对`x`使用了`strlen`，`strlen`是一个求解过程，所以得到了`6`这个结果，这看起来远没有面向对象复杂。
-
-
 
 ## 面向对象的语言与面向过程的语言对比
 

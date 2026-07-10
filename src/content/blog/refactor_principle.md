@@ -1,7 +1,7 @@
 ---
 title: 重构原则
 pubDate: 2026-1-20
-tags: ["Code Aesthetic","Rust", "Refactor", "Programming"]
+tags: ["Code Aesthetic", "Rust", "Refactor", "Programming"]
 categories: Development & Programming
 heroImage: img/pixiv/139123166.jpg
 ---
@@ -27,7 +27,6 @@ heroImage: img/pixiv/139123166.jpg
 所以要做重构无非就是，删代码、抽象、简化。
 
 我来为你展示一个例子
-
 
 ```rust
 // 重构前的代码

@@ -8,43 +8,32 @@ const posts = await getCollection("blog");
 const tags = new Map<string, number>();
 
 posts.forEach((post) => {
-    post.data.tags?.forEach((tag) => {
-        tags.set(tag, (tags.get(tag) || 0) + 1);
-    });
+  post.data.tags?.forEach((tag) => {
+    tags.set(tag, (tags.get(tag) || 0) + 1);
+  });
 });
 ---
 
 <BaseLayout>
-    <BackgroundGrid />
+  <BackgroundGrid />
 
-    <main class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4 font-serif">Tags</h1>
-        <!-- <p></p> -->
-        <div class="flex flex-wrap gap-2">
-            {
-                Array.from(tags)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([tag, count]) => (
-                        <a
-                            href={`/tag/${snake_case(tag)}`}
-                            class="font-serif
-                            px-3
-                            py-1
-                            text-accent-foreground
-                            pointer-events-auto
-                            focus:outline-none
-                            rounded-full
-                            bg-card
-                            hover:bg-accent
-                            transition-colors"
-                        >
-                            {tag}
-                            <span class="ml-1 text-muted-foreground">
-                                ({count})
-                            </span>
-                        </a>
-                    ))
-            }
-        </div>
-    </main>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="mb-4 font-serif text-3xl font-bold">Tags</h1>
+    <!-- <p></p> -->
+    <div class="flex flex-wrap gap-2">
+      {
+        Array.from(tags)
+          .sort((a, b) => b[1] - a[1])
+          .map(([tag, count]) => (
+            <a
+              href={`/tag/${snake_case(tag)}`}
+              class="pointer-events-auto rounded-full bg-card px-3 py-1 font-serif text-accent-foreground transition-colors hover:bg-accent focus:outline-none"
+            >
+              {tag}
+              <span class="ml-1 text-muted-foreground">({count})</span>
+            </a>
+          ))
+      }
+    </div>
+  </main>
 </BaseLayout>

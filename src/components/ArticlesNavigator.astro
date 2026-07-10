@@ -2,48 +2,35 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
-    prev?: string;
-    next?: string;
+  prev?: string;
+  next?: string;
 }
 
 const { prev, next } = Astro.props as Props;
 ---
 
-<div class="flex items-center mt-8">
-    {
-        prev && (
-            <a
-                href={prev}
-                class="inline-flex items-center gap-2
-                            px-4 py-2
-                            rounded-full
-                            bg-card
-                            hover:bg-accent
-                            transition-colors
-                            border"
-            >
-                <Icon name="mdi:chevron-left" class="w-5 h-5" />
-                <span class="font-serif font-semibold">Previous</span>
-            </a>
-        )
-    }
+<div class="mt-8 flex items-center">
+  {
+    prev && (
+      <a
+        href={prev}
+        class="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-colors hover:bg-accent"
+      >
+        <Icon name="mdi:chevron-left" class="h-5 w-5" />
+        <span class="font-serif font-semibold">Previous</span>
+      </a>
+    )
+  }
 
-    {
-        next && (
-            <a
-                href={next}
-                class="ml-auto
-                            inline-flex items-center gap-2
-                            px-4 py-2
-                            rounded-full
-                            bg-card
-                            hover:bg-accent
-                            transition-colors
-                            border"
-            >
-                <span class="font-serif font-semibold">Next</span>
-                <Icon name="mdi:chevron-right" class="w-5 h-5" />
-            </a>
-        )
-    }
+  {
+    next && (
+      <a
+        href={next}
+        class="ml-auto inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-colors hover:bg-accent"
+      >
+        <span class="font-serif font-semibold">Next</span>
+        <Icon name="mdi:chevron-right" class="h-5 w-5" />
+      </a>
+    )
+  }
 </div>

@@ -9,11 +9,11 @@ import { clip_markdown } from "@/utils/clip";
 import FormattedDate from "@/components/FormattedDate.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
 }
 type Props = CollectionEntry<"blog">;
 
@@ -23,143 +23,113 @@ post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout
-	image={post.data.heroImage}
-	title={post.data.title}
-	description={post.body ? clip_markdown(post.body, 100) : post.data.title}
-	showTitleTemplate
+  image={post.data.heroImage}
+  title={post.data.title}
+  description={post.body ? clip_markdown(post.body, 100) : post.data.title}
+  showTitleTemplate
 >
-	<main>
-		<BackgroundGrid />
-		<!-- Hero (If exists) -->
-		{
-			post.data.heroImage && (
-				<div class="w-full h-128 overflow-hidden">
-					<Image
-						src={post.data.heroImage}
-						alt={post.data.title}
-						class="w-full h-full object-cover"
-						loading="eager"
-					/>
-				</div>
-			)
-		}
-		<!-- Title -->
-		<h1
-			class="text-center
-				text-3xl
-				lg:text-4xl
-				font-serif
-				font-semibold
-				px-4
-				mt-8
-				mb-4"
-		>
-			{post.data.title}
-		</h1>
-		<div class="text-center text-muted-foreground">
-			<p class="text-sm mt-1">
-				Published on {(<FormattedDate date={post.data.pubDate} />)}
-			</p>
-		</div>
+  <main>
+    <BackgroundGrid />
+    <!-- Hero (If exists) -->
+    {
+      post.data.heroImage && (
+        <div class="h-128 w-full overflow-hidden">
+          <Image
+            src={post.data.heroImage}
+            alt={post.data.title}
+            class="h-full w-full object-cover"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+    <!-- Title -->
+    <h1
+      class="mt-8 mb-4 px-4 text-center font-serif text-3xl font-semibold lg:text-4xl"
+    >
+      {post.data.title}
+    </h1>
+    <div class="text-center text-muted-foreground">
+      <p class="mt-1 text-sm">
+        Published on {(<FormattedDate date={post.data.pubDate} />)}
+      </p>
+    </div>
 
-		{
-			post.data.wip && (
-				<div
-					class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mt-4 mx-auto max-w-3xl"
-					role="alert"
-				>
-					<p class="font-bold">Work in Progress</p>
-					<p>
-						This article is still under development and may be
-						incomplete.
-					</p>
-				</div>
-			)
-		}
-		<div class="mt-4 mx-auto
-			max-w-7xl
-			lg:grid">
-			<!-- Right -->
-			<aside
-				class="p-4
-				justify-start
-				lg:max-w-none
-				lg:col-start-2
-				lg:row-start-1
-				lg:sticky
-				lg:top-8
-				lg:h-fit"
-			>
-				<h2 class="text-xl font-bold font-serif mb-4">Contents</h2>
-				<ul class="space-y-2">
-					{
-						headings.map((heading) => (
-							<li
-								class:list={[
-									heading.depth === 2 && "ml-4",
-									heading.depth === 3 && "ml-6",
-									heading.depth === 4 && "ml-8",
-								]}
-							>
-								<a href={`#${heading.slug}`}>{heading.text}</a>
-							</li>
-						))
-					}
-				</ul>
-			</aside>
+    {
+      post.data.wip && (
+        <div
+          class="mx-auto mt-4 max-w-3xl border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-800"
+          role="alert"
+        >
+          <p class="font-bold">Work in Progress</p>
+          <p>This article is still under development and may be incomplete.</p>
+        </div>
+      )
+    }
+    <div class="mx-auto mt-4 max-w-7xl lg:grid">
+      <!-- Right -->
+      <aside
+        class="justify-start p-4 lg:sticky lg:top-8 lg:col-start-2 lg:row-start-1 lg:h-fit lg:max-w-none"
+      >
+        <h2 class="mb-4 font-serif text-xl font-bold">Contents</h2>
+        <ul class="space-y-2">
+          {
+            headings.map((heading) => (
+              <li
+                class:list={[
+                  heading.depth === 2 && "ml-4",
+                  heading.depth === 3 && "ml-6",
+                  heading.depth === 4 && "ml-8",
+                ]}
+              >
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
 
-			<!-- Main Content -->
-			<div class="lg:col-start-1 lg:row-start-1 max-w-3xl ml-auto">
-				<Text class="max-w-none p-4">
-					<Content />
-				</Text>
-				<!-- Tags -->
-				{
-					post.data.tags && (
-						<div class="flex flex-wrap gap-2 mx-4 mt-4">
-							{post.data.tags.map((tag) => (
-								<a
-									href={`/tag/${snake_case(tag)}`}
-									class="font-serif
-                                        px-3
-                                        py-1
-                                        text-accent-foreground
-                                        pointer-events-auto
-                                        focus:outline-none
-                                        text-sm
-                                        rounded-full
-                                        hover:bg-muted
-                                        border"
-								>
-									<span class="text-primary font-sans">
-										#
-									</span>
-									{tag}
-								</a>
-							))}
-						</div>
-					)
-				}
+      <!-- Main Content -->
+      <div class="ml-auto max-w-3xl lg:col-start-1 lg:row-start-1">
+        <Text class="max-w-none p-4">
+          <Content />
+        </Text>
+        <!-- Tags -->
+        {
+          post.data.tags && (
+            <div class="mx-4 mt-4 flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <a
+                  href={`/tag/${snake_case(tag)}`}
+                  class="pointer-events-auto rounded-full border px-3 py-1 font-serif text-sm text-accent-foreground hover:bg-muted focus:outline-none"
+                >
+                  <span class="font-sans text-primary">#</span>
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )
+        }
 
-				<!-- Giscus Comments -->
-				<div class="mt-10 p-4">
-					<script
-						src="https://giscus.app/client.js"
-						data-repo="H2Sxxa/h2sxxa.github.io"
-						data-repo-id="R_kgDOSuttsw"
-						data-category="Announcements"
-						data-category-id="DIC_kwDOSutts84C-zu8"
-						data-mapping="pathname"
-						data-strict="0"
-						data-reactions-enabled="1"
-						data-emit-metadata="0"
-						data-input-position="bottom"
-						data-theme="fro"
-						data-lang="zh-CN"
-						crossorigin="anonymous"
-						async></script>
-				</div>
-			</div>
-		</div>
-	</main>
+        <!-- Giscus Comments -->
+        <div class="mt-10 p-4">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="H2Sxxa/h2sxxa.github.io"
+            data-repo-id="R_kgDOSuttsw"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOSutts84C-zu8"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="fro"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async></script>
+        </div>
+      </div>
+    </div>
+  </main>
 </BaseLayout>

@@ -1,7 +1,7 @@
 ---
 title: MineCraft 1.12.2 开发教程 —— 0.准备工作
 pubDate: 2022-10-16
-tags: ["Minecraft","Forge","1.12.2"]
+tags: ["Minecraft", "Forge", "1.12.2"]
 categories: Minecraft Forge 1.12.2 Development Tutorial
 heroImage: img/pixiv/101891205.jpg
 ---
@@ -83,15 +83,13 @@ https://github.com/IdeallandEarthDept/IdeallandFramework
 >
 > IDL，Idealland，理想境的简称。
 >
-> MDK，Mod Development Kit，模组开发包的简称。 
+> MDK，Mod Development Kit，模组开发包的简称。
 >
 > 作者：道家深湖 https://www.bilibili.com/read/cv19031222 出处：bilibili
 
 值得一提的是，IDF几乎为您配好了所有镜像环境，因此在下一步构建环境也会轻松许多
 
 如果不需要IDF提供的代码，那我推荐你使用LCF
-
-
 
 ##### LCF(LunarCapitalFrameWork) - 适合有其他语言基础的小白
 
@@ -102,8 +100,6 @@ LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE
 与TDE一样配备了 **Gradle 8.1.1** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle)** + **Forge 14.23.5.2847**，但并不是全镜像
 
 额外还将打算支持添加项目生成器与管理器脚本（依赖于Python）
-
-
 
 ### 需要更多帮助 or 看看其他的教程
 
@@ -145,7 +141,7 @@ LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE
 >
 > 10【Github】Github就是github。
 >
-> - 链接略，国内不稳定 
+> - 链接略，国内不稳定
 >
 > 作者：道家深湖 https://www.bilibili.com/read/cv12067660 出处：bilibili
 
@@ -161,9 +157,9 @@ LunarCapitalFrameWork（月都框架），是由我基于IDF与Cleanroommc的TDE
 
 打开PowerShell or CMD输入
 
-````shell
+```shell
 java -version
-````
+```
 
 如果一切正常，看起来会是这样的
 
@@ -177,5 +173,7 @@ Java HotSpot(TM) 64-Bit Server VM (build ..., mixed mode)
 请确认java version是**1.8.0**而不是其他(" _ "后面可以忽略)，或者你可以在你的IDE里面更改项目SDK
 
 ## 参考
+
 [^1]: Harbinger https://harbinger.covertdragon.team
+
 [^2]: 道家深湖指路明灯等文章 (出处文中均有提到)

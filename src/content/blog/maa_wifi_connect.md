@@ -1,7 +1,7 @@
 ---
 title: MAA通过无线调试连接手机运行
 pubDate: 2023-03-18
-tags: ["Arknights","MAA","Android"]
+tags: ["Arknights", "MAA", "Android"]
 categories: Share & Misc
 heroImage: img/pixiv/97389556.jpg
 ---
@@ -115,7 +115,7 @@ MAA可以在 [[此处]](https://github.com/MaaAssistantArknights/MaaAssistantArk
 - ADB绝对路径选择你的`adb.exe`的位置
 - 连接地址即为上文**你自己** `.\adb.exe connect`的地址
 - 连接配置因人而异，你可以用默认的通用模式
-- 触控模式默认的`minitouch`如果手机没有`ROOT`，可能会出现连接成功没有反应，可以换用`MaaTouch`，*别TM用兼容模式*，还是不好使建议点击`强制替换ADB`，没事替换也没啥问题
+- 触控模式默认的`minitouch`如果手机没有`ROOT`，可能会出现连接成功没有反应，可以换用`MaaTouch`，_别TM用兼容模式_，还是不好使建议点击`强制替换ADB`，没事替换也没啥问题
 
 ### 3-2.Link Start!
 

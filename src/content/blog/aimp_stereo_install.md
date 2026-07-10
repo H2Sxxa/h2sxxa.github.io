@@ -1,7 +1,7 @@
 ---
 title: 记一次AIMP的DSP Stereo Tool插件安装
 pubDate: 2022-11-06
-tags: ["Music","AIMP","DSP"]
+tags: ["Music", "AIMP", "DSP"]
 categories: Share & Misc
 heroImage: img/pixiv/93025943.jpg
 ---
@@ -27,4 +27,3 @@ heroImage: img/pixiv/93025943.jpg
 ### 注册
 
 你以为安装成功了吗，其实还不算完...如果现在结束的话虽然可以用，但是有时候会蹦出来烦人的滴滴声，对此可以用一些小手段"结束调研"完成注册，这里就不一一列举......
-

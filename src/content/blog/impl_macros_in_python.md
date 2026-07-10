@@ -1,7 +1,7 @@
 ---
 title: 如何在 Python 中实现宏展开?
 pubDate: 2024-09-01
-tags: ["Python","Macros","Black Magic"]
+tags: ["Python", "Macros", "Black Magic"]
 categories: Development & Programming
 heroImage: img/pixiv/122018493.jpg
 ---

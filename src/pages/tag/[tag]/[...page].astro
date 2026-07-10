@@ -9,56 +9,54 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { snake_case } from "@/utils/snakecase";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-    const posts = await getCollection("blog");
+  const posts = await getCollection("blog");
 
-    const tags = new Set<string>();
+  const tags = new Set<string>();
 
-    posts.forEach((post) => {
-        post.data.tags?.forEach((tag) => tags.add(tag));
+  posts.forEach((post) => {
+    post.data.tags?.forEach((tag) => tags.add(tag));
+  });
+
+  return Array.from(tags).flatMap((tag) => {
+    const tagPosts = posts
+      .filter((post) => post.data.tags?.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return paginate(tagPosts, {
+      params: {
+        tag: snake_case(tag),
+      },
+      props: {
+        tag,
+      },
+      pageSize: PAGE_SIZE,
     });
-
-    return Array.from(tags).flatMap((tag) => {
-        const tagPosts = posts
-            .filter((post) => post.data.tags?.includes(tag))
-            .sort(
-                (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-            );
-
-        return paginate(tagPosts, {
-            params: {
-                tag: snake_case(tag),
-            },
-            props: {
-                tag,
-            },
-            pageSize: PAGE_SIZE,
-        });
-    });
+  });
 };
 
 type Props = {
-    tag: string;
-    page: Page<CollectionEntry<"blog">>;
+  tag: string;
+  page: Page<CollectionEntry<"blog">>;
 };
 
 const { tag, page } = Astro.props;
 ---
 
 <BaseLayout>
-    <BackgroundGrid />
-    <main class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4 font-serif">{tag}</h1>
-        <p class="text-lg text-muted-foreground mb-6">
-            <a href="/tag" class="hover:underline font-serif italic">View all tags</a>
-        </p>
-        <div class="space-y-4">
-            {
-                page.data.map((post, index) => (
-                    <ArticleTile post={post} eagerLoading={index < 5} />
-                ))
-            }
-        </div>
+  <BackgroundGrid />
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="mb-4 font-serif text-3xl font-bold">{tag}</h1>
+    <p class="mb-6 text-lg text-muted-foreground">
+      <a href="/tag" class="font-serif italic hover:underline">View all tags</a>
+    </p>
+    <div class="space-y-4">
+      {
+        page.data.map((post, index) => (
+          <ArticleTile post={post} eagerLoading={index < 5} />
+        ))
+      }
+    </div>
 
-        <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
-    </main>
+    <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
+  </main>
 </BaseLayout>

@@ -1,7 +1,7 @@
 ---
 title: 通过方法链（链式调用）简单来在面向对象中使用函数式编程
 pubDate: 2024-5-8
-tags: ["Code Aesthetic","Python","OOP","FP"]
+tags: ["Code Aesthetic", "Python", "OOP", "FP"]
 categories: Development & Programming
 heroImage: img/pixiv/105589501.jpg
 ---

@@ -1,7 +1,7 @@
 ---
 title: Forge镜像补全计划（教程向）
 pubDate: 2023-7-16
-tags: ["Forge","Groovy","Gradle"]
+tags: ["Forge", "Groovy", "Gradle"]
 categories: Development & Programming
 heroImage: img/pixiv/99637717.jpg
 ---
@@ -172,4 +172,3 @@ repositories { // 在这个大括号内添加
 }
 //...
 ```
-

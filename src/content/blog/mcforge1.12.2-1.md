@@ -1,7 +1,7 @@
 ---
 title: MineCraft 1.12.2 开发教程 —— 1.构建环境并启动MC
 pubDate: 2022-10-16
-tags: ["Minecraft","Forge","1.12.2"]
+tags: ["Minecraft", "Forge", "1.12.2"]
 categories: Minecraft Forge 1.12.2 Development Tutorial
 heroImage: img/pixiv/79639404-1.png
 ---
@@ -13,9 +13,9 @@ heroImage: img/pixiv/79639404-1.png
 在了解构建环境之前，你需要知道一个名为 **ForgeGradle** 的东西，它的作用如下
 
 > - 部署开发环境（下载 Minecraft、反编译及反混淆 Minecraft、下载 assets），有三种：
->  - 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（`setupDecompWorkspace` task)
->   - 持续集成服务器（CI）经常使用的用于自动构建 Mod 的环境（`setupCIWorkspace` task）
->   - 不太常用的仅有反混淆后的 Minecraft 的开发环境（`setupDevWorkspace` task）
+> - 基本上所有 Mod 开发者在平时开发 Mod 时都会使用的带反编译出的源码的开发环境（`setupDecompWorkspace` task)
+> - 持续集成服务器（CI）经常使用的用于自动构建 Mod 的环境（`setupCIWorkspace` task）
+> - 不太常用的仅有反混淆后的 Minecraft 的开发环境（`setupDevWorkspace` task）
 > - 依赖处理
 >   - 用于反混淆依赖项目的 scope（`deobfCompile` 和 `deobfProvided`），在开发跨 Mod 兼容或扩展 Mod 时经常用到
 > - IDE 相关
@@ -24,7 +24,7 @@ heroImage: img/pixiv/79639404-1.png
 >   - 运行服务器（`runServer` task）
 >   - 运行客户端（`runClient` task）
 > - 在执行 Gradle Java 插件的 `build` task 时可自动完成对源码的重混淆
-> 
+>
 > 作者：3TUSK 出处：https://harbinger.covertdragon.team/chapter-01/forgegradle.html
 
 简单来说，构建环境就是把整个MC下到.gradle缓存里，同时进行几轮的反编译反混淆，便于 `runClient` 运行客户端调试与执行其他Gradle命令
@@ -49,7 +49,7 @@ heroImage: img/pixiv/79639404-1.png
 >
 > 作者：3TUSK 出处：https://harbinger.covertdragon.team/chapter-02/
 
-- [Proxifier or TUN模式代理Gradle](https://github.com/IAXRetailer/MCreator_Setup/wiki/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BB%A3%E7%90%86Forge(java)%E6%9D%A5%E5%8A%A0%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83)
+- [Proxifier or TUN模式代理Gradle](<https://github.com/IAXRetailer/MCreator_Setup/wiki/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BB%A3%E7%90%86Forge(java)%E6%9D%A5%E5%8A%A0%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83>)
 
 - 使用代理镜像Maven源，类似于阿里云....，也有现成的框架，类似于[IDF](https://github.com/IdeallandEarthDept/IdeallandFramework)，不过你可能需要把[build.gradle这部分](https://github.com/IdeallandEarthDept/IdeallandFramework/blob/master/build.gradle#L42)改为下文那样，从而使用2847版本的MDK，不过2768其实也影响不大...看个人选择吧
 
@@ -57,7 +57,7 @@ heroImage: img/pixiv/79639404-1.png
   minecraft {
       version = "1.12.2-14.23.5.2847" //改为1.12.2-14.23.5.2847，此处已更改
       runDir = "run"
-  
+
       // the mappings can be changed at any time, and must be in the following format.
       // snapshot_YYYYMMDD   snapshot are built nightly.
       // stable_#            stables are built at the discretion of the MCP team.
@@ -66,12 +66,8 @@ heroImage: img/pixiv/79639404-1.png
       mappings = "snapshot_20171003"
       // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
   }
-  
+
   ```
-
-
-
-
 
 ### 一些修改建议
 
@@ -123,10 +119,10 @@ Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/
 1. 在你的mdk目录下打开CMD或者PowerShell窗口
 2. 输入`gradlew setupDecompWorkspace`
 3. 如果你使用eclipse等上述任务结束后输入`gradlew eclipse`
-4. 如果你使用IntelliJ IDEA，等上述任务结束，**先选择build.gradle把项目导入IDEA后关闭IDEA**，在确保IDEA关闭后输入`gradlew genIntellijRuns` 
+4. 如果你使用IntelliJ IDEA，等上述任务结束，**先选择build.gradle把项目导入IDEA后关闭IDEA**，在确保IDEA关闭后输入`gradlew genIntellijRuns`
    - 如何导入build.gradle? File->Open->选择你的build.gradle后点击ok，把作为项目打开
 
-1. VSCode在ForgeGradle2.3没有相应的Gradle Task，如果你使用LCF，此处你直接导入即可（记得装Gradle插件）
+5. VSCode在ForgeGradle2.3没有相应的Gradle Task，如果你使用LCF，此处你直接导入即可（记得装Gradle插件）
 
 ### 构建失败？
 

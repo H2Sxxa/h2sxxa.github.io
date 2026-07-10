@@ -1,7 +1,7 @@
 ---
 title: 借用回调在不阻塞地执行 Rust 异步方法
 pubDate: 2025-1-28
-tags: ["Python","Rust","Programming","Async","Tokio"]
+tags: ["Python", "Rust", "Programming", "Async", "Tokio"]
 categories: Development & Programming
 heroImage: img/pixiv/126570679.jpg
 ---

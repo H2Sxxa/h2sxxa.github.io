@@ -2,39 +2,35 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
-    title: string;
-    subtitle?: string;
-    href: string;
-    leadingIcon?: string;
+  title: string;
+  subtitle?: string;
+  href: string;
+  leadingIcon?: string;
 }
 
 const { title, subtitle, href, leadingIcon } = Astro.props;
 ---
 
 <div
-    class="block my-4 p-6 bg-card rounded-lg hover:bg-accent has-[span:hover]:bg-card elevated transition-colors relative group overflow-hidden"
+  class="group relative my-4 block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[span:hover]:bg-card"
 >
-    <a href={href} class="absolute inset-0 z-10" aria-label="Tile Link"></a>
+  <a href={href} class="absolute inset-0 z-10" aria-label="Tile Link"></a>
 
-    <div class="flex items-center">
-        <!-- Leading -->
-        <div class="mr-6 shrink-0 text-card-foreground">
-            <Icon name={leadingIcon || "mdi:book-open-page-variant"} size="32" />
-        </div>
-
-        <!-- Title and Subtitle -->
-        <div class="min-w-0 flex-1">
-            <div class="font-serif font-semibold truncate">{title}</div>
-            {
-                subtitle && (
-                    <div class="truncate text-card-foreground">{subtitle}</div>
-                )
-            }
-        </div>
-
-        <!-- Trailing -->
-        <div class="ml-4 shrink-0 text-card-foreground">
-            <Icon name="mdi:arrow-top-right" size="24" />
-        </div>
+  <div class="flex items-center">
+    <!-- Leading -->
+    <div class="mr-6 shrink-0 text-card-foreground">
+      <Icon name={leadingIcon || "mdi:book-open-page-variant"} size="32" />
     </div>
+
+    <!-- Title and Subtitle -->
+    <div class="min-w-0 flex-1">
+      <div class="truncate font-serif font-semibold">{title}</div>
+      {subtitle && <div class="truncate text-card-foreground">{subtitle}</div>}
+    </div>
+
+    <!-- Trailing -->
+    <div class="ml-4 shrink-0 text-card-foreground">
+      <Icon name="mdi:arrow-top-right" size="24" />
+    </div>
+  </div>
 </div>
