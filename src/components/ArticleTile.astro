@@ -13,7 +13,7 @@ const { post, eagerLoading } = Astro.props as Props;
 ---
 
 <article
-  class="group relative block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[a:hover]:bg-card"
+  class="relative block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[a:hover]:bg-card"
 >
   {/* Image */}
   <div
@@ -54,7 +54,7 @@ const { post, eagerLoading } = Astro.props as Props;
           {post.data.tags.map((tag) => (
             <a
               href={`/tag/${snake_case(tag)}`}
-              class="pointer-events-auto shrink-0 rounded-full border px-3 py-1 font-serif text-sm whitespace-nowrap text-accent-foreground group-focus-within:border-black group-focus-within:text-primary hover:bg-muted focus:border-none"
+              class="pointer-events-auto shrink-0 rounded-full border px-3 py-1 font-serif text-sm whitespace-nowrap text-accent-foreground hover:bg-muted"
             >
               <span class="font-sans text-primary">#</span>
               {tag}
