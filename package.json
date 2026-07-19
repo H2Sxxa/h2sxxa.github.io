@@ -13,20 +13,20 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/mdx": "^6.0.1",
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/mdx": "^7.0.3",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.4.2",
+    "astro": "^7.1.1",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
-    "sharp": "^0.34.3",
+    "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/markdown-remark": "^7.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
