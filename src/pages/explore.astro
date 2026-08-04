@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BackgroundGrid from "@/components/BackgroundGrid.astro";
+---
+
+<BaseLayout>
+  <BackgroundGrid />
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="font-serif text-2xl font-bold">Navigation</h1>
+    <p class="mb-6 text-lg text-muted-foreground">
+      I don't like to use a navigation bar, so I put all the links here.
+    </p>
+
+    <h2 class="relative rounded-xl p-4">
+      <a
+        href="/"
+        class="font-serif text-3xl text-primary no-underline hover:underline"
+      >
+        Home
+      </a>
+      <p class="text-muted-foreground">
+        The home page of this blog, which contains the latest posts.
+      </p>
+
+      <div class="absolute -top-4 left-0 -z-10 text-8xl font-bold opacity-5">
+        01
+      </div>
+    </h2>
+  </main>
+</BaseLayout>

@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { snake_case } from "@/utils/snakecase";
 import FormattedDate from "./FormattedDate.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -50,13 +51,13 @@ const { post, eagerLoading } = Astro.props as Props;
     {/* Tags */}
     {
       post.data.tags && (
-        <div class="mt-4 flex flex-nowrap gap-2">
+        <div class="mt-4 flex scrollbar-none gap-2 overflow-x-auto">
           {post.data.tags.map((tag) => (
             <a
               href={`/tag/${snake_case(tag)}`}
               class="pointer-events-auto shrink-0 rounded-full border px-3 py-1 font-serif text-sm whitespace-nowrap text-accent-foreground hover:bg-muted"
             >
-              <span class="font-sans text-primary">#</span>
+              <span class="pr-1 font-sans text-primary">#</span>
               {tag}
             </a>
           ))}

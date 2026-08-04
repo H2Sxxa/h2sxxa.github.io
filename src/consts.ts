@@ -31,8 +31,8 @@ export const FAB_LINKS = [
     icon: "mdi:account-group",
   },
   {
-    href: "/about",
-    icon: "mdi:account",
+    href: "/explore",
+    icon: "mdi:dots-horizontal",
   },
 ];
 
