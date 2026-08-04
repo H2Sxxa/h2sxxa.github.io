@@ -8,18 +8,16 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://h2sxxa.github.io",
-  integrations: [
-    mdx(),
-    sitemap(),
-    icon({
-      include: {
-        mdi: ["*"],
-      },
-    }),
-  ],
+  integrations: [mdx(), sitemap(), icon({
+    include: {
+      mdi: ["*"],
+    },
+  }), react()],
   image: {
     domains: ["avatars.githubusercontent.com"],
   },
