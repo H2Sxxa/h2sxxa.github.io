@@ -29,6 +29,7 @@
   --font-sans: var(--font-lato);
   --font-serif: var(--font-lora);
   --font-mono: var(--font-fira-code);
+  --font-handwriting: var(--font-dancing-script);
 
   /* Radius */
   --radius: 0.75rem;
@@ -80,6 +81,7 @@
   --font-sans: var(--font-lato);
   --font-serif: var(--font-lora);
   --font-mono: var(--font-fira-code);
+  --font-handwriting: var(--font-dancing-script);
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
@@ -217,4 +219,8 @@
 
 @utility decorative {
   @apply relative z-0 overflow-hidden rounded-2xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md;
+}
+
+@utility page {
+  @apply container mx-auto px-4 py-8;
 }

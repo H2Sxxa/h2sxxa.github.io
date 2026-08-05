@@ -13,11 +13,16 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://h2sxxa.github.io",
-  integrations: [mdx(), sitemap(), icon({
-    include: {
-      mdi: ["*"],
-    },
-  }), react()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    icon({
+      include: {
+        mdi: ["*"],
+      },
+    }),
+    react(),
+  ],
   image: {
     domains: ["avatars.githubusercontent.com"],
   },
@@ -57,6 +62,12 @@ export default defineConfig({
       name: "Fira Code",
       cssVariable: "--font-fira-code",
       fallbacks: ["monospace"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Dancing Script",
+      cssVariable: "--font-dancing-script",
+      fallbacks: ["cursive"],
     },
   ],
   vite: {

@@ -70,7 +70,7 @@ export const EXPLORE_LINKS = [
   },
 
   {
-    title: "About",
+    title: "About Me",
     description: "关于我",
     href: "/about",
   },
