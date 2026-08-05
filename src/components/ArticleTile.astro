@@ -14,7 +14,7 @@ const { post, eagerLoading } = Astro.props as Props;
 ---
 
 <article
-  class="relative block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[a:hover]:bg-card"
+  class="group relative block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[a:hover]:bg-card"
 >
   {/* Image */}
   <div
@@ -27,7 +27,7 @@ const { post, eagerLoading } = Astro.props as Props;
           src={post.data.heroImage}
           alt=""
           loading={eagerLoading ? "eager" : "lazy"}
-          class="h-full w-full rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)] object-cover opacity-35 mix-blend-multiply dark:opacity-100"
+          class="h-full w-full rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)] object-cover opacity-35 mix-blend-multiply transition-transform duration-300 group-hover:scale-105 dark:opacity-100"
         />
       )
     }

@@ -20,7 +20,7 @@ import BackgroundGrid from "@/components/BackgroundGrid.astro";
             href={friend.link}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center rounded-lg bg-card p-4 transition-colors hover:bg-accent"
+            class="group decorative flex items-center p-4"
           >
             <Image
               src={friend.avatar}
@@ -34,6 +34,8 @@ import BackgroundGrid from "@/components/BackgroundGrid.astro";
               <h2 class="font-serif text-xl font-semibold">{friend.title}</h2>
               <p class="font-sans text-card-foreground">{friend.intro}</p>
             </div>
+
+            <div class="decorative-index text-6xl">{friend.title}</div>
           </a>
         ))
       }

@@ -14,7 +14,7 @@ const { prev, next } = Astro.props as Props;
     prev && (
       <a
         href={prev}
-        class="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-colors hover:bg-accent"
+        class="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-all duration-300 hover:-translate-y-1 hover:bg-accent"
       >
         <Icon name="mdi:chevron-left" class="h-5 w-5" />
         <span class="font-serif font-semibold">Previous</span>
@@ -26,7 +26,7 @@ const { prev, next } = Astro.props as Props;
     next && (
       <a
         href={next}
-        class="ml-auto inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-colors hover:bg-accent"
+        class="ml-auto inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 transition-all duration-300 hover:-translate-y-1 hover:bg-accent"
       >
         <span class="font-serif font-semibold">Next</span>
         <Icon name="mdi:chevron-right" class="h-5 w-5" />

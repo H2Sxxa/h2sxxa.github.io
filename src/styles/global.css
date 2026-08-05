@@ -203,6 +203,18 @@
   @apply shadow-sm;
 
   @variant dark {
-    @apply border shadow-none;
+    @apply border shadow-none hover:border-primary/40;
   }
+}
+
+@utility decorative-index {
+  @apply absolute -top-2 -right-2 -z-10 text-7xl font-black text-primary/20 transition-transform duration-300 group-hover:scale-110;
+
+  @variant dark {
+    @apply text-primary/12;
+  }
+}
+
+@utility decorative {
+  @apply relative z-0 overflow-hidden rounded-2xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md;
 }

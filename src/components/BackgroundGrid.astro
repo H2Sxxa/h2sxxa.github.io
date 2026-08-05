@@ -59,9 +59,10 @@
       grid.classList.add("active");
     }
   }
-
-  document.addEventListener("astro:page-load", initGridGlow);
-  initGridGlow();
+  if (!window.matchMedia("(pointer: coarse)").matches) {
+    document.addEventListener("astro:page-load", initGridGlow);
+    initGridGlow();
+  }
 </script>
 
 <style>
