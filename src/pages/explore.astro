@@ -1,30 +1,39 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BackgroundGrid from "@/components/BackgroundGrid.astro";
+import { EXPLORE_LINKS } from "@/consts.ts";
 ---
 
 <BaseLayout>
   <BackgroundGrid />
   <main class="container mx-auto px-4 py-8">
-    <h1 class="font-serif text-2xl font-bold">Navigation</h1>
-    <p class="mb-6 text-lg text-muted-foreground">
-      I don't like to use a navigation bar, so I put all the links here.
-    </p>
-
-    <h2 class="relative rounded-xl p-4">
-      <a
-        href="/"
-        class="font-serif text-3xl text-primary no-underline hover:underline"
-      >
-        Home
-      </a>
-      <p class="text-muted-foreground">
-        The home page of this blog, which contains the latest posts.
+    <div class="mx-auto max-w-7xl">
+      <h1 class="font-serif text-3xl font-bold">Explore</h1>
+      <p class="mb-6 text-lg text-muted-foreground">
+        I don't like to use a navigation bar, so I put all the links here.
       </p>
 
-      <div class="absolute -top-4 left-0 -z-10 text-8xl font-bold opacity-5">
-        01
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          EXPLORE_LINKS.map((link, index) => (
+            <article class="group relative overflow-hidden rounded-2xl border border-border/60 bg-background/70 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
+              <div class="absolute -top-3 -right-3 text-7xl font-black text-primary/15 transition-transform duration-300 group-hover:scale-110">
+                {index < 11 ? `0${index + 1}` : index + 1}
+              </div>
+
+              <a
+                href={link.href}
+                class="relative block font-serif text-2xl font-semibold text-primary no-underline transition-colors hover:text-primary/80"
+              >
+                {link.title}
+              </a>
+              <p class="relative mt-3 text-sm leading-6 text-muted-foreground">
+                {link.description}
+              </p>
+            </article>
+          ))
+        }
       </div>
-    </h2>
+    </div>
   </main>
 </BaseLayout>

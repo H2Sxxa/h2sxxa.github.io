@@ -56,6 +56,36 @@ export const SITE_OWNER_LINKS = [
   },
 ];
 
+// Explore
+export const EXPLORE_LINKS = [
+  {
+    title: "Home",
+    description: "平平无奇的首页",
+    href: "/",
+  },
+  {
+    title: "Blog",
+    description: "在这浏览所有文章",
+    href: "/blog",
+  },
+
+  {
+    title: "About",
+    description: "关于我",
+    href: "/about",
+  },
+  {
+    title: "Friends",
+    description: "朋友们的博客",
+    href: "/friends",
+  },
+  {
+    title: "Playground",
+    description: "一些新奇的尝试",
+    href: "/playground",
+  },
+];
+
 export const FRIENDS_LINKS = [
   {
     title: "black_trees",

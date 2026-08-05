@@ -1,25 +1,175 @@
 <div class="bg-grid"></div>
 
+<script is:inline>
+  const glowState =
+    window.__gridGlowState ||
+    (window.__gridGlowState = {
+      targetX: 0,
+      targetY: 0,
+      currentX: 0,
+      currentY: 0,
+      active: false,
+      initialized: false,
+      grid: null,
+    });
+
+  function initGridGlow() {
+    const grid = document.querySelector(".bg-grid");
+
+    if (!grid) {
+      return;
+    }
+
+    glowState.grid = grid;
+
+    if (!glowState.initialized) {
+      window.addEventListener("mousemove", (e) => {
+        glowState.targetX = e.clientX;
+        glowState.targetY = e.clientY;
+        glowState.active = true;
+
+        if (glowState.grid) {
+          glowState.grid.classList.add("active");
+        }
+      });
+
+      function animate() {
+        glowState.currentX += (glowState.targetX - glowState.currentX) * 0.08;
+        glowState.currentY += (glowState.targetY - glowState.currentY) * 0.08;
+
+        if (glowState.grid) {
+          glowState.grid.style.setProperty(
+            "--mouse-x",
+            `${glowState.currentX}px`,
+          );
+          glowState.grid.style.setProperty(
+            "--mouse-y",
+            `${glowState.currentY}px`,
+          );
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+      glowState.initialized = true;
+    }
+
+    if (glowState.active && grid) {
+      grid.classList.add("active");
+    }
+  }
+
+  document.addEventListener("astro:page-load", initGridGlow);
+  initGridGlow();
+</script>
+
 <style>
   .bg-grid {
     position: fixed;
     inset: 0;
     z-index: -1;
+    pointer-events: none;
+
+    --grid-size: 40px;
+    --edge-fade: 18%;
+    --safe-margin: 24px;
 
     background-image:
       linear-gradient(
         to right,
-        color-mix(in oklab, var(--border) 20%, transparent) 1px,
+        color-mix(in oklab, var(--border) 18%, transparent) 1px,
         transparent 1px
       ),
       linear-gradient(
         to bottom,
-        color-mix(in oklab, var(--border) 20%, transparent) 1px,
+        color-mix(in oklab, var(--border) 18%, transparent) 1px,
         transparent 1px
       );
 
-    background-size: 40px 40px;
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: center;
+    background-repeat: repeat;
 
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--border) 8%, transparent),
+      inset 0 0 80px color-mix(in oklab, var(--background) 70%, transparent);
+  }
+
+  .bg-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--background) 8%, transparent) 0%,
+        transparent 22%,
+        transparent 78%,
+        color-mix(in oklab, var(--background) 8%, transparent) 100%
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--background) 8%, transparent) 0%,
+        transparent 22%,
+        transparent 78%,
+        color-mix(in oklab, var(--background) 8%, transparent) 100%
+      );
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .bg-grid::after {
+    content: "";
+    position: absolute;
+    inset: calc(var(--safe-margin) * -1);
+    opacity: 0;
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--primary) 20%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--primary) 20%, transparent) 1px,
+        transparent 1px
+      );
+
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: center;
+    background-repeat: repeat;
+
+    mask-image: radial-gradient(
+      180px circle at var(--mouse-x) var(--mouse-y),
+      black 0%,
+      black 28%,
+      transparent 82%
+    );
+
+    -webkit-mask-image: radial-gradient(
+      180px circle at var(--mouse-x) var(--mouse-y),
+      black 0%,
+      black 28%,
+      transparent 82%
+    );
+    filter: blur(0.5px);
+  }
+
+  .bg-grid.active::after {
+    opacity: 0.85;
   }
 </style>
