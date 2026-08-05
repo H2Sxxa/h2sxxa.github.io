@@ -103,7 +103,7 @@ post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
                   href={`/tag/${snake_case(tag)}`}
                   class="pointer-events-auto rounded-full border px-3 py-1 font-serif text-sm text-accent-foreground hover:bg-muted focus:outline-none"
                 >
-                  <span class="font-sans text-primary">#</span>
+                  <span class="pr-1 font-sans text-primary">#</span>
                   {tag}
                 </a>
               ))}

@@ -38,4 +38,10 @@ const { class: className } = Astro.props;
   article :global(h3:hover .anchor) {
     opacity: 1;
   }
+
+  article :global(:not(pre) > code) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 </style>
