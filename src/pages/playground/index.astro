@@ -1,12 +1,41 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BackgroundGrid from "@/components/BackgroundGrid.astro";
+import DecorativeCard from "@/components/DecorativeCard.astro";
+import DecorativeIndex from "@/components/DecorativeIndex.astro";
+import DecorativeTitle from "@/components/DecorativeTitle.astro";
 ---
 
 <BaseLayout>
   <BackgroundGrid />
   <main class="page">
     <h1 class="font-handwriting text-3xl font-bold">Playground</h1>
-    <p class="mb-6 text-lg text-muted-foreground"></p>
+    <p class="mb-6 text-lg text-muted-foreground">
+      Want Something, Coding Something.
+    </p>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        [
+          {
+            title: "Lenis",
+            href: "/playground/lenis",
+            description: "A smooth scroll library for the modern web.",
+          },
+        ].map((link, index) => (
+          <DecorativeCard>
+            <DecorativeIndex>
+              {index < 11 ? `0${index + 1}` : index + 1}
+            </DecorativeIndex>
+
+            <DecorativeTitle
+              href={link.href}
+              title={link.title}
+              description={link.description}
+            />
+          </DecorativeCard>
+        ))
+      }
+    </div>
   </main>
 </BaseLayout>

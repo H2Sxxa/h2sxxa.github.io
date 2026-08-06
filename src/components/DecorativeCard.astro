@@ -1,0 +1,13 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<article class={cn("group decorative", className)}>
+  <slot />
+</article>

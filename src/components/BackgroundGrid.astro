@@ -15,7 +15,7 @@
 
   function initGridGlow() {
     const grid = document.querySelector(".bg-grid");
-
+    const speed = 0.05;
     if (!grid) {
       return;
     }
@@ -34,8 +34,8 @@
       });
 
       function animate() {
-        glowState.currentX += (glowState.targetX - glowState.currentX) * 0.08;
-        glowState.currentY += (glowState.targetY - glowState.currentY) * 0.08;
+        glowState.currentX += (glowState.targetX - glowState.currentX) * speed;
+        glowState.currentY += (glowState.targetY - glowState.currentY) * speed;
 
         if (glowState.grid) {
           glowState.grid.style.setProperty(

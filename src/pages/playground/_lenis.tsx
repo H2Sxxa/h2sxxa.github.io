@@ -9,29 +9,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function Body() {
   const container = useRef(null);
+
   const heroTitle = useRef(null);
   const box = useRef(null);
+
   const story = useRef(null);
   const sticky = useRef(null);
-  /**
-   * Lenis -> ScrollTrigger 同步
-   */
+
   useLenis(() => {
     ScrollTrigger.update();
   });
-  /**
-   * GSAP
-   */
+
   useGSAP(
     () => {
-      // 1. Hero 入场动画
+      // Hero
       gsap.from(heroTitle.current, {
         y: 100,
         opacity: 0,
         duration: 1.2,
         ease: "power3.out",
       });
-      // 2. 滚动控制 box
+
+      // Box
       gsap.to(box.current, {
         x: 500,
         rotate: 360,
@@ -43,16 +42,31 @@ export function Body() {
           scrub: true,
         },
       });
-      // 3. Pin 滚动叙事
-      gsap.to(sticky.current, {
-        scale: 2,
-        scrollTrigger: {
-          trigger: story.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-          pin: true,
-        },
+
+      /**
+       * 图片固定
+       */
+      ScrollTrigger.create({
+        trigger: story.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: sticky.current,
+      });
+
+      /**
+       * 文字进入动画
+       */
+      gsap.utils.toArray(".story-text").forEach((item: any) => {
+        gsap.from(item, {
+          y: 100,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: item,
+            start: "top 70%",
+            end: "top 40%",
+            scrub: true,
+          },
+        });
       });
     },
     {
@@ -61,24 +75,44 @@ export function Body() {
   );
 
   return (
-    <main ref={container} className="overflow-x-hidden">
-      {/* Hero */}
+    <main ref={container} className="mx-auto overflow-x-hidden">
       <section className="flex h-screen items-center justify-center">
         <h1 ref={heroTitle} className="text-7xl font-bold">
           GSAP + Lenis
         </h1>
       </section>
-      {/* Box Animation */}
+
       <section className="flex h-screen items-center justify-center">
         <div ref={box} className="h-40 w-40 bg-blue-500" />
       </section>
-      {/* Scroll Story */}
-      <section ref={story} className="h-[300vh]">
+
+      <section ref={story} className="grid h-[300vh] grid-cols-2">
+        <div className="flex flex-col items-center space-y-[50vh] py-[20vh]">
+          <div className="story-text">
+            <h2 className="text-5xl font-bold">01</h2>
+            <p className="mt-5 text-xl">First Paragraph</p>
+          </div>
+
+          <div className="story-text">
+            <h2 className="text-5xl font-bold">02</h2>
+            <p className="mt-5 text-xl">Second Paragraph</p>
+          </div>
+
+          <div className="story-text">
+            <h2 className="text-5xl font-bold">03</h2>
+
+            <p className="mt-5 text-xl">Third Paragraph</p>
+          </div>
+        </div>
+
         <div ref={sticky} className="flex h-screen items-center justify-center">
-          <h2 className="text-6xl font-bold">Scroll Story</h2>
+          <img
+            src="https://placehold.net/default.png"
+            className="w-[70%] rounded-xl"
+          />
         </div>
       </section>
-      {/* End */}
+
       <section className="flex h-screen items-center justify-center">
         <h2 className="text-5xl">End</h2>
       </section>

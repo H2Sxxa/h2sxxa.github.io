@@ -1,0 +1,15 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<div
+  class={cn("grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3", className)}
+>
+  <slot />
+</div>

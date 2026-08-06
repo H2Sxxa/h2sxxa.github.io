@@ -1,0 +1,11 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const props = Astro.props as Props;
+---
+
+<div class={cn("h-px w-full bg-border my-4", props.class)}></div>

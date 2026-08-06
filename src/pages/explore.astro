@@ -2,6 +2,13 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import { EXPLORE_LINKS } from "@/consts.ts";
+
+import Divider from "@/components/Divider.astro";
+import FlatGrid from "@/components/FlatGrid.astro";
+import DecorativeCard from "@/components/DecorativeCard.astro";
+import DecorativeIndex from "@/components/DecorativeIndex.astro";
+import DecorativeTitle from "@/components/DecorativeTitle.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <BaseLayout>
@@ -12,23 +19,33 @@ import { EXPLORE_LINKS } from "@/consts.ts";
       I don't like to use a navigation bar, so I put all the links here.
     </p>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <FlatGrid>
       {
         EXPLORE_LINKS.map((link, index) => (
-          <article class="group decorative">
-            <div class="decorative-index">
+          <DecorativeCard>
+            <DecorativeIndex>
               {index < 11 ? `0${index + 1}` : index + 1}
-            </div>
+            </DecorativeIndex>
 
-            <h2 class="block font-serif text-2xl font-semibold text-primary no-underline transition-colors hover:text-primary/80 hover:underline">
-              <a href={link.href}>{link.title}</a>
-            </h2>
-            <p class="mt-3 text-sm leading-6 text-muted-foreground">
-              {link.description}
-            </p>
-          </article>
+            <DecorativeTitle
+              href={link.href}
+              title={link.title}
+              description={link.description}
+            />
+          </DecorativeCard>
         ))
       }
-    </div>
+    </FlatGrid>
+    <Divider />
+    <FlatGrid>
+      <DecorativeCard>
+        <DecorativeIndex> <Icon name="mdi:github" /> </DecorativeIndex>
+        <DecorativeTitle
+          href="https://github.com/H2Sxxa"
+          title="GitHub"
+          description="Explore my GitHub profile."
+        />
+      </DecorativeCard>
+    </FlatGrid>
   </main>
 </BaseLayout>
