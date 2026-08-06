@@ -20,7 +20,8 @@ const sizes = {
 
 <div
   class={cn(
-    "inline-block rounded-full border-4 border-primary/50 pointer-events-none",
+    "inline-block rounded-full  pointer-events-none shrink-0",
+    sizes[size],
     Astro.props.class,
   )}
 >
@@ -29,6 +30,6 @@ const sizes = {
     alt={alt ?? "Avatar"}
     inferSize
     loading="eager"
-    class:list={["rounded-full", sizes[size]]}
+    class:list={["rounded-full border-4 border-primary/50", sizes[size]]}
   />
 </div>

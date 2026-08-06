@@ -87,20 +87,19 @@ export function Body() {
       </section>
 
       <section ref={story} className="grid h-[300vh] grid-cols-2">
-        <div className="flex flex-col items-center space-y-[50vh] py-[20vh]">
-          <div className="story-text">
+        <div className="flex flex-col items-center">
+          <div className="story-text flex flex-col h-screen">
             <h2 className="text-5xl font-bold">01</h2>
             <p className="mt-5 text-xl">First Paragraph</p>
           </div>
 
-          <div className="story-text">
+          <div className="story-text flex flex-col h-screen">
             <h2 className="text-5xl font-bold">02</h2>
             <p className="mt-5 text-xl">Second Paragraph</p>
           </div>
 
-          <div className="story-text">
+          <div className="story-text flex flex-col h-screen">
             <h2 className="text-5xl font-bold">03</h2>
-
             <p className="mt-5 text-xl">Third Paragraph</p>
           </div>
         </div>
