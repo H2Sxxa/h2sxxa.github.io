@@ -11,11 +11,49 @@
       active: false,
       initialized: false,
       grid: null,
+      rafId: 0,
+      lastUpdateTime: 0,
     });
+
+  const speed = 0.05;
+  const updateInterval = 16;
+  const maxDelta = 12;
+
+  function applyGlowPosition(x, y) {
+    glowState.currentX = x;
+    glowState.currentY = y;
+
+    if (glowState.grid) {
+      glowState.grid.style.setProperty("--mouse-x", `${glowState.currentX}px`);
+      glowState.grid.style.setProperty("--mouse-y", `${glowState.currentY}px`);
+    }
+  }
+
+  function animate() {
+    const now = performance.now();
+    if (now - glowState.lastUpdateTime < updateInterval) {
+      glowState.rafId = requestAnimationFrame(animate);
+      return;
+    }
+
+    glowState.lastUpdateTime = now;
+    glowState.currentX += (glowState.targetX - glowState.currentX) * speed;
+    glowState.currentY += (glowState.targetY - glowState.currentY) * speed;
+
+    const dx = glowState.currentX - glowState.targetX;
+    const dy = glowState.currentY - glowState.targetY;
+
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+      applyGlowPosition(glowState.targetX, glowState.targetY);
+    } else {
+      applyGlowPosition(glowState.currentX, glowState.currentY);
+    }
+
+    glowState.rafId = requestAnimationFrame(animate);
+  }
 
   function initGridGlow() {
     const grid = document.querySelector(".bg-grid");
-    const speed = 0.05;
     if (!grid) {
       return;
     }
@@ -23,33 +61,28 @@
     glowState.grid = grid;
 
     if (!glowState.initialized) {
-      window.addEventListener("mousemove", (e) => {
-        glowState.targetX = e.clientX;
-        glowState.targetY = e.clientY;
-        glowState.active = true;
+      window.addEventListener(
+        "mousemove",
+        (e) => {
+          const nextX = e.clientX;
+          const nextY = e.clientY;
+          const dx = nextX - glowState.targetX;
+          const dy = nextY - glowState.targetY;
 
-        if (glowState.grid) {
-          glowState.grid.classList.add("active");
-        }
-      });
+          if (Math.abs(dx) < maxDelta && Math.abs(dy) < maxDelta) {
+            return;
+          }
 
-      function animate() {
-        glowState.currentX += (glowState.targetX - glowState.currentX) * speed;
-        glowState.currentY += (glowState.targetY - glowState.currentY) * speed;
+          glowState.targetX = nextX;
+          glowState.targetY = nextY;
+          glowState.active = true;
 
-        if (glowState.grid) {
-          glowState.grid.style.setProperty(
-            "--mouse-x",
-            `${glowState.currentX}px`,
-          );
-          glowState.grid.style.setProperty(
-            "--mouse-y",
-            `${glowState.currentY}px`,
-          );
-        }
-
-        requestAnimationFrame(animate);
-      }
+          if (glowState.grid) {
+            glowState.grid.classList.add("active");
+          }
+        },
+        { passive: true },
+      );
 
       animate();
       glowState.initialized = true;
