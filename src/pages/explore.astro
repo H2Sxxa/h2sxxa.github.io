@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BackgroundGrid from "@/components/BackgroundGrid.astro";
-import { EXPLORE_LINKS } from "@/consts.ts";
+import { EXPLORE_LINKS, SITE_OWNER_LINKS } from "@/consts.ts";
 
 import Divider from "@/components/Divider.astro";
 import FlatGrid from "@/components/FlatGrid.astro";
@@ -38,14 +38,21 @@ import { Icon } from "astro-icon/components";
     </FlatGrid>
     <Divider />
     <FlatGrid>
-      <DecorativeCard>
-        <DecorativeIndex> <Icon name="mdi:github" /> </DecorativeIndex>
-        <DecorativeTitle
-          href="https://github.com/H2Sxxa"
-          title="GitHub"
-          description="Explore my GitHub profile."
-        />
-      </DecorativeCard>
+      {
+        SITE_OWNER_LINKS.map((link) => (
+          <DecorativeCard>
+            <DecorativeIndex>
+              <Icon name={link.icon} />
+            </DecorativeIndex>
+
+            <DecorativeTitle
+              href={link.href}
+              title={link.title}
+              description={link.description}
+            />
+          </DecorativeCard>
+        ))
+      }
     </FlatGrid>
   </main>
 </BaseLayout>

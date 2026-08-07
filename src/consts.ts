@@ -44,14 +44,20 @@ export const PAGE_SIZE = 8;
 export const SITE_OWNER_LINKS = [
   {
     href: "https://github.com/H2Sxxa",
+    title: "GitHub",
+    description: "My GitHub Profile.",
     icon: "mdi:github",
   },
   {
     href: "https://steamcommunity.com/profiles/76561199187367033/",
+    title: "Steam",
+    description: "Maybe you want play game with me.",
     icon: "mdi:steam",
   },
   {
     href: "mailto:h2sxxa0w0@gmail.com",
+    title: "Email",
+    description: "I will check my email every day.",
     icon: "mdi:email",
   },
 ];
