@@ -135,4 +135,10 @@ export const FRIENDS_LINKS = [
     link: "https://blog.yookoishi.com/",
     avatar: "https://avatars.githubusercontent.com/u/115394813",
   },
+  {
+    title: "Amiya_desi",
+    intro: "Amiya's Desk",
+    link: "https://blog.sayori.org/",
+    avatar: "https://avatars.githubusercontent.com/u/288253848",
+  },
 ];
