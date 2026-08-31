@@ -28,7 +28,11 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
       onPointerOut={(event) => setHover(false)}
     >
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+      <meshStandardMaterial
+        color={hovered ? "hotpink" : "orange"}
+        metalness={0.8}
+        roughness={0.5}
+      />
     </mesh>
   );
 }
@@ -36,9 +40,12 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
 export default function Page() {
   return (
     <div className="h-dvh w-dvw">
+      <h1 className="absolute top-16 w-dvw text-center font-handwriting text-6xl">
+        Rotated Box
+      </h1>
       <Canvas>
         <Box />
-        <directionalLight position={[0, 0, 5]} />
+        <directionalLight position={[0, 0, 2]} />
       </Canvas>
     </div>
   );
