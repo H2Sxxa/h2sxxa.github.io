@@ -76,29 +76,34 @@ export function Body() {
 
   return (
     <main ref={container} className="mx-auto overflow-x-hidden">
-      <section className="flex h-screen items-center justify-center">
-        <h1 ref={heroTitle} className="text-7xl font-bold">
-          GSAP + Lenis
-        </h1>
+      <section className="relative flex h-screen items-center justify-center">
+        <div ref={heroTitle} className="absolute bottom-24 left-24 z-0">
+          <h1 className="font-handwriting text-7xl">Lenis</h1>
+          <div className="my-4 h-px w-full bg-border" />
+
+          <h2 className="font-serif text-xl italic">
+            GSAP / Lenis / React / TypeScript
+          </h2>
+        </div>
+        {/* Decoration */}
+        {/* Background Image */}
       </section>
 
       <section className="flex h-screen items-center justify-center">
-        <div ref={box} className="h-40 w-40 bg-blue-500" />
+        <div ref={box} className="h-40 w-40 bg-primary" />
       </section>
 
       <section ref={story} className="grid h-[300vh] grid-cols-2">
         <div className="flex flex-col items-center">
-          <div className="story-text flex flex-col h-screen">
+          <div className="story-text flex h-screen flex-col items-start justify-center">
             <h2 className="text-5xl font-bold">01</h2>
             <p className="mt-5 text-xl">First Paragraph</p>
           </div>
-
-          <div className="story-text flex flex-col h-screen">
+          <div className="story-text flex h-screen flex-col items-start justify-center">
             <h2 className="text-5xl font-bold">02</h2>
             <p className="mt-5 text-xl">Second Paragraph</p>
           </div>
-
-          <div className="story-text flex flex-col h-screen">
+          <div className="story-text flex h-screen flex-col items-start justify-center">
             <h2 className="text-5xl font-bold">03</h2>
             <p className="mt-5 text-xl">Third Paragraph</p>
           </div>
