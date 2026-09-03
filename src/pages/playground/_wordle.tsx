@@ -1,4 +1,4 @@
-import { Text, OrthographicCamera, Line } from "@react-three/drei";
+import { Text, OrthographicCamera } from "@react-three/drei";
 import {
   Physics,
   RigidBody,
@@ -26,7 +26,7 @@ function Letter({
   const [dragging, setDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  const { camera, pointer } = useThree();
+  const { camera, pointer, viewport } = useThree();
 
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
 
@@ -37,39 +37,91 @@ function Letter({
   };
 
   const FLOOR_Y = 0;
-
+  const MAX_SPEED = 18;
+  const OUT = 1;
   const DRAG_Y = FLOOR_Y + LETTER_SIZE.height / 2;
+
   const dragPlane = useMemo(
     () => new THREE.Plane(new THREE.Vector3(0, 1, 0), -DRAG_Y),
     [DRAG_Y],
   );
 
   const point = useMemo(() => new THREE.Vector3(), []);
-
+  const screenPosition = useMemo(() => new THREE.Vector3(), []);
   useFrame(() => {
-    if (!dragging || !body.current) return;
+    if (!body.current) return;
 
-    raycaster.setFromCamera(pointer, camera);
+    if (dragging) {
+      raycaster.setFromCamera(pointer, camera);
+      if (raycaster.ray.intersectPlane(dragPlane, point)) {
+        body.current.setNextKinematicTranslation({
+          x: point.x,
+          y: DRAG_Y,
+          z: point.z,
+        });
+      }
+      return;
+    }
 
-    if (raycaster.ray.intersectPlane(dragPlane, point)) {
-      body.current.setNextKinematicTranslation({
-        x: point.x,
-        y: DRAG_Y,
-        z: point.z,
-      });
+    const position = body.current.translation();
+    screenPosition.set(position.x, position.y, position.z);
+    screenPosition.project(camera);
+
+    if (Math.abs(screenPosition.x) > OUT || Math.abs(screenPosition.z) > OUT) {
+      resetPosition();
     }
   });
-
   const startDrag = (event: ThreeEvent<PointerEvent>) => {
     event.stopPropagation();
+    const target = event.target as Element;
+    target?.setPointerCapture(event.pointerId);
     body.current?.setBodyType(2, true);
     setDragging(true);
   };
 
   const endDrag = (event: ThreeEvent<PointerEvent>) => {
     event.stopPropagation();
+
+    // Limit the speed of the letter when released to prevent it from flying off too fast
+    const rigidBody = body.current;
+
+    if (rigidBody) {
+      rigidBody.setBodyType(0, true);
+
+      const velocity = rigidBody.linvel();
+
+      const speed = Math.sqrt(
+        velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2,
+      );
+
+      if (speed > MAX_SPEED) {
+        const scale = MAX_SPEED / speed;
+
+        rigidBody.setLinvel(
+          {
+            x: velocity.x * scale,
+            y: velocity.y * scale,
+            z: velocity.z * scale,
+          },
+          true,
+        );
+      }
+    }
+
     body.current?.setBodyType(0, true);
     setDragging(false);
+    const target = event.target as Element;
+    if (target.hasPointerCapture(event.pointerId)) {
+      target.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  const resetPosition = () => {
+    if (!body.current) return;
+    body.current.setTranslation({ x: 0, y: 20, z: 0 }, true);
+    body.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    body.current.wakeUp();
   };
 
   return (
@@ -79,7 +131,7 @@ function Letter({
       position={position}
       colliders={false}
       friction={0.8}
-      restitution={0.2}
+      restitution={0.1}
       linearDamping={0.8}
       angularDamping={0.2}
     >
@@ -94,6 +146,7 @@ function Letter({
       <group
         onPointerDown={startDrag}
         onPointerUp={endDrag}
+        onPointerCancel={endDrag}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
@@ -182,9 +235,19 @@ export default function Page() {
       <Canvas className="border-8" shadows>
         <Camera />
         <ambientLight intensity={1.25} />
-        <directionalLight position={[20, 15, 0]} castShadow />
-
-        <Physics gravity={[0, -12, 0]}>
+        <directionalLight
+          position={[20, 15, 0]}
+          castShadow
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
+          shadow-camera-left={-20}
+          shadow-camera-right={20}
+          shadow-camera-top={20}
+          shadow-camera-bottom={-20}
+          shadow-camera-near={0.1}
+          shadow-camera-far={100}
+        />
+        <Physics>
           <Letters />
           <Floor />
         </Physics>
