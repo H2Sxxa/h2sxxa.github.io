@@ -118,7 +118,7 @@ function Letter({
 
   const resetPosition = () => {
     if (!body.current) return;
-    body.current.setTranslation({ x: 0, y: 20, z: 0 }, true);
+    body.current.setTranslation({ x: 0, y: 35, z: 0 }, true);
     body.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
     body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
     body.current.wakeUp();
@@ -231,7 +231,7 @@ function Camera() {
 
 export default function Page() {
   return (
-    <div className="h-dvh w-full">
+    <div className="h-dvh w-full touch-none">
       <Canvas className="border-8" shadows>
         <Camera />
         <ambientLight intensity={1.25} />
