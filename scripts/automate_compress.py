@@ -62,7 +62,14 @@ def compress(path: Path, apply: bool) -> tuple[int, int]:
 
             tmp = path.with_suffix(path.suffix + ".tmp")
             if fmt == "PNG":
-                im.save(tmp, format="PNG", optimize=True)
+                im = im.convert("RGB")
+                im.save(
+                    tmp,
+                    format="JPEG",
+                    quality=JPEG_QUALITY,
+                    optimize=True,
+                    progressive=True,
+                )
             else:
                 # Flatten alpha onto white for JPEG, which has no alpha channel.
                 if im.mode in ("RGBA", "LA", "P"):
@@ -85,7 +92,10 @@ def compress(path: Path, apply: bool) -> tuple[int, int]:
         return old, old
 
     if apply:
-        tmp.replace(path)
+        tmp.replace(path.with_suffix(path.suffix + ".jpg"))
+        if fmt == "PNG":
+            # Remove the original PNG if we converted to JPEG.
+            path.unlink()
     else:
         tmp.unlink()
     return old, new
