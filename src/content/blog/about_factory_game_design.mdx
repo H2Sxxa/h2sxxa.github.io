@@ -50,7 +50,7 @@ pub struct Processor {
 
 pub struct Belt {
     pub in0: Slot,
-    pub out: Slot,
+    pub out
 }
 ```
 
@@ -93,29 +93,76 @@ pub struct Pos {
 
 很显然，这是一张有向图，如果根节点G不再有入边且有且仅有一个根节点G，那么它就是一棵有向树。
 
-既然能够被认作为一棵有向树，那么就可以用深度优先搜索(DFS)来遍历它，我们只需要按顺序从根节点G开始，依次访问它的子节点B和P，就可以把整个网络遍历一遍，同时处理完他们的输入输出。
+既然能够被认作为一棵有向树，我们只需要按顺序从根节点G开始，依次访问它的子节点B和P，就可以把整个网络遍历一遍，同时处理完他们的输入输出。
 
-那么代码会是这样的(我们暂且忽略越界检查和不重要的代码细节):
+那么代码会是这样的(我们暂且忽略大多数情况，包括越界检查、不重要的代码细节和潜在的性能问题，并且以一种直观的数据结构来表示):
 
 ```rust
-pub struct Graph {
-    // Node 自带方向
-    pub nodes: Vec<Node>,
+// 我们可以认为一张图中存放了多个网络，且在此图中，网络之间是没有连接的
+pub struct Graph(Map<Pos, Node>);
 
+impl Graph {
+    // 因为网络之间没有连接，所以我们可以根据根节点的特性来发现所有网络
+    // 在一般情况下：根节点的特征是它没有入边，并且没有输入
+    // 不一般的情况指可能存在的非法的连接（例如 B->G->...），当然，我们需要实现剔除这类多余节点
+    pub fn networks<'a>(&'a mut self) -> Vec<Network<'a>>;
 }
 
-pub struct Network {
-    // Length = width * height
-    pub grid: Vec<Option<Node>>, // (from, to)
-    // Index0 is the root node, which is a Generator
-    pub root: Pos,
+
+pub struct Network<'a> {
+    // nodes 已经按照迭代顺序排列好
+    pub nodes: Vec<&'a mut Node>,
+    // 某个 index 可能会连接多个节点，考虑分配器，溢流器等情况
+    pub edges: Map<usize, Vec<(Direction, usize)>>,
 }
 
-impl Network {
-    pub fn get_direction_node(&self, pos: &Pos)-> Option<&Node>;
+impl NodeObject {
+    // set in0 / in1 / ...
+    fn push(&mut self, item: Item);
+    // consume in0 / in1 / ... and produce out
+    fn work(&mut self);
+    // in0 / in1 / ... empty?
+    fn can_push(&self) -> bool;
+    // take out
+    fn take(&self) -> Option<Item>;
+}
+
+fn try_take_and_push_item(from: &mut NodeObject, to: &mut NodeObject) -> bool {
+    if to.can_push() && let Some(item) = from.take() {
+        to.push(item);
+        true
+    } else {
+        false
+    }
+}
+
+
+impl<'a> Network<'a> {
+    pub fn next(&self, index: usize, node_direction: Direction) -> Option<usize>;
 
     pub fn tick(&mut self) {
-
+        for (index, node) in self.nodes.iter_mut().enumerate() {
+            // 如果是溢流器，分配器，这里需要 match node 并且读取内部状态来决定下一步的方向
+            // 这里我们暂且忽略这些复杂的情况，假设每个节点只有一个输出方向
+            let next = self.next(index, node.direction);
+            // 如果成功推送了物品，那么就执行 work
+            if try_take_and_push_item(node.object, self.nodes[next].object) {
+                // 对于传送带，work 把输入的物品移动到输出槽位，在下一个 tick 中，传送带的输出槽位会被下一个节点读取
+                // 这样就不会产生级联现象
+                node.object.work();
+            }
+        }
     }
 }
 ```
+
+一个代码执行的时序表，帮助你来理解
+
+|  Tick | G            | B            | P                     |
+| ----: | ------------ | ------------ | --------------------- |
+|    初始 | `Item #0`    | —            | —                     |
+| **0** | 推送`#0`，产生 `I#1` | 接收 `I#0` | —                     |
+| **1** | 推送`#1`，产生 `I#2` | 接收 `I#1` | 产生 `P#0` |
+| **2** | 推送`#2`，产生 `I#3` | 接收 `I#2` | 产生 `P#1` |
+
+# 
