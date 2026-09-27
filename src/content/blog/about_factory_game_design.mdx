@@ -1,0 +1,121 @@
+---
+
+title: '"工厂"流水线执行模型的设计'
+pubDate: 2026-9-27
+tags: ["Factory Game", "Game Design", "Rust"]
+categories: "Development & Programming"
+wip: true
+---
+
+import NavigationTile from "@/components/inlines/NavigationTile.astro";
+
+# 前言
+
+最近心血来潮，想试试从0写一个工厂游戏，其中最难的部分莫过于执行模型的设计，也就是怎么让上一Tick的结果在下一Tick中生效，怎么让机器之间的资源流动起来。
+
+<NavigationTile
+  title="Matlas"
+  subtitle="玩法失败的工厂游戏，UI 由 AI 完成"
+  href="/matlas"
+/>
+
+# 你需要知道的概念
+
+在工厂游戏中，我认为如果需要支撑这个玩法，那么就需要最基本的三类机器:
+
+1. 资源生成(Generator) - 例如：仓库出站、矿机...
+2. 资源加工(Processor) - 例如：仓库入站、粉碎机、合成器...
+3. 资源运输(Belt) - 例如：传送带、溢流门、分配器...
+
+在这篇文章中，我们会把它们简称为 G, P, B，为了更加立体的表示他们的方向，下面会用 Up, Down, Left, Right 的缩写来指示，也就是M(U/D/L/R)。
+
+所有的机器都具有槽位，槽位分为两类: 输入槽位和输出槽位，输入槽位(in)用于接收资源，输出槽(out)位用于输出资源。
+
+这三类机器可能是这样的:
+
+```rust
+pub struct Item;
+pub type Slot = Option<Item>;
+
+pub struct Generator {
+    pub out: Slot,
+}
+
+pub struct Processor {
+    pub in0: Slot,
+    // pub in1: Slot,
+    // ...
+    pub out: Slot,
+}
+
+pub struct Belt {
+    pub in0: Slot,
+    pub out: Slot,
+}
+```
+
+一个独立的，由数个机器连接在一起的整体，我称之为"网络"。
+
+
+为了能够宽泛地表示这类不同的节点，我们可以定义一个枚举，同时使用另一个 struct 来表示它们的方向:
+
+```rust
+pub enum NodeObject {
+    Generator(Generator),
+    Processor(Processor),
+    Belt(Belt),
+}
+
+pub enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+pub struct Node {
+    pub object: NodeObject,
+    pub direction: Direction,
+}
+
+pub struct Pos {
+    pub x: usize,
+    pub y: usize,
+}
+```
+
+
+# 原型
+
+现在有了三类机器了，下一步就是把网络表示出来。
+
+试想一下原型，也就是最简单的网络: G(R)B(R)P(R) (G->B->P)
+
+很显然，这是一张有向图，如果根节点G不再有入边且有且仅有一个根节点G，那么它就是一棵有向树。
+
+既然能够被认作为一棵有向树，那么就可以用深度优先搜索(DFS)来遍历它，我们只需要按顺序从根节点G开始，依次访问它的子节点B和P，就可以把整个网络遍历一遍，同时处理完他们的输入输出。
+
+那么代码会是这样的(我们暂且忽略越界检查和不重要的代码细节):
+
+```rust
+pub struct Graph {
+    // Node 自带方向
+    pub nodes: Vec<Node>,
+
+}
+
+pub struct Network {
+    // Length = width * height
+    pub grid: Vec<Option<Node>>, // (from, to)
+    // Index0 is the root node, which is a Generator
+    pub root: Pos,
+}
+
+impl Network {
+    pub fn get_direction_node(&self, pos: &Pos)-> Option<&Node>;
+
+    pub fn tick(&mut self) {
+
+    }
+}
+```
