@@ -30,7 +30,15 @@
   const screen = document.querySelector("#loading-screen");
   const progress = document.querySelector("#loading-progress");
   const percent = document.querySelector("#loading-percent");
+  const lockPage = () => {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  };
 
+  const unlockPage = () => {
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+  };
   const renderProgress = (value) => {
     progress.style.width = `${value}%`;
     percent.textContent = `${Math.floor(value)}`;
@@ -38,7 +46,7 @@
 
   const playIntro = () => {
     let value = 0;
-
+    lockPage();
     screen.hidden = false;
     renderProgress(value);
 
@@ -51,6 +59,7 @@
     }, TICK_MS);
 
     const finish = () => {
+      unlockPage();
       clearInterval(timer);
       sessionStorage.setItem(KEY, "1");
       renderProgress(100);
