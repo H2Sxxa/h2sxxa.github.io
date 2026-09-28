@@ -1,0 +1,78 @@
+<div
+  id="loading-screen"
+  hidden
+  class="fixed inset-0 z-9999 bg-background transition-[opacity,visibility] duration-800 ease-in-out"
+>
+  <div class="absolute bottom-0 w-full">
+    <div class="mt-3 mb-4 pr-4 text-right font-mono text-xl">
+      <span id="loading-percent">0</span>%
+    </div>
+    <div class="h-1.5 w-full overflow-hidden bg-primary/20">
+      <div
+        id="loading-progress"
+        class="h-full w-0 bg-primary transition-[width] duration-150 ease-out"
+      >
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // The loader stays hidden by default and is only revealed on the first visit of
+  // a session. The node is never removed: a self-deleting persisted element makes
+  // Astro fall back to the freshly rendered markup on the next navigation, and
+  // nothing drives that copy, so it freezes on screen at 0%.
+  const KEY = "site-intro-shown";
+  const PENDING_PROGRESS_MAX = 90;
+  const FADE_DELAY_MS = 300;
+  const TICK_MS = 100;
+
+  const screen = document.querySelector("#loading-screen");
+  const progress = document.querySelector("#loading-progress");
+  const percent = document.querySelector("#loading-percent");
+
+  const renderProgress = (value) => {
+    progress.style.width = `${value}%`;
+    percent.textContent = `${Math.floor(value)}`;
+  };
+
+  const playIntro = () => {
+    let value = 0;
+
+    screen.hidden = false;
+    renderProgress(value);
+
+    const timer = window.setInterval(() => {
+      const remaining = PENDING_PROGRESS_MAX - value;
+      const increment = Math.max(0.3, remaining * 0.08);
+
+      value = Math.min(value + increment, PENDING_PROGRESS_MAX);
+      renderProgress(value);
+    }, TICK_MS);
+
+    const finish = () => {
+      clearInterval(timer);
+      sessionStorage.setItem(KEY, "1");
+      renderProgress(100);
+
+      setTimeout(() => {
+        screen.classList.add("opacity-0", "invisible", "pointer-events-none");
+      }, FADE_DELAY_MS);
+    };
+
+    if (document.readyState === "complete") {
+      finish();
+    } else {
+      window.addEventListener("load", finish, { once: true });
+    }
+  };
+
+  if (
+    sessionStorage.getItem(KEY) === null &&
+    screen instanceof HTMLElement &&
+    progress instanceof HTMLElement &&
+    percent instanceof HTMLElement
+  ) {
+    playIntro();
+  }
+</script>

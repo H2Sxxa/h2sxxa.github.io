@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import BaseHead from "@/components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import FloatActionButton from "@/components/FloatActionButton.astro";
+import PageLoader from "@/components/PageLoader.astro";
 
 interface Props {
   dontIncludeFABPadding?: boolean;
@@ -55,6 +56,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
     />
   </head>
   <body>
+    <PageLoader />
     <ClientRouter />
     <slot />
     <FloatActionButton />
