@@ -30,6 +30,21 @@ let activeCurtain = false;
 let runToken = 0;
 let pendingViewTransition: ViewTransition | null = null;
 
+function lockScroll(): void {
+  const scrollbarWidth: number =
+    window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.setProperty(
+    "--curtain-scrollbar-comp",
+    `${Math.max(0, scrollbarWidth)}px`,
+  );
+  document.documentElement.classList.add("curtain-locked");
+}
+
+function unlockScroll(): void {
+  document.documentElement.classList.remove("curtain-locked");
+  document.documentElement.style.removeProperty("--curtain-scrollbar-comp");
+}
+
 function normalizePath(pathname: string): string {
   if (!pathname || pathname === "/") return "/";
   return pathname.replace(/\/+$/, "") || "/";
@@ -105,6 +120,7 @@ function resetToIdle(overlay: HTMLElement): void {
   });
   overlay.classList.add("is-idle");
   document.documentElement.classList.remove("curtain-active");
+  unlockScroll();
 }
 
 export function initRouteCurtain(): void {
@@ -128,6 +144,7 @@ export function initRouteCurtain(): void {
 
     const token: number = ++runToken;
     activeCurtain = true;
+    lockScroll();
     document.documentElement.classList.add("curtain-active");
     setRouteCopy(overlay, toMeta, toPath);
 
@@ -156,7 +173,10 @@ export function initRouteCurtain(): void {
   document.addEventListener("astro:before-swap", (rawEvent: Event) => {
     if (!activeCurtain) return;
     const event = rawEvent as TransitionBeforeSwapEvent;
-    event.newDocument.documentElement.classList.add("curtain-active");
+    event.newDocument.documentElement.classList.add(
+      "curtain-active",
+      "curtain-locked",
+    );
     pendingViewTransition = event.viewTransition ?? null;
   });
 
@@ -177,6 +197,7 @@ export function initRouteCurtain(): void {
       activeCurtain = false;
       pendingViewTransition = null;
       document.documentElement.classList.remove("curtain-active");
+      unlockScroll();
       return;
     }
 
