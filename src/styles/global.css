@@ -340,13 +340,22 @@ html.curtain-active::view-transition-new(root) {
 }
 
 @utility m3-pill {
-  @apply rounded-full hover:rounded-xl active:scale-95 active:rounded-lg;
+  border-radius: 24px;
   transition:
     border-radius 320ms var(--ease-spring),
     transform 280ms var(--ease-spring),
     background-color 180ms ease,
     border-color 180ms ease,
     color 180ms ease;
+
+  &:hover {
+    border-radius: 14px;
+  }
+
+  &:active {
+    border-radius: 10px;
+    transform: scale(0.95);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

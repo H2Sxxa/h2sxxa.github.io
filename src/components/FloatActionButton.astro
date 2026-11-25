@@ -137,7 +137,7 @@ import { FAB_LINKS } from "@/consts";
   }
 
   .fab-main[aria-expanded="true"] {
-    border-radius: 9999px;
+    border-radius: 28px;
   }
 
   #fab-icon-wrap {
@@ -169,14 +169,16 @@ import { FAB_LINKS } from "@/consts";
     transform: translateY(0) scale(1);
   }
 
-  /* Clear stagger delay once menu is open so hover responds immediately */
-  #fab-menu[data-open="true"] :global(.fab-stagger-item:hover) {
+  /* Clear stagger delay once menu finishes opening so hover-in and hover-out are instant */
+  #fab-menu[data-settled="true"] :global(.fab-stagger-item) {
     transition-delay: 0ms !important;
+  }
+
+  #fab-menu[data-open="true"] :global(.fab-stagger-item:hover) {
     transform: translateY(0) scale(1.06);
   }
 
   #fab-menu[data-open="true"] :global(.fab-stagger-item:active) {
-    transition-delay: 0ms !important;
     transform: translateY(0) scale(0.95);
   }
 
@@ -208,12 +210,16 @@ import { FAB_LINKS } from "@/consts";
       return toggle?.getAttribute("aria-expanded") === "true";
     };
 
+    let settleTimer = 0;
+
     const setOpen = (next) => {
       const { toggle, menu, iconMenu, iconClose, ring, ringTrack } = getEls();
       if (!toggle || !menu) return;
+      window.clearTimeout(settleTimer);
       toggle.setAttribute("aria-expanded", String(next));
       menu.setAttribute("aria-hidden", String(!next));
       menu.setAttribute("data-open", String(next));
+      menu.setAttribute("data-settled", "false");
 
       const rx = next ? "32" : "24";
       ring?.setAttribute("rx", rx);
@@ -224,6 +230,9 @@ import { FAB_LINKS } from "@/consts";
         menu.classList.add("opacity-100", "pointer-events-auto");
         iconMenu?.classList.add("hidden");
         iconClose?.classList.remove("hidden");
+        settleTimer = window.setTimeout(() => {
+          menu.setAttribute("data-settled", "true");
+        }, 260);
       } else {
         menu.classList.remove("opacity-100", "pointer-events-auto");
         menu.classList.add("opacity-0", "pointer-events-none");
