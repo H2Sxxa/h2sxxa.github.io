@@ -2,32 +2,84 @@
 import { SITE_OWNER } from "@/consts";
 import Avatar from "@/components/Avatar.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 ---
 
 <BaseLayout dontIncludeFABPadding>
-  <BackgroundGrid />
   <main
-    class="mx-auto flex min-h-dvh max-w-6xl flex-col items-center justify-center gap-12 px-6 md:flex-row md:gap-12"
+    class="mx-auto flex min-h-dvh max-w-5xl flex-col items-center justify-center gap-10 px-6 md:flex-row md:gap-14"
   >
     <!-- Left -->
-
-    <section
-      class="flex flex-col items-center text-center md:items-center md:text-left"
-    >
-      <Avatar src={SITE_OWNER.avatar} alt="Avatar" />
-      <h1 class="mt-6 text-3xl font-bold">{SITE_OWNER.name}</h1>
+    <section class="flex shrink-0 flex-col items-center text-center">
+      <div
+        id="home-avatar-tilt"
+        class="rounded-full transition-transform duration-200 ease-out will-change-transform"
+      >
+        <Avatar src={SITE_OWNER.avatar} alt={SITE_OWNER.name} />
+      </div>
+      <h1 class="mt-6 font-serif text-3xl font-bold tracking-tight">
+        {SITE_OWNER.name}
+      </h1>
     </section>
 
     <!-- Right -->
-    <section class="max-w-2xl text-center md:text-left">
+    <section class="max-w-xl text-center md:text-left">
       <h2 class="font-handwriting text-4xl font-bold md:text-5xl">
         {SITE_OWNER.bio}
       </h2>
 
-      <p class="mt-6 font-serif text-lg text-primary md:text-xl">
+      <p
+        class="mt-5 font-serif text-lg leading-relaxed text-muted-foreground md:text-xl"
+      >
         {SITE_OWNER.description}
       </p>
+
+      <nav
+        aria-label="Quick links"
+        class="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-mono text-xs text-muted-foreground md:justify-start"
+      >
+        <a href="/blog" class="text-primary hover:underline">Blog</a>
+        <span aria-hidden="true">·</span>
+        <a href="/about" class="text-muted-foreground hover:text-primary">About</a>
+        <span aria-hidden="true">·</span>
+        <a href="/explore" class="text-muted-foreground hover:text-primary">Explore</a>
+        <span aria-hidden="true">·</span>
+        <button
+          type="button"
+          data-open-cmd
+          class="m3-pill cursor-pointer border border-border bg-card/70 px-2.5 py-0.5 text-muted-foreground hover:border-primary/40 hover:bg-accent hover:text-foreground"
+        >
+          ⌘K
+        </button>
+      </nav>
     </section>
   </main>
+
+  <script is:inline>
+    (() => {
+      const bindAvatarTilt = () => {
+        const avatar = document.getElementById("home-avatar-tilt");
+        if (
+          !avatar ||
+          avatar.dataset.bound === "1" ||
+          window.matchMedia("(pointer: coarse)").matches ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          return;
+        }
+        avatar.dataset.bound = "1";
+        avatar.addEventListener("pointermove", (e) => {
+          const rect = avatar.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width - 0.5;
+          const py = (e.clientY - rect.top) / rect.height - 0.5;
+          avatar.style.transform = `perspective(500px) rotateX(${(-py * 14).toFixed(1)}deg) rotateY(${(px * 14).toFixed(1)}deg) scale(1.03)`;
+        });
+        avatar.addEventListener("pointerleave", () => {
+          avatar.style.transform = "";
+        });
+      };
+
+      document.addEventListener("astro:page-load", bindAvatarTilt);
+      bindAvatarTilt();
+    })();
+  </script>
 </BaseLayout>

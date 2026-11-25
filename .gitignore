@@ -31,3 +31,4 @@ pnpm-debug.log*
 
 /skills-lock.json
 /.agents
+/.tmp-*

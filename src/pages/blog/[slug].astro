@@ -1,9 +1,9 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/Text.astro";
-import { Image } from "astro:assets";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import { snake_case } from "@/utils/snakecase";
 import { clip_markdown } from "@/utils/clip";
 import FormattedDate from "@/components/FormattedDate.astro";
@@ -19,7 +19,12 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
-post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
+const sortedTags = post.data.tags
+  ? [...post.data.tags].sort((a, b) => a.localeCompare(b))
+  : [];
+const charCount = post.body ? post.body.replace(/\s+/g, "").length : 0;
+const readingMinutes = Math.max(1, Math.round(charCount / 400));
+const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 ---
 
 <BaseLayout
@@ -28,82 +33,122 @@ post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
   description={post.body ? clip_markdown(post.body, 100) : post.data.title}
   showTitleTemplate
 >
-  <main>
-    <BackgroundGrid />
-    <!-- Hero (If exists) -->
+  <main class="pb-12">
+    <!-- Hero Image -->
     {
       post.data.heroImage && (
-        <div class="h-128 w-full overflow-hidden">
-          <Image
-            src={post.data.heroImage}
-            alt={post.data.title}
-            class="h-full w-full object-cover"
-            loading="eager"
-          />
+        <div class="mx-auto max-w-4xl px-4 pt-6 md:px-6">
+          <div class="max-h-104 w-full overflow-hidden rounded-3xl border border-border/80 bg-card shadow-sm">
+            <Image
+              src={post.data.heroImage}
+              alt={post.data.title}
+              transition:name={`post-hero-${post.id}`}
+              class="h-full max-h-104 w-full object-cover"
+              loading="eager"
+            />
+          </div>
         </div>
       )
     }
-    <!-- Title -->
-    <h1
-      class="mt-8 mb-4 px-4 text-center font-serif text-3xl font-semibold lg:text-4xl"
-    >
-      {post.data.title}
-    </h1>
-    <div class="text-center text-muted-foreground">
-      <p class="mt-1 text-sm">
-        Published on {(<FormattedDate date={post.data.pubDate} />)}
-      </p>
-    </div>
 
-    {
-      post.data.wip && (
-        <div
-          class="mx-auto mt-4 max-w-3xl border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-800"
-          role="alert"
+    <!-- Article Header -->
+    <header class="mx-auto max-w-3xl px-4 pt-8 pb-6 text-center md:px-6">
+      <div class="mb-4 flex items-center justify-center">
+        <a
+          href="/blog"
+          class="m3-pill inline-flex items-center gap-1.5 border border-border bg-card/80 px-3.5 py-1 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-accent hover:text-foreground"
         >
-          <p class="font-bold">Work in Progress</p>
-          <p>This article is still under development and may be incomplete.</p>
-        </div>
-      )
-    }
-    <div class="mx-auto mt-4 max-w-7xl lg:grid">
-      <!-- Right -->
-      <aside
-        class="justify-start p-4 lg:sticky lg:top-8 lg:col-start-2 lg:row-start-1 lg:h-fit lg:max-w-none"
-      >
-        <h2 class="mb-4 font-serif text-xl font-bold">Contents</h2>
-        <ul class="space-y-2">
-          {
-            headings.map((heading) => (
-              <li
-                class:list={[
-                  heading.depth === 2 && "ml-4",
-                  heading.depth === 3 && "ml-6",
-                  heading.depth === 4 && "ml-8",
-                ]}
-              >
-                <a href={`#${heading.slug}`}>{heading.text}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </aside>
+          <Icon name="mdi:arrow-left" class="h-3.5 w-3.5" />
+          <span>Back to Blog</span>
+        </a>
+      </div>
 
-      <!-- Main Content -->
-      <div class="ml-auto max-w-3xl lg:col-start-1 lg:row-start-1">
-        <Text class="max-w-none p-4">
+      <h1
+        transition:name={`post-title-${post.id}`}
+        class="font-serif text-3xl leading-tight font-semibold tracking-tight text-foreground lg:text-4xl"
+      >
+        {post.data.title}
+      </h1>
+
+      <div
+        class="mt-3 flex flex-wrap items-center justify-center gap-2 font-mono text-xs tabular-nums text-muted-foreground"
+      >
+        <span>
+          Published on <FormattedDate date={post.data.pubDate} />
+        </span>
+        <span aria-hidden="true">·</span>
+        <span>{readingMinutes} min read</span>
+      </div>
+
+      {
+        post.data.wip && (
+          <div
+            class="mx-auto mt-5 rounded-xl border border-amber-500/40 border-l-4 border-l-amber-500 bg-amber-500/10 p-4 text-left text-sm text-amber-900 dark:text-amber-200"
+            role="alert"
+          >
+            <p class="font-semibold">Work in Progress</p>
+            <p class="mt-0.5 opacity-90">
+              This article is still under development and may be incomplete.
+            </p>
+          </div>
+        )
+      }
+    </header>
+
+    <!-- Main Grid: Centered Reading Column + Sticky Sliding-Rail TOC -->
+    <div
+      class:list={[
+        "mx-auto mt-2 px-4 md:px-6",
+        tocHeadings.length > 0
+          ? "max-w-6xl lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start lg:gap-10"
+          : "max-w-3xl",
+      ]}
+    >
+      <!-- Mobile Collapsible TOC -->
+      {
+        tocHeadings.length > 0 && (
+          <details class="mb-6 rounded-2xl border border-border bg-card/80 p-4 lg:hidden">
+            <summary class="cursor-pointer font-serif text-sm font-semibold text-foreground">
+              Contents ({tocHeadings.length})
+            </summary>
+            <ul class="mt-3 space-y-1.5 border-l border-border pl-3 text-sm">
+              {tocHeadings.map((heading) => (
+                <li
+                  class:list={[
+                    heading.depth === 2 && "pl-2",
+                    heading.depth === 3 && "pl-4",
+                    heading.depth === 4 && "pl-6",
+                  ]}
+                >
+                  <a
+                    href={`#${heading.slug}`}
+                    class="block py-0.5 text-muted-foreground hover:text-primary"
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
+
+      <!-- Article Content -->
+      <div class="mx-auto w-full max-w-3xl min-w-0 lg:col-start-1 lg:row-start-1">
+        <Text class="max-w-none">
           <Content />
         </Text>
+
         <!-- Tags -->
         {
-          post.data.tags && (
-            <div class="mx-4 mt-4 flex flex-wrap gap-2">
-              {post.data.tags.map((tag) => (
+          sortedTags.length > 0 && (
+            <div class="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
+              {sortedTags.map((tag) => (
                 <a
                   href={`/tag/${snake_case(tag)}`}
-                  class="pointer-events-auto rounded-full border px-3 py-1 font-serif text-sm text-accent-foreground hover:bg-muted focus:outline-none"
+                  class="m3-pill border border-border bg-card px-3.5 py-1 text-xs font-medium text-muted-foreground hover:border-primary/50 hover:bg-accent hover:text-accent-foreground"
                 >
-                  <span class="pr-1 font-sans text-primary">#</span>
+                  <span class="pr-0.5 text-primary">#</span>
                   {tag}
                 </a>
               ))}
@@ -112,44 +157,260 @@ post.data.tags = post.data.tags?.sort((a, b) => a.localeCompare(b));
         }
 
         <!-- Giscus Comments -->
-        <div id="giscus-comments" class="mt-10 p-4"></div>
-        <script is:inline>
-          const loadGiscus = () => {
-            const container = document.getElementById("giscus-comments");
-            if (!container) return;
-
-            container.innerHTML = "";
-
-            const script = document.createElement("script");
-            script.src = "https://giscus.app/client.js";
-            script.setAttribute("data-repo", "H2Sxxa/h2sxxa.github.io");
-            script.setAttribute("data-repo-id", "R_kgDOSuttsw");
-            script.setAttribute("data-category", "Announcements");
-            script.setAttribute("data-category-id", "DIC_kwDOSutts84C-zu8");
-            script.setAttribute("data-mapping", "pathname");
-            script.setAttribute("data-strict", "0");
-            script.setAttribute("data-reactions-enabled", "1");
-            script.setAttribute("data-emit-metadata", "0");
-            script.setAttribute("data-input-position", "bottom");
-            script.setAttribute("data-theme", "fro");
-            script.setAttribute("data-lang", "zh-CN");
-            script.setAttribute("crossorigin", "anonymous");
-            script.async = true;
-
-            container.appendChild(script);
-          };
-
-          document.addEventListener("astro:page-load", loadGiscus);
-
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", loadGiscus, {
-              once: true,
-            });
-          } else {
-            loadGiscus();
-          }
-        </script>
+        <div id="giscus-comments" class="mt-10"></div>
       </div>
+
+      <!-- Desktop Sticky TOC with Sliding Active Rail -->
+      {
+        tocHeadings.length > 0 && (
+          <aside
+            class="hidden lg:sticky lg:top-10 lg:col-start-2 lg:row-start-1 lg:block"
+            aria-label="Table of contents"
+          >
+            <h2 class="mb-3 font-mono text-xs font-semibold tracking-wider text-muted-foreground">
+              ON THIS PAGE
+            </h2>
+            <div class="relative border-l border-border/80">
+              <div
+                id="toc-active-rail"
+                class="pointer-events-none absolute -left-px top-0 h-5 w-0.5 rounded-full bg-primary opacity-0 transition-[transform,height,opacity] duration-300 ease-[var(--ease-spring-soft)]"
+                aria-hidden="true"
+              />
+              <ul id="desktop-toc-list" class="space-y-1 text-sm">
+                {tocHeadings.map((heading) => (
+                  <li
+                    class:list={[
+                      heading.depth <= 2 && "pl-3.5",
+                      heading.depth === 3 && "pl-6",
+                      heading.depth === 4 && "pl-8",
+                    ]}
+                  >
+                    <a
+                      href={`#${heading.slug}`}
+                      data-toc-link={heading.slug}
+                      class="block py-1 leading-snug text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        )
+      }
     </div>
   </main>
+
+  <!-- Lightweight Image Lightbox -->
+  <div
+    id="article-lightbox"
+    class="pointer-events-none fixed inset-0 z-100 hidden cursor-zoom-out items-center justify-center bg-background/85 p-4 opacity-0 backdrop-blur-md transition-opacity duration-200"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image preview"
+  >
+    <img
+      id="article-lightbox-img"
+      src=""
+      alt=""
+      class="max-h-[90vh] max-w-[92vw] scale-95 rounded-xl border border-border object-contain shadow-2xl transition-transform duration-200"
+    />
+  </div>
 </BaseLayout>
+
+<script is:inline>
+  (() => {
+    const getGiscusTheme = () =>
+      document.documentElement.classList.contains("dark")
+        ? "dark_dimmed"
+        : "light";
+
+    const loadGiscus = () => {
+      const container = document.getElementById("giscus-comments");
+      if (!container || container.dataset.loaded === "1") return;
+      container.dataset.loaded = "1";
+      container.innerHTML = "";
+
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.setAttribute("data-repo", "H2Sxxa/h2sxxa.github.io");
+      script.setAttribute("data-repo-id", "R_kgDOSuttsw");
+      script.setAttribute("data-category", "Announcements");
+      script.setAttribute("data-category-id", "DIC_kwDOSutts84C-zu8");
+      script.setAttribute("data-mapping", "pathname");
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", "1");
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", "bottom");
+      script.setAttribute("data-theme", getGiscusTheme());
+      script.setAttribute("data-lang", "zh-CN");
+      script.setAttribute("crossorigin", "anonymous");
+      script.async = true;
+
+      container.appendChild(script);
+    };
+
+    const syncGiscusTheme = () => {
+      const iframe = document.querySelector("iframe.giscus-frame");
+      if (!iframe || !iframe.contentWindow) return;
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: getGiscusTheme() } } },
+        "https://giscus.app",
+      );
+    };
+
+    // Enhance code blocks with copy button
+    const enhanceCodeBlocks = () => {
+      document.querySelectorAll(".prose pre").forEach((pre) => {
+        if (pre.dataset.copyEnhanced === "1") return;
+        pre.dataset.copyEnhanced = "1";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "Copy";
+        btn.setAttribute("aria-label", "Copy code");
+        btn.className =
+          "absolute top-2.5 right-2.5 cursor-pointer rounded-lg border border-border bg-background/85 px-2.5 py-1 font-mono text-[11px] font-medium text-muted-foreground opacity-80 backdrop-blur-xs transition-[opacity,background-color,color,border-color] duration-150 hover:border-primary/50 hover:bg-accent hover:text-foreground hover:opacity-100";
+
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent || pre.textContent || "";
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.textContent = "Copied ✓";
+            btn.classList.add("border-primary/60", "text-primary");
+            window.setTimeout(() => {
+              btn.textContent = "Copy";
+              btn.classList.remove("border-primary/60", "text-primary");
+            }, 1800);
+          } catch {
+            btn.textContent = "Failed";
+          }
+        });
+
+        pre.appendChild(btn);
+      });
+    };
+
+    // Lightweight image lightbox for prose images
+    const enhanceLightbox = () => {
+      const lightbox = document.getElementById("article-lightbox");
+      const lightboxImg = document.getElementById("article-lightbox-img");
+      if (!lightbox || !lightboxImg) return;
+
+      const close = () => {
+        lightbox.classList.remove("opacity-100");
+        lightbox.classList.add("opacity-0", "pointer-events-none");
+        lightboxImg.classList.remove("scale-100");
+        lightboxImg.classList.add("scale-95");
+        window.setTimeout(() => {
+          lightbox.classList.add("hidden");
+          lightbox.classList.remove("flex");
+        }, 180);
+      };
+
+      const open = (src, alt) => {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || "";
+        lightbox.classList.remove("hidden", "pointer-events-none");
+        lightbox.classList.add("flex");
+        requestAnimationFrame(() => {
+          lightbox.classList.remove("opacity-0");
+          lightbox.classList.add("opacity-100");
+          lightboxImg.classList.remove("scale-95");
+          lightboxImg.classList.add("scale-100");
+        });
+      };
+
+      if (!lightbox.dataset.bound) {
+        lightbox.dataset.bound = "1";
+        lightbox.addEventListener("click", close);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !lightbox.classList.contains("hidden")) {
+            close();
+          }
+        });
+      }
+
+      document.querySelectorAll(".prose img").forEach((img) => {
+        if (img.dataset.lightboxBound === "1") return;
+        img.dataset.lightboxBound = "1";
+        img.classList.add("cursor-zoom-in");
+        img.addEventListener("click", () => open(img.currentSrc || img.src, img.alt));
+      });
+    };
+
+    // Sliding-rail TOC scrollspy
+    const enhanceToc = () => {
+      const tocList = document.getElementById("desktop-toc-list");
+      const rail = document.getElementById("toc-active-rail");
+      if (!tocList || !rail) return;
+
+      const links = Array.from(tocList.querySelectorAll("[data-toc-link]"));
+      const headings = links
+        .map((link) => {
+          const id = link.getAttribute("data-toc-link");
+          return id ? { id, link, el: document.getElementById(id) } : null;
+        })
+        .filter((item) => item && item.el);
+
+      if (!headings.length) return;
+
+      const setActive = (activeId) => {
+        let matched = null;
+        headings.forEach(({ id, link }) => {
+          const isActive = id === activeId;
+          link.classList.toggle("text-primary", isActive);
+          link.classList.toggle("font-medium", isActive);
+          link.classList.toggle("text-muted-foreground", !isActive);
+          if (isActive) matched = link;
+        });
+
+        if (matched) {
+          const listRect = tocList.getBoundingClientRect();
+          const linkRect = matched.getBoundingClientRect();
+          const top = linkRect.top - listRect.top + 4;
+          const height = Math.max(16, linkRect.height - 8);
+          rail.style.transform = `translateY(${top}px)`;
+          rail.style.height = `${height}px`;
+          rail.style.opacity = "1";
+        }
+      };
+
+      const onScroll = () => {
+        const threshold = 120;
+        let current = headings[0].id;
+        for (const item of headings) {
+          if (item.el.getBoundingClientRect().top <= threshold) {
+            current = item.id;
+          } else {
+            break;
+          }
+        }
+        setActive(current);
+      };
+
+      if (window.__tocScrollHandler) {
+        window.removeEventListener("scroll", window.__tocScrollHandler);
+      }
+      window.__tocScrollHandler = onScroll;
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    };
+
+    const initArticle = () => {
+      loadGiscus();
+      enhanceCodeBlocks();
+      enhanceLightbox();
+      enhanceToc();
+    };
+
+    if (!window.__articleListenersBound) {
+      window.__articleListenersBound = true;
+      window.addEventListener("theme-change", syncGiscusTheme);
+      document.addEventListener("astro:page-load", initArticle);
+    }
+
+    initArticle();
+  })();
+</script>

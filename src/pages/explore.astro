@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import { EXPLORE_LINKS, SITE_OWNER_LINKS } from "@/consts.ts";
 
 import Divider from "@/components/Divider.astro";
@@ -12,7 +11,6 @@ import { Icon } from "astro-icon/components";
 ---
 
 <BaseLayout>
-  <BackgroundGrid />
   <main class="page">
     <h1 class="font-serif text-3xl font-bold">Explore</h1>
     <p class="mb-6 text-lg text-muted-foreground">
@@ -24,7 +22,7 @@ import { Icon } from "astro-icon/components";
         EXPLORE_LINKS.map((link, index) => (
           <DecorativeCard>
             <DecorativeIndex>
-              {index < 11 ? `0${index + 1}` : index + 1}
+              {index < 9 ? `0${index + 1}` : index + 1}
             </DecorativeIndex>
 
             <DecorativeTitle

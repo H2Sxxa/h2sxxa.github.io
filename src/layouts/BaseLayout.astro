@@ -4,6 +4,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import FloatActionButton from "@/components/FloatActionButton.astro";
 import PageLoader from "@/components/PageLoader.astro";
+import CommandPalette from "@/components/CommandPalette.astro";
 
 interface Props {
   dontIncludeFABPadding?: boolean;
@@ -17,36 +18,103 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
   Astro.props as Props;
 ---
 
-<html>
+<html lang="zh-CN">
   <head>
-    <!-- Theme (dark/light) -->
-
+    <!-- Theme (dark/light) with manual override + circular View Transition ripple -->
     <script is:inline>
-      const colorSchemeQuery = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      );
-
-      const setColorScheme = (element, dark) => {
-        element.classList.toggle("dark", dark);
-      };
-
-      const applyColorScheme = () => {
-        setColorScheme(document.documentElement, colorSchemeQuery.matches);
-      };
-
-      const applyColorSchemeToNextDocument = (event) => {
-        setColorScheme(
-          event.newDocument.documentElement,
-          colorSchemeQuery.matches,
+      (() => {
+        const STORAGE_KEY = "blog-theme";
+        const colorSchemeQuery = window.matchMedia(
+          "(prefers-color-scheme: dark)",
         );
-      };
 
-      applyColorScheme();
-      colorSchemeQuery.addEventListener("change", applyColorScheme);
-      document.addEventListener(
-        "astro:before-swap",
-        applyColorSchemeToNextDocument,
-      );
+        const resolveIsDark = () => {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved === "dark") return true;
+          if (saved === "light") return false;
+          return colorSchemeQuery.matches;
+        };
+
+        const setColorScheme = (element, dark) => {
+          element.classList.toggle("dark", dark);
+        };
+
+        const applyColorScheme = () => {
+          setColorScheme(document.documentElement, resolveIsDark());
+        };
+
+        applyColorScheme();
+
+        if (!window.__themeControllerInitialized) {
+          window.__themeControllerInitialized = true;
+
+          colorSchemeQuery.addEventListener("change", () => {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+              applyColorScheme();
+              window.dispatchEvent(
+                new CustomEvent("theme-change", {
+                  detail: { dark: resolveIsDark() },
+                }),
+              );
+            }
+          });
+
+          document.addEventListener("astro:before-swap", (event) => {
+            setColorScheme(event.newDocument.documentElement, resolveIsDark());
+          });
+
+          window.__toggleTheme = (originX, originY) => {
+            const nextDark = !document.documentElement.classList.contains("dark");
+            const commit = () => {
+              localStorage.setItem(STORAGE_KEY, nextDark ? "dark" : "light");
+              setColorScheme(document.documentElement, nextDark);
+              window.dispatchEvent(
+                new CustomEvent("theme-change", { detail: { dark: nextDark } }),
+              );
+            };
+
+            const reduced = window.matchMedia(
+              "(prefers-reduced-motion: reduce)",
+            ).matches;
+            if (!document.startViewTransition || reduced) {
+              commit();
+              return;
+            }
+
+            const x = typeof originX === "number" ? originX : window.innerWidth - 48;
+            const y = typeof originY === "number" ? originY : window.innerHeight - 48;
+            const endRadius = Math.hypot(
+              Math.max(x, window.innerWidth - x),
+              Math.max(y, window.innerHeight - y),
+            );
+
+            document.documentElement.classList.add("theme-transitioning");
+            const transition = document.startViewTransition(commit);
+
+            transition.ready
+              .then(() => {
+                document.documentElement.animate(
+                  {
+                    clipPath: [
+                      `circle(0px at ${x}px ${y}px)`,
+                      `circle(${endRadius}px at ${x}px ${y}px)`,
+                    ],
+                  },
+                  {
+                    duration: 480,
+                    easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                    pseudoElement: "::view-transition-new(root)",
+                  },
+                );
+              })
+              .catch(() => {});
+
+            transition.finished.finally(() => {
+              document.documentElement.classList.remove("theme-transitioning");
+            });
+          };
+        }
+      })();
     </script>
     <BaseHead
       title={title || SITE_TITLE}
@@ -59,6 +127,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
     <PageLoader />
     <ClientRouter />
     <slot />
+    <CommandPalette />
     <FloatActionButton />
     <!-- Padding for FAB -->
     {!dontIncludeFABPadding && <div class="h-24" />}

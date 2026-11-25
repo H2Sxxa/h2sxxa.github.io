@@ -2,8 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { snake_case } from "@/utils/snakecase";
+import { clip_markdown } from "@/utils/clip";
 import FormattedDate from "./FormattedDate.astro";
-import { Icon } from "astro-icon/components";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -11,53 +11,80 @@ interface Props {
 }
 
 const { post, eagerLoading } = Astro.props as Props;
+
+const excerpt = post.body ? clip_markdown(post.body, 110) : "";
+const charCount = post.body ? post.body.replace(/\s+/g, "").length : 0;
+const readingMinutes = Math.max(1, Math.round(charCount / 400));
 ---
 
 <article
-  class="group relative block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[a:hover]:bg-card"
+  class="group relative block overflow-hidden rounded-3xl elevated bg-card p-6 transition-[transform,border-color,box-shadow] duration-300 ease-[var(--ease-spring-soft)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md active:scale-[0.99]"
 >
-  {/* Image */}
-  <div
-    class="pointer-events-none absolute top-0 right-0 hidden h-full w-72 md:block dark:block"
-    aria-hidden="true"
-  >
-    {
-      post.data.heroImage && (
+  {/* Hero Image (Desktop only, readable in both light & dark modes) */}
+  {
+    post.data.heroImage && (
+      <div
+        class="pointer-events-none absolute top-0 right-0 hidden h-full w-64 overflow-hidden md:block"
+        aria-hidden="true"
+      >
         <Image
           src={post.data.heroImage}
           alt=""
           loading={eagerLoading ? "eager" : "lazy"}
-          class="h-full w-full rounded-r-lg mask-[linear-gradient(to_left,white_15%,transparent)] object-cover opacity-35 mix-blend-multiply transition-transform duration-300 group-hover:scale-105 dark:opacity-100"
+          transition:name={`post-hero-${post.id}`}
+          class="h-full w-full mask-[linear-gradient(to_left,black_20%,transparent_95%)] object-cover opacity-35 transition-transform duration-300 group-hover:scale-105 dark:opacity-25"
         />
-      )
-    }
-  </div>
+      </div>
+    )
+  }
 
-  {/* Title and Date */}
-  <div class="relative flex flex-col">
-    <h2 class="font-serif text-lg font-semibold lg:text-2xl">
+  {/* Content */}
+  <div class="relative z-10 flex flex-col md:max-w-[78%]">
+    <div
+      class="flex items-center gap-2 font-mono text-xs tabular-nums text-muted-foreground"
+    >
+      <FormattedDate date={post.data.pubDate} />
+      <span aria-hidden="true">·</span>
+      <span>{readingMinutes} min read</span>
+      {
+        post.data.wip && (
+          <span class="rounded-md border border-primary/30 bg-accent px-1.5 py-0.5 text-[11px] font-medium text-accent-foreground">
+            WIP
+          </span>
+        )
+      }
+    </div>
+
+    <h2
+      transition:name={`post-title-${post.id}`}
+      class="mt-2 font-serif text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary lg:text-2xl"
+    >
       <a
         href={`/blog/${post.id}`}
-        class="text-primary no-underline hover:underline"
+        class="text-inherit no-underline after:absolute after:inset-0 hover:text-primary"
       >
         {post.data.title}
       </a>
     </h2>
 
-    <p class="mt-1 text-card-foreground">
-      <FormattedDate date={post.data.pubDate} />
-    </p>
+    {
+      excerpt && (
+        <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+          {excerpt}
+        </p>
+      )
+    }
 
     {/* Tags */}
     {
-      post.data.tags && (
-        <div class="mt-4 flex scrollbar-none gap-2 overflow-x-auto">
+      post.data.tags && post.data.tags.length > 0 && (
+        <div class="relative z-20 mt-4 flex flex-wrap gap-2">
           {post.data.tags.map((tag) => (
             <a
               href={`/tag/${snake_case(tag)}`}
-              class="pointer-events-auto shrink-0 rounded-full border px-3 py-1 font-serif text-sm whitespace-nowrap text-accent-foreground hover:bg-muted"
+              class="m3-pill pointer-events-auto shrink-0 border border-border/80 bg-background/70 px-3 py-0.5 text-xs font-medium whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:bg-accent hover:text-accent-foreground"
             >
-              <span class="pr-1 font-sans text-primary">#</span>
+              <span class="pr-0.5 text-primary">#</span>
               {tag}
             </a>
           ))}

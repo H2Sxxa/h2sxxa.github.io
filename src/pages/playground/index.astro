@@ -1,13 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import DecorativeCard from "@/components/DecorativeCard.astro";
 import DecorativeIndex from "@/components/DecorativeIndex.astro";
 import DecorativeTitle from "@/components/DecorativeTitle.astro";
 ---
 
 <BaseLayout>
-  <BackgroundGrid />
   <main class="page">
     <h1 class="font-handwriting text-3xl font-bold">Playground</h1>
     <p class="mb-6 text-lg text-muted-foreground">
@@ -35,7 +33,7 @@ import DecorativeTitle from "@/components/DecorativeTitle.astro";
         ].map((link, index) => (
           <DecorativeCard>
             <DecorativeIndex>
-              {index < 11 ? `0${index + 1}` : index + 1}
+              {index < 9 ? `0${index + 1}` : index + 1}
             </DecorativeIndex>
 
             <DecorativeTitle

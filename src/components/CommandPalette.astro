@@ -1,0 +1,323 @@
+---
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import { EXPLORE_LINKS } from "@/consts";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    title: post.data.title,
+    href: `/blog/${post.id}`,
+    tags: post.data.tags ?? [],
+    date: post.data.pubDate.toISOString().slice(0, 10),
+  }));
+
+const pages = EXPLORE_LINKS.map((link) => ({
+  title: link.title,
+  description: link.description,
+  href: link.href,
+}));
+
+const payload = JSON.stringify({ posts, pages });
+---
+
+<div
+  id="cmd-palette-backdrop"
+  class="pointer-events-none fixed inset-0 z-100 hidden items-start justify-center bg-background/60 px-4 pt-[12vh] opacity-0 backdrop-blur-sm transition-opacity duration-150"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+  transition:persist
+>
+  <div
+    id="cmd-palette-panel"
+    class="w-full max-w-xl scale-95 overflow-hidden rounded-[28px] border border-border bg-card shadow-2xl transition-transform duration-300 ease-[var(--ease-spring-soft)]"
+  >
+    <div class="flex items-center gap-3 border-b border-border px-4 py-3">
+      <Icon name="mdi:magnify" class="h-5 w-5 shrink-0 text-muted-foreground" />
+      <input
+        id="cmd-palette-input"
+        type="text"
+        placeholder="Search posts, tags, pages, or actions..."
+        autocomplete="off"
+        spellcheck="false"
+        class="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+      />
+      <kbd
+        class="hidden shrink-0 rounded-md border border-border bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground sm:inline-block"
+      >
+        ESC
+      </kbd>
+    </div>
+
+    <div
+      id="cmd-palette-list"
+      class="max-h-[55vh] overflow-y-auto p-2"
+      role="listbox"
+    >
+    </div>
+
+    <div
+      class="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2 font-mono text-[11px] text-muted-foreground"
+    >
+      <div class="flex items-center gap-3">
+        <span>↑↓ Navigate</span>
+        <span>↵ Open</span>
+      </div>
+      <span>⌘K / Ctrl+K</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline id="cmd-palette-data" type="application/json" set:html={payload}></script>
+
+<script is:inline>
+  (() => {
+    if (window.__cmdPaletteInitialized) return;
+    window.__cmdPaletteInitialized = true;
+
+    const getElements = () => ({
+      backdrop: document.getElementById("cmd-palette-backdrop"),
+      panel: document.getElementById("cmd-palette-panel"),
+      input: document.getElementById("cmd-palette-input"),
+      list: document.getElementById("cmd-palette-list"),
+      dataEl: document.getElementById("cmd-palette-data"),
+    });
+
+    const dataEl = document.getElementById("cmd-palette-data");
+    const dataset = dataEl ? JSON.parse(dataEl.textContent || "{}") : { posts: [], pages: [] };
+
+    const actions = [
+      {
+        group: "Actions",
+        title: "Toggle Theme (Light / Dark)",
+        subtitle: "Switch appearance with radial transition",
+        keywords: "theme dark light mode 主题 暗色 浅色",
+        run: () => {
+          if (typeof window.__toggleTheme === "function") {
+            window.__toggleTheme(window.innerWidth / 2, window.innerHeight / 2);
+          }
+        },
+      },
+      {
+        group: "Actions",
+        title: "Read a Random Post",
+        subtitle: "Jump to a surprise article",
+        keywords: "random surprise 随机 文章",
+        run: () => {
+          if (!dataset.posts.length) return;
+          const pick =
+            dataset.posts[Math.floor(Math.random() * dataset.posts.length)];
+          window.location.href = pick.href;
+        },
+      },
+      {
+        group: "Actions",
+        title: "Browse All Tags",
+        subtitle: "Explore articles by topic",
+        keywords: "tags topics 标签 分类",
+        href: "/tag",
+      },
+    ];
+
+    const allItems = [
+      ...actions,
+      ...dataset.pages.map((p) => ({
+        group: "Pages",
+        title: p.title,
+        subtitle: p.description,
+        keywords: `${p.title} ${p.description} ${p.href}`,
+        href: p.href,
+      })),
+      ...dataset.posts.map((post) => ({
+        group: "Posts",
+        title: post.title,
+        subtitle: post.tags.length ? post.tags.map((t) => `#${t}`).join("  ") : "Article",
+        meta: post.date,
+        keywords: `${post.title} ${post.tags.join(" ")} ${post.date}`,
+        href: post.href,
+      })),
+    ];
+
+    let isOpen = false;
+    let activeIndex = 0;
+    let filtered = allItems;
+
+    const escapeHtml = (value) =>
+      String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+
+    const renderList = () => {
+      const { list } = getElements();
+      if (!list) return;
+
+      if (!filtered.length) {
+        list.innerHTML = `<div class="px-4 py-8 text-center text-sm text-muted-foreground">No matching posts, pages, or commands.</div>`;
+        return;
+      }
+
+      let html = "";
+      let currentGroup = "";
+
+      filtered.forEach((item, idx) => {
+        if (item.group !== currentGroup) {
+          currentGroup = item.group;
+          html += `<div class="px-3 pt-2.5 pb-1 font-mono text-[11px] font-medium text-muted-foreground">${escapeHtml(currentGroup)}</div>`;
+        }
+        const selected = idx === activeIndex;
+        html += `
+          <button
+            type="button"
+            data-cmd-index="${idx}"
+            role="option"
+            aria-selected="${selected}"
+            class="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+              selected
+                ? "bg-accent text-accent-foreground"
+                : "text-foreground hover:bg-muted/70"
+            }"
+          >
+            <div class="min-w-0">
+              <div class="truncate text-sm font-medium">${escapeHtml(item.title)}</div>
+              <div class="truncate text-xs text-muted-foreground">${escapeHtml(item.subtitle || "")}</div>
+            </div>
+            ${
+              item.meta
+                ? `<span class="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">${escapeHtml(item.meta)}</span>`
+                : ""
+            }
+          </button>
+        `;
+      });
+
+      list.innerHTML = html;
+
+      const activeBtn = list.querySelector(`[data-cmd-index="${activeIndex}"]`);
+      activeBtn?.scrollIntoView({ block: "nearest" });
+    };
+
+    const runItem = (item) => {
+      if (!item) return;
+      closePalette();
+      if (typeof item.run === "function") {
+        item.run();
+      } else if (item.href) {
+        const a = document.createElement("a");
+        a.href = item.href;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    };
+
+    const filterItems = (query) => {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        filtered = allItems.slice(0, 18);
+      } else {
+        const terms = q.split(/\s+/);
+        filtered = allItems.filter((item) => {
+          const hay = item.keywords.toLowerCase();
+          return terms.every((t) => hay.includes(t));
+        });
+      }
+      activeIndex = 0;
+      renderList();
+    };
+
+    const openPalette = () => {
+      const { backdrop, panel, input } = getElements();
+      if (!backdrop || !panel || !input) return;
+      isOpen = true;
+      backdrop.classList.remove("hidden", "pointer-events-none");
+      backdrop.classList.add("flex");
+      requestAnimationFrame(() => {
+        backdrop.classList.remove("opacity-0");
+        backdrop.classList.add("opacity-100");
+        panel.classList.remove("scale-95");
+        panel.classList.add("scale-100");
+      });
+      input.value = "";
+      filterItems("");
+      input.focus();
+    };
+
+    const closePalette = () => {
+      const { backdrop, panel } = getElements();
+      if (!backdrop || !panel || !isOpen) return;
+      isOpen = false;
+      backdrop.classList.remove("opacity-100");
+      backdrop.classList.add("opacity-0", "pointer-events-none");
+      panel.classList.remove("scale-100");
+      panel.classList.add("scale-95");
+      setTimeout(() => {
+        if (!isOpen) {
+          backdrop.classList.add("hidden");
+          backdrop.classList.remove("flex");
+        }
+      }, 160);
+    };
+
+    window.__openCommandPalette = openPalette;
+    window.__closeCommandPalette = closePalette;
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        if (isOpen) closePalette();
+        else openPalette();
+        return;
+      }
+      if (!isOpen) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closePalette();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (filtered.length) {
+          activeIndex = (activeIndex + 1) % filtered.length;
+          renderList();
+        }
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (filtered.length) {
+          activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+          renderList();
+        }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        runItem(filtered[activeIndex]);
+      }
+    });
+
+    document.addEventListener("input", (e) => {
+      if (e.target && e.target.id === "cmd-palette-input") {
+        filterItems(e.target.value);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target instanceof Element && target.closest("[data-open-cmd]")) {
+        openPalette();
+        return;
+      }
+      const { backdrop } = getElements();
+      if (!isOpen || !backdrop) return;
+      if (target === backdrop) {
+        closePalette();
+        return;
+      }
+      const btn = target instanceof Element ? target.closest("[data-cmd-index]") : null;
+      if (btn) {
+        const idx = Number(btn.getAttribute("data-cmd-index"));
+        runItem(filtered[idx]);
+      }
+    });
+
+    document.addEventListener("astro:before-swap", closePalette);
+  })();
+</script>

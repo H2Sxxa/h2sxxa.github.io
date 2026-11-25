@@ -20,19 +20,23 @@ I think technology should make the world better, so I keep programming instead o
 export const FAB_LINKS = [
   {
     href: "/",
+    label: "Home",
     icon: "mdi:home",
   },
   {
     href: "/blog",
-    icon: "mdi:blog",
+    label: "Blog",
+    icon: "mdi:book-open-page-variant",
   },
   {
     href: "/friends",
+    label: "Friends",
     icon: "mdi:account-group",
   },
   {
     href: "/explore",
-    icon: "mdi:dots-horizontal",
+    label: "Explore",
+    icon: "mdi:compass-outline",
   },
 ];
 

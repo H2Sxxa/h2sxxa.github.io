@@ -4,7 +4,6 @@ import type { GetStaticPaths, Page } from "astro";
 import { PAGE_SIZE } from "@/consts";
 import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { snake_case } from "@/utils/snakecase";
 
@@ -42,12 +41,13 @@ type Props = {
 const { tag, page } = Astro.props;
 ---
 
-<BaseLayout>
-  <BackgroundGrid />
-  <main class="page">
-    <h1 class="mb-4 font-serif text-3xl font-bold">{tag}</h1>
-    <p class="mb-6 text-lg text-muted-foreground">
-      <a href="/tag" class="font-serif italic hover:underline">View all tags</a>
+<BaseLayout title={`#${tag}`} showTitleTemplate>
+  <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
+    <h1 class="mb-2 font-serif text-3xl font-bold tracking-tight">
+      <span class="mr-1 text-primary">#</span>{tag}
+    </h1>
+    <p class="mb-6 text-sm text-muted-foreground md:text-base">
+      <a href="/tag" class="hover:underline">← View all tags</a>
     </p>
     <div class="space-y-4">
       {

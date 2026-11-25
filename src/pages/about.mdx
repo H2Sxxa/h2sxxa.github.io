@@ -1,12 +1,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import BackgroundGrid from "@/components/BackgroundGrid.astro";
 import Text from "@/components/Text.astro";
 import Avatar from "@/components/Avatar.astro";
 import { SITE_OWNER, SITE_OWNER_LINKS } from "@/consts";
 import { Icon } from "astro-icon/components";
 
 <BaseLayout>
-    <BackgroundGrid />
     <main>
     <div class="flex flex-col items-center mt-12">
       <Avatar src={SITE_OWNER.avatar} />
