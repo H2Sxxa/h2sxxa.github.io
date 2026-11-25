@@ -146,26 +146,39 @@
     border-radius: 4px;
   }
 
-  /* Unified Matcha Scrollbar (Firefox) */
+  /* Hide native root scrollbar on fine-pointer desktops (replaced by OverlayScrollbar) */
+  @media (pointer: fine) {
+    html,
+    body {
+      scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* Unified Matcha Scrollbar for inner scrollable containers (Firefox) */
   @supports not selector(::-webkit-scrollbar) {
-    * {
+    :not(html):not(body) {
       scrollbar-width: thin;
       scrollbar-color: color-mix(in oklab, var(--primary) 35%, var(--border))
         transparent;
     }
   }
 
-  /* Unified Matcha Scrollbar (Chromium / Safari) */
-  ::-webkit-scrollbar {
+  /* Unified Matcha Scrollbar for inner scrollable containers (Chromium / Safari) */
+  :not(html):not(body)::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
-  ::-webkit-scrollbar-track {
+  :not(html):not(body)::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  ::-webkit-scrollbar-thumb {
+  :not(html):not(body)::-webkit-scrollbar-thumb {
     background-color: color-mix(in oklab, var(--primary) 28%, var(--border));
     border-radius: 9999px;
     border: 2px solid transparent;
@@ -173,15 +186,15 @@
     transition: background-color 150ms ease;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
+  :not(html):not(body)::-webkit-scrollbar-thumb:hover {
     background-color: color-mix(in oklab, var(--primary) 65%, transparent);
   }
 
-  ::-webkit-scrollbar-thumb:active {
+  :not(html):not(body)::-webkit-scrollbar-thumb:active {
     background-color: color-mix(in oklab, var(--primary) 85%, transparent);
   }
 
-  ::-webkit-scrollbar-corner {
+  :not(html):not(body)::-webkit-scrollbar-corner {
     background: transparent;
   }
 }
@@ -207,14 +220,10 @@ html.curtain-active::view-transition-new(root) {
   animation: none !important;
 }
 
-/* Lock scroll and hide scrollbar edge-to-edge while the route curtain is visible */
+/* Lock scroll while the route curtain is visible (0px layout shift thanks to overlay scrollbar) */
 html.curtain-locked,
 html.curtain-locked body {
   overflow: hidden !important;
-}
-
-html.curtain-locked body {
-  padding-right: var(--curtain-scrollbar-comp, 0px);
 }
 
 /* Typography Color */

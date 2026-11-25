@@ -6,6 +6,7 @@ import FloatActionButton from "@/components/FloatActionButton.astro";
 import PageLoader from "@/components/PageLoader.astro";
 import CommandPalette from "@/components/CommandPalette.astro";
 import RouteTransitionOverlay from "@/components/RouteTransitionOverlay.astro";
+import OverlayScrollbar from "@/components/OverlayScrollbar.astro";
 
 interface Props {
   dontIncludeFABPadding?: boolean;
@@ -127,6 +128,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
   <body>
     <PageLoader />
     <RouteTransitionOverlay />
+    <OverlayScrollbar />
     <ClientRouter />
     <slot />
     <CommandPalette />

@@ -1,0 +1,68 @@
+---
+// Zero-layout-shift Matcha overlay scrollbar for the root document.
+---
+
+<div
+  id="overlay-scrollbar-track"
+  data-scrollable="false"
+  data-visible="false"
+  data-dragging="false"
+  aria-hidden="true"
+  transition:persist="overlay-scrollbar"
+  class="overlay-scrollbar-track fixed top-1 right-1 bottom-1 z-40 w-3 select-none"
+>
+  <div
+    id="overlay-scrollbar-thumb"
+    class="overlay-scrollbar-thumb ml-auto w-1.5 cursor-grab rounded-full active:cursor-grabbing"
+  >
+  </div>
+</div>
+
+<style>
+  .overlay-scrollbar-track {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .overlay-scrollbar-track[data-scrollable="true"] {
+    pointer-events: auto;
+  }
+
+  .overlay-scrollbar-track[data-scrollable="true"][data-visible="true"],
+  .overlay-scrollbar-track[data-scrollable="true"]:hover,
+  .overlay-scrollbar-track[data-dragging="true"] {
+    opacity: 1;
+  }
+
+  /* Hide cleanly during full-screen route curtain */
+  :global(html.curtain-locked) .overlay-scrollbar-track {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .overlay-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--primary) 34%, var(--border));
+    will-change: transform;
+    transition:
+      width 160ms var(--ease-spring-soft),
+      background-color 160ms ease;
+  }
+
+  .overlay-scrollbar-track:hover .overlay-scrollbar-thumb,
+  .overlay-scrollbar-track[data-dragging="true"] .overlay-scrollbar-thumb {
+    width: 0.5rem;
+    background-color: color-mix(in oklab, var(--primary) 72%, transparent);
+  }
+
+  @media (pointer: coarse) {
+    .overlay-scrollbar-track {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { initOverlayScrollbar } from "@/scripts/overlayScrollbar";
+  initOverlayScrollbar();
+</script>

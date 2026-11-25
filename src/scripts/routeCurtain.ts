@@ -31,18 +31,11 @@ let runToken = 0;
 let pendingViewTransition: ViewTransition | null = null;
 
 function lockScroll(): void {
-  const scrollbarWidth: number =
-    window.innerWidth - document.documentElement.clientWidth;
-  document.documentElement.style.setProperty(
-    "--curtain-scrollbar-comp",
-    `${Math.max(0, scrollbarWidth)}px`,
-  );
   document.documentElement.classList.add("curtain-locked");
 }
 
 function unlockScroll(): void {
   document.documentElement.classList.remove("curtain-locked");
-  document.documentElement.style.removeProperty("--curtain-scrollbar-comp");
 }
 
 function normalizePath(pathname: string): string {
