@@ -5,6 +5,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import FloatActionButton from "@/components/FloatActionButton.astro";
 import PageLoader from "@/components/PageLoader.astro";
 import CommandPalette from "@/components/CommandPalette.astro";
+import RouteTransitionOverlay from "@/components/RouteTransitionOverlay.astro";
 
 interface Props {
   dontIncludeFABPadding?: boolean;
@@ -125,6 +126,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
   </head>
   <body>
     <PageLoader />
+    <RouteTransitionOverlay />
     <ClientRouter />
     <slot />
     <CommandPalette />

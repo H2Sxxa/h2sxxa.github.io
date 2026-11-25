@@ -201,6 +201,12 @@ html.theme-transitioning::view-transition-new(root) {
   z-index: 9999;
 }
 
+/* Disable root crossfade while the 4-band route curtain is covering the screen */
+html.curtain-active::view-transition-old(root),
+html.curtain-active::view-transition-new(root) {
+  animation: none !important;
+}
+
 /* Typography Color */
 .prose {
   --tw-prose-body: var(--foreground);

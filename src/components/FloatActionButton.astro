@@ -4,7 +4,7 @@ import FloatActionButtonItem from "./FloatActionButtonItem.astro";
 import { FAB_LINKS } from "@/consts";
 ---
 
-<div id="fab-root" class="fixed right-5 bottom-5 z-50" transition:persist>
+<div id="fab-root" class="fixed right-5 bottom-5 z-50" transition:persist="fab-root">
   <div
     id="fab-menu"
     class="pointer-events-none absolute right-0 bottom-18 flex flex-col items-end gap-2.5 opacity-0"
@@ -15,19 +15,15 @@ import { FAB_LINKS } from "@/consts";
       id="fab-top"
       type="button"
       style="transition-delay: 180ms"
-      class="fab-stagger-item group/item hidden cursor-pointer items-center justify-end gap-2.5"
+      class="fab-stagger-item fab-action-btn m3-pill group/item relative hidden h-12 w-12 cursor-pointer items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm hover:scale-105 hover:border-primary/50 hover:bg-accent"
       aria-label="Back to top"
     >
       <span
-        class="pointer-events-none rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
+        class="pointer-events-none absolute right-[calc(100%+10px)] rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
       >
         Top
       </span>
-      <span
-        class="m3-pill flex h-12 w-12 items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm group-hover/item:scale-105 group-hover/item:border-primary/50 group-hover/item:bg-accent"
-      >
-        <Icon name="mdi:arrow-up" class="h-5 w-5" />
-      </span>
+      <Icon name="mdi:arrow-up" class="h-5 w-5" />
     </button>
 
     <!-- Command Palette trigger -->
@@ -35,19 +31,15 @@ import { FAB_LINKS } from "@/consts";
       id="fab-search"
       type="button"
       style="transition-delay: 150ms"
-      class="fab-stagger-item group/item flex cursor-pointer items-center justify-end gap-2.5"
+      class="fab-stagger-item fab-action-btn m3-pill group/item relative flex h-12 w-12 cursor-pointer items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm hover:scale-105 hover:border-primary/50 hover:bg-accent"
       aria-label="Search (Ctrl+K)"
     >
       <span
-        class="pointer-events-none rounded-full border border-border bg-card/95 px-3 py-1 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
+        class="pointer-events-none absolute right-[calc(100%+10px)] rounded-full border border-border bg-card/95 px-3 py-1 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
       >
         Search ⌘K
       </span>
-      <span
-        class="m3-pill flex h-12 w-12 items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm group-hover/item:scale-105 group-hover/item:border-primary/50 group-hover/item:bg-accent"
-      >
-        <Icon name="mdi:magnify" class="h-5 w-5" />
-      </span>
+      <Icon name="mdi:magnify" class="h-5 w-5" />
     </button>
 
     <!-- Theme Toggle -->
@@ -55,23 +47,19 @@ import { FAB_LINKS } from "@/consts";
       id="fab-theme"
       type="button"
       style="transition-delay: 120ms"
-      class="fab-stagger-item group/item flex cursor-pointer items-center justify-end gap-2.5"
+      class="fab-stagger-item fab-action-btn m3-pill group/item relative flex h-12 w-12 cursor-pointer items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm hover:scale-105 hover:border-primary/50 hover:bg-accent"
       aria-label="Toggle color theme"
     >
       <span
-        class="pointer-events-none rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
+        class="pointer-events-none absolute right-[calc(100%+10px)] rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
       >
         Theme
       </span>
-      <span
-        class="m3-pill flex h-12 w-12 items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm group-hover/item:scale-105 group-hover/item:border-primary/50 group-hover/item:bg-accent"
-      >
-        <Icon name="mdi:weather-sunny" class="hidden h-5 w-5 dark:block" />
-        <Icon name="mdi:weather-night" class="block h-5 w-5 dark:hidden" />
-      </span>
+      <Icon name="mdi:weather-sunny" class="hidden h-5 w-5 dark:block" />
+      <Icon name="mdi:weather-night" class="block h-5 w-5 dark:hidden" />
     </button>
 
-    <div class="my-0.5 h-px w-8 bg-border/80"></div>
+    <div class="my-0.5 h-px w-8 self-center bg-border/80"></div>
 
     {
       FAB_LINKS.map((link, index) => (
@@ -169,12 +157,34 @@ import { FAB_LINKS } from "@/consts";
     transform: translateY(12px) scale(0.82);
     transition:
       opacity 220ms ease,
-      transform 380ms var(--ease-spring);
+      transform 340ms var(--ease-spring),
+      border-radius 320ms var(--ease-spring),
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
   }
 
   #fab-menu[data-open="true"] :global(.fab-stagger-item) {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+  /* Clear stagger delay once menu is open so hover responds immediately */
+  #fab-menu[data-open="true"] :global(.fab-stagger-item:hover) {
+    transition-delay: 0ms !important;
+    transform: translateY(0) scale(1.06);
+  }
+
+  #fab-menu[data-open="true"] :global(.fab-stagger-item:active) {
+    transition-delay: 0ms !important;
+    transform: translateY(0) scale(0.95);
+  }
+
+  :global([data-fab-item][data-active="true"]) {
+    border-color: var(--primary);
+    background-color: var(--accent);
+    color: var(--primary);
+    border-radius: 1rem;
   }
 </style>
 
@@ -226,14 +236,10 @@ import { FAB_LINKS } from "@/consts";
       const path = window.location.pathname;
       document.querySelectorAll("[data-fab-item]").forEach((el) => {
         const href = el.getAttribute("data-fab-href");
-        const circle = el.querySelector("[data-fab-circle]");
-        if (!circle || !href) return;
+        if (!href) return;
         const isActive =
           href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
-        circle.classList.toggle("border-primary", isActive);
-        circle.classList.toggle("bg-accent", isActive);
-        circle.classList.toggle("text-primary", isActive);
-        circle.classList.toggle("rounded-2xl", isActive);
+        el.setAttribute("data-active", String(isActive));
       });
     };
 
