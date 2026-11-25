@@ -1,28 +1,77 @@
 ---
 import { Icon } from "astro-icon/components";
+import { cn } from "@/utils/cn";
 
 interface Props {
   href?: string;
+  id?: string;
   label: string;
-  icon: string;
-  index?: number;
+  ariaLabel?: string;
+  icon?: string;
+  delayMs: number;
+  monoLabel?: boolean;
+  hiddenByDefault?: boolean;
 }
 
-const { href, label, icon, index = 0 } = Astro.props;
+const {
+  href,
+  id,
+  label,
+  ariaLabel,
+  icon,
+  delayMs,
+  monoLabel,
+  hiddenByDefault,
+} = Astro.props as Props;
+
+const sharedClass: string = cn(
+  "fab-stagger-item m3-pill group/item relative h-12 w-12 cursor-pointer items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm hover:scale-105 hover:border-primary/50 hover:bg-accent hover:text-foreground",
+  hiddenByDefault ? "hidden" : "flex",
+);
+
+const tooltipClass: string = cn(
+  "fab-tooltip pointer-events-none absolute right-[calc(100%+10px)] rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200",
+  monoLabel && "font-mono",
+);
 ---
 
-<a
-  href={href}
-  data-fab-item
-  data-fab-href={href}
-  style={`transition-delay: ${index * 30}ms`}
-  class="fab-stagger-item fab-action-btn m3-pill group/item relative flex h-12 w-12 items-center justify-center border border-border bg-card/95 text-foreground shadow-sm backdrop-blur-sm hover:scale-105 hover:border-primary/50 hover:bg-accent hover:text-foreground"
-  aria-label={label}
->
-  <span
-    class="pointer-events-none absolute right-[calc(100%+10px)] rounded-full border border-border bg-card/95 px-3 py-1 text-xs font-medium whitespace-nowrap text-foreground shadow-sm backdrop-blur-sm transition-[opacity,transform] duration-200 md:translate-x-1.5 md:opacity-0 md:group-hover/item:translate-x-0 md:group-hover/item:opacity-100"
-  >
-    {label}
-  </span>
-  <Icon name={icon} class="h-5 w-5" />
-</a>
+{
+  href ? (
+    <a
+      href={href}
+      data-fab-item
+      data-fab-href={href}
+      style={`transition-delay: ${delayMs}ms`}
+      class={sharedClass}
+      aria-label={ariaLabel ?? label}
+    >
+      <span class={tooltipClass}>{label}</span>
+      {icon ? <Icon name={icon} class="h-5 w-5" /> : <slot />}
+    </a>
+  ) : (
+    <button
+      id={id}
+      type="button"
+      style={`transition-delay: ${delayMs}ms`}
+      class={sharedClass}
+      aria-label={ariaLabel ?? label}
+    >
+      <span class={tooltipClass}>{label}</span>
+      {icon ? <Icon name={icon} class="h-5 w-5" /> : <slot />}
+    </button>
+  )
+}
+
+<style>
+  @media (hover: hover) {
+    .fab-tooltip {
+      opacity: 0;
+      transform: translateX(6px);
+    }
+
+    .group\/item:hover .fab-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style>

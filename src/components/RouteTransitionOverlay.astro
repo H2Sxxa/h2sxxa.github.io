@@ -1,28 +1,27 @@
 ---
 // 4-band staggered horizontal curtain transition inspired by chromasounds.work,
-// featuring a Material 3 Expressive (M3E) morphing loading indicator in the Uji Matcha palette.
-// Triggered only on major top-level page switches (skipped when entering sub-routes).
+// featuring a flat Material 3 Expressive (M3E) morphing loading indicator.
 const STRIPS = [0, 1, 2, 3] as const;
 ---
 
 <div
   id="route-transition-overlay"
-  class="route-transition-overlay is-idle"
+  class="route-transition-overlay is-idle pointer-events-none fixed inset-0 z-[9998] overflow-hidden overscroll-none touch-none"
   aria-hidden="true"
   transition:persist="route-curtain"
 >
   {
     STRIPS.map((index) => (
       <div
-        class="route-transition-strip"
+        class="route-transition-strip absolute right-0 left-0 isolate overflow-hidden bg-accent will-change-[clip-path]"
         data-rt-strip={index}
-        style={`--strip-index: ${index}`}
+        style={`top: ${index * 25}%; height: calc(25% + 2px);`}
       >
-        <div class="route-transition-stage">
-          <div class="route-transition-mark">
-            <div class="m3e-loader-container">
+        <div class="pointer-events-none fixed inset-0 flex flex-col items-center justify-center text-primary select-none">
+          <div class="flex flex-col items-center gap-4">
+            <div class="flex h-15 w-15 items-center justify-center text-primary">
               <svg
-                class="m3e-loader-svg"
+                class="h-14 w-14 will-change-transform"
                 data-m3e-svg
                 viewBox="-52 -52 104 104"
                 aria-hidden="true"
@@ -30,12 +29,27 @@ const STRIPS = [0, 1, 2, 3] as const;
                 <path data-m3e-path fill="currentColor" d="" />
               </svg>
             </div>
-            <div class="route-transition-meta">
-              <span data-rt-index class="route-transition-index">01</span>
-              <span data-rt-label class="route-transition-label">HOME</span>
+            <div class="rt-meta flex items-baseline gap-2.5 opacity-0">
+              <span
+                data-rt-index
+                class="font-mono text-xs tracking-[0.12em] text-muted-foreground"
+              >
+                01
+              </span>
+              <span
+                data-rt-label
+                class="font-serif text-2xl font-semibold tracking-[0.14em] text-foreground"
+              >
+                HOME
+              </span>
             </div>
           </div>
-          <span data-rt-path class="route-transition-path">/</span>
+          <span
+            data-rt-path
+            class="rt-path fixed bottom-8 font-mono text-xs tracking-[0.08em] text-muted-foreground opacity-0"
+          >
+            /
+          </span>
         </div>
       </div>
     ))
@@ -43,16 +57,6 @@ const STRIPS = [0, 1, 2, 3] as const;
 </div>
 
 <style>
-  .route-transition-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    overflow: hidden;
-    pointer-events: none;
-    overscroll-behavior: none;
-    touch-action: none;
-  }
-
   .route-transition-overlay.is-idle {
     visibility: hidden;
   }
@@ -63,95 +67,14 @@ const STRIPS = [0, 1, 2, 3] as const;
   }
 
   .route-transition-strip {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(var(--strip-index) * 25%);
-    height: calc(25% + 2px);
-    overflow: hidden;
-    isolation: isolate;
     clip-path: inset(0 100% 0 0);
-    will-change: clip-path;
-    background-color: var(--accent);
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in oklab, var(--accent) 94%, var(--background)) 0%,
-      color-mix(in oklab, var(--muted) 88%, var(--accent)) 100%
-    );
   }
 
-  .route-transition-stage {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .route-transition-mark {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.125rem;
-  }
-
-  /* Material 3 Expressive Flat Loading Indicator (uncontained) */
-  .m3e-loader-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    color: var(--primary);
-  }
-
-  .m3e-loader-svg {
-    width: 56px;
-    height: 56px;
-    will-change: transform;
-  }
-
-  .route-transition-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 0.65rem;
-    opacity: 0;
-  }
-
-  .route-transition-overlay:not(.is-idle) .route-transition-meta {
+  .route-transition-overlay:not(.is-idle) .rt-meta {
     animation: rt-reveal-text 240ms ease 180ms forwards;
   }
 
-  .route-transition-index {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    color: var(--muted-foreground);
-  }
-
-  .route-transition-label {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    color: var(--foreground);
-  }
-
-  .route-transition-path {
-    position: fixed;
-    bottom: 2rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: var(--muted-foreground);
-    opacity: 0;
-  }
-
-  .route-transition-overlay:not(.is-idle) .route-transition-path {
+  .route-transition-overlay:not(.is-idle) .rt-path {
     animation: rt-reveal-text 220ms ease 220ms forwards;
   }
 
@@ -173,315 +96,7 @@ const STRIPS = [0, 1, 2, 3] as const;
   }
 </style>
 
-<script is:inline>
-  (() => {
-    if (window.__routeCurtainInitialized) return;
-    window.__routeCurtainInitialized = true;
-
-    const TOP_LEVEL_ROUTES = {
-      "/": { section: "home", label: "HOME", index: "01" },
-      "/blog": { section: "blog", label: "BLOG", index: "02" },
-      "/explore": { section: "explore", label: "EXPLORE", index: "03" },
-      "/friends": { section: "friends", label: "FRIENDS", index: "04" },
-      "/about": { section: "about", label: "ABOUT", index: "05" },
-      "/playground": { section: "playground", label: "PLAYGROUND", index: "06" },
-      "/tag": { section: "tag", label: "TAGS", index: "07" },
-      "/category": { section: "category", label: "CATEGORIES", index: "08" },
-    };
-
-    const STRIP_DURATION = 440;
-    const STRIP_STAGGER = 55;
-    const STRIP_EASING = "cubic-bezier(0.85, 0.15, 0.2, 1)";
-
-    // --- M3 Expressive Morphing Loading Indicator Shapes ---
-    // 7 iconic M3E shapes sampled at N=36 polar vertices so any two shapes
-    // interpolate smoothly with zero topology jumps.
-    const SAMPLE_COUNT = 36;
-    const MORPH_STEP_MS = 560;
-
-    const samplePolar = (radiusFn) => {
-      const pts = [];
-      for (let i = 0; i < SAMPLE_COUNT; i++) {
-        const theta = (i / SAMPLE_COUNT) * Math.PI * 2;
-        const r = radiusFn(theta);
-        pts.push([Math.cos(theta) * r, Math.sin(theta) * r]);
-      }
-      return pts;
-    };
-
-    const sampleSuperellipse = (rx, ry, n) => {
-      const pts = [];
-      for (let i = 0; i < SAMPLE_COUNT; i++) {
-        const t = (i / SAMPLE_COUNT) * Math.PI * 2;
-        const c = Math.cos(t);
-        const s = Math.sin(t);
-        const x = Math.sign(c) * Math.pow(Math.abs(c), 2 / n) * rx;
-        const y = Math.sign(s) * Math.pow(Math.abs(s), 2 / n) * ry;
-        pts.push([x, y]);
-      }
-      return pts;
-    };
-
-    const sampleRoundedPolygon = (sides, radius, softness) =>
-      samplePolar((t) => {
-        const sector = (Math.PI * 2) / sides;
-        const a = ((t % sector) + sector) % sector - sector / 2;
-        const poly = (radius * Math.cos(sector / 2)) / Math.cos(a);
-        return poly * (1 - softness) + radius * softness;
-      });
-
-    // Order matches M3E spec: Soft Burst -> Cookie 9 -> Pentagon -> Pill -> Sunny -> Cookie 4 -> Oval
-    const M3E_SHAPES = [
-      // Soft Burst (10 soft petals)
-      samplePolar((t) => 38 + 7.5 * Math.cos(10 * t)),
-      // Cookie 9 (9 scallops)
-      samplePolar((t) => 40 + 5.5 * Math.cos(9 * t)),
-      // Pentagon (soft rounded)
-      sampleRoundedPolygon(5, 43, 0.32),
-      // Pill (stadium capsule)
-      sampleSuperellipse(45, 27, 3.4),
-      // Sunny (8-ray flower)
-      samplePolar((t) => 37 + 8.5 * Math.cos(8 * t)),
-      // Cookie 4 (4-lobe clover)
-      samplePolar((t) => 37 + 9 * Math.cos(4 * t)),
-      // Oval
-      sampleSuperellipse(44, 32, 2),
-    ];
-
-    // Convert closed point loop into smooth Catmull-Rom cubic Bezier SVG path
-    const pointsToSmoothPath = (pts) => {
-      const n = pts.length;
-      let d = `M ${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)}`;
-      for (let i = 0; i < n; i++) {
-        const p0 = pts[(i - 1 + n) % n];
-        const p1 = pts[i];
-        const p2 = pts[(i + 1) % n];
-        const p3 = pts[(i + 2) % n];
-        const cp1x = p1[0] + (p2[0] - p0[0]) / 6;
-        const cp1y = p1[1] + (p2[1] - p0[1]) / 6;
-        const cp2x = p2[0] - (p3[0] - p1[0]) / 6;
-        const cp2y = p2[1] - (p3[1] - p1[1]) / 6;
-        d += ` C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)} ${cp2x.toFixed(2)} ${cp2y.toFixed(2)} ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
-      }
-      return d + " Z";
-    };
-
-    // Expressive spring easing with subtle overshoot
-    const springEase = (t) => {
-      if (t <= 0) return 0;
-      if (t >= 1) return 1;
-      const c4 = (2 * Math.PI) / 3.2;
-      return 1 + Math.pow(2, -9 * t) * Math.sin((t * 10 - 0.75) * c4) * 0.45;
-    };
-
-    let m3eRafId = 0;
-    let m3eStartTime = 0;
-    let m3eStartShape = 0;
-
-    const renderM3eFrame = (overlay, now) => {
-      const elapsed = now - m3eStartTime;
-      const stepFloat = elapsed / MORPH_STEP_MS;
-      const stepIndex = Math.floor(stepFloat);
-      const localT = stepFloat - stepIndex;
-      const eased = springEase(localT);
-
-      const fromIdx = (m3eStartShape + stepIndex) % M3E_SHAPES.length;
-      const toIdx = (fromIdx + 1) % M3E_SHAPES.length;
-      const fromPts = M3E_SHAPES[fromIdx];
-      const toPts = M3E_SHAPES[toIdx];
-
-      const interp = new Array(SAMPLE_COUNT);
-      for (let i = 0; i < SAMPLE_COUNT; i++) {
-        interp[i] = [
-          fromPts[i][0] + (toPts[i][0] - fromPts[i][0]) * eased,
-          fromPts[i][1] + (toPts[i][1] - fromPts[i][1]) * eased,
-        ];
-      }
-
-      const pathData = pointsToSmoothPath(interp);
-      // M3E choreography: spring-stepped +90deg per morph + gentle continuous spin
-      const angle = (stepIndex + eased) * 90 + elapsed * 0.045;
-
-      overlay.querySelectorAll("[data-m3e-path]").forEach((el) => {
-        el.setAttribute("d", pathData);
-      });
-      overlay.querySelectorAll("[data-m3e-svg]").forEach((el) => {
-        el.style.transform = `rotate(${angle.toFixed(1)}deg)`;
-      });
-    };
-
-    const startM3eLoader = (overlay) => {
-      stopM3eLoader();
-      m3eStartTime = performance.now();
-      m3eStartShape = (m3eStartShape + 1) % M3E_SHAPES.length;
-      const tick = (now) => {
-        renderM3eFrame(overlay, now);
-        m3eRafId = requestAnimationFrame(tick);
-      };
-      renderM3eFrame(overlay, m3eStartTime);
-      m3eRafId = requestAnimationFrame(tick);
-    };
-
-    const stopM3eLoader = () => {
-      if (m3eRafId) {
-        cancelAnimationFrame(m3eRafId);
-        m3eRafId = 0;
-      }
-    };
-
-    // --- Route Curtain Controller ---
-    let activeCurtain = false;
-    let runToken = 0;
-    let pendingViewTransition = null;
-
-    const normalizePath = (pathname) => {
-      if (!pathname || pathname === "/") return "/";
-      return pathname.replace(/\/+$/, "") || "/";
-    };
-
-    const getSection = (pathname) => {
-      const normalized = normalizePath(pathname);
-      if (normalized === "/") return "home";
-      return normalized.split("/")[1] || "home";
-    };
-
-    const getOverlay = () => document.getElementById("route-transition-overlay");
-
-    const getStrips = (overlay) =>
-      Array.from(overlay.querySelectorAll("[data-rt-strip]"));
-
-    const cancelStripAnimations = (strips) => {
-      strips.forEach((strip) => {
-        strip.getAnimations().forEach((anim) => anim.cancel());
-      });
-    };
-
-    const animateStrips = (overlay, fromClip, toClip) => {
-      const strips = getStrips(overlay);
-      cancelStripAnimations(strips);
-      const anims = strips.map((strip, idx) =>
-        strip.animate([{ clipPath: fromClip }, { clipPath: toClip }], {
-          duration: STRIP_DURATION,
-          delay: idx * STRIP_STAGGER,
-          easing: STRIP_EASING,
-          fill: "forwards",
-        }),
-      );
-      return Promise.all(
-        anims.map((anim) => anim.finished.catch(() => undefined)),
-      );
-    };
-
-    const setRouteCopy = (overlay, meta, path) => {
-      overlay.querySelectorAll("[data-rt-label]").forEach((el) => {
-        el.textContent = meta.label;
-      });
-      overlay.querySelectorAll("[data-rt-index]").forEach((el) => {
-        el.textContent = meta.index;
-      });
-      overlay.querySelectorAll("[data-rt-path]").forEach((el) => {
-        el.textContent = path;
-      });
-    };
-
-    const resetToIdle = (overlay) => {
-      stopM3eLoader();
-      const strips = getStrips(overlay);
-      cancelStripAnimations(strips);
-      strips.forEach((strip) => {
-        strip.style.clipPath = "inset(0 100% 0 0)";
-      });
-      overlay.classList.add("is-idle");
-      document.documentElement.classList.remove("curtain-active");
-    };
-
-    document.addEventListener("astro:before-preparation", (event) => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const fromPath = normalizePath(
-        event.from?.pathname || window.location.pathname,
-      );
-      const toPath = normalizePath(event.to?.pathname || "");
-
-      const toMeta = TOP_LEVEL_ROUTES[toPath];
-      if (!toMeta) return;
-      if (getSection(fromPath) === toMeta.section) return;
-
-      const overlay = getOverlay();
-      if (!overlay) return;
-
-      const token = ++runToken;
-      activeCurtain = true;
-      document.documentElement.classList.add("curtain-active");
-      setRouteCopy(overlay, toMeta, toPath);
-
-      overlay.classList.add("is-idle");
-      void overlay.offsetWidth;
-      overlay.classList.remove("is-idle");
-      startM3eLoader(overlay);
-
-      const coverPromise = animateStrips(
-        overlay,
-        "inset(0 100% 0 0)",
-        "inset(0 0 0 0)",
-      );
-
-      const originalLoader = event.loader;
-      event.loader = async () => {
-        await Promise.all([originalLoader(), coverPromise]);
-        if (token === runToken) {
-          getStrips(overlay).forEach((strip) => {
-            strip.style.clipPath = "inset(0 0 0 0)";
-          });
-        }
-      };
-    });
-
-    document.addEventListener("astro:before-swap", (event) => {
-      if (!activeCurtain) return;
-      event.newDocument.documentElement.classList.add("curtain-active");
-      pendingViewTransition = event.viewTransition || null;
-    });
-
-    document.addEventListener("astro:after-swap", () => {
-      if (!activeCurtain) return;
-      try {
-        pendingViewTransition?.skipTransition?.();
-      } catch {
-        // Ignore if transition already finished or was skipped
-      }
-    });
-
-    document.addEventListener("astro:page-load", async () => {
-      if (!activeCurtain) return;
-      const overlay = getOverlay();
-      if (!overlay) {
-        stopM3eLoader();
-        activeCurtain = false;
-        pendingViewTransition = null;
-        document.documentElement.classList.remove("curtain-active");
-        return;
-      }
-
-      const token = runToken;
-      const vt = pendingViewTransition;
-      pendingViewTransition = null;
-
-      if (vt && vt.finished) {
-        await vt.finished.catch(() => undefined);
-      }
-      if (token !== runToken) return;
-
-      document.documentElement.classList.remove("curtain-active");
-
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      if (token !== runToken) return;
-
-      await animateStrips(overlay, "inset(0 0 0 0)", "inset(0 0 0 100%)");
-      if (token === runToken) {
-        resetToIdle(overlay);
-        activeCurtain = false;
-      }
-    });
-  })();
+<script>
+  import { initRouteCurtain } from "@/scripts/routeCurtain";
+  initRouteCurtain();
 </script>

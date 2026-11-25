@@ -4,9 +4,10 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/Text.astro";
-import { snake_case } from "@/utils/snakecase";
-import { clip_markdown } from "@/utils/clip";
+import TagChip from "@/components/TagChip.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
+import { clip_markdown } from "@/utils/clip";
+import { estimateReadingMinutes } from "@/utils/readingTime";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -15,15 +16,15 @@ export async function getStaticPaths() {
     props: post,
   }));
 }
+
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
-const sortedTags = post.data.tags
+const sortedTags: string[] = post.data.tags
   ? [...post.data.tags].sort((a, b) => a.localeCompare(b))
   : [];
-const charCount = post.body ? post.body.replace(/\s+/g, "").length : 0;
-const readingMinutes = Math.max(1, Math.round(charCount / 400));
+const readingMinutes: number = estimateReadingMinutes(post.body);
 const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 ---
 
@@ -144,13 +145,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
           sortedTags.length > 0 && (
             <div class="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
               {sortedTags.map((tag) => (
-                <a
-                  href={`/tag/${snake_case(tag)}`}
-                  class="m3-pill border border-border bg-card px-3.5 py-1 text-xs font-medium text-muted-foreground hover:border-primary/50 hover:bg-accent hover:text-accent-foreground"
-                >
-                  <span class="pr-0.5 text-primary">#</span>
-                  {tag}
-                </a>
+                <TagChip tag={tag} class="px-3.5 py-1" />
               ))}
             </div>
           )
@@ -219,198 +214,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
   </div>
 </BaseLayout>
 
-<script is:inline>
-  (() => {
-    const getGiscusTheme = () =>
-      document.documentElement.classList.contains("dark")
-        ? "dark_dimmed"
-        : "light";
-
-    const loadGiscus = () => {
-      const container = document.getElementById("giscus-comments");
-      if (!container || container.dataset.loaded === "1") return;
-      container.dataset.loaded = "1";
-      container.innerHTML = "";
-
-      const script = document.createElement("script");
-      script.src = "https://giscus.app/client.js";
-      script.setAttribute("data-repo", "H2Sxxa/h2sxxa.github.io");
-      script.setAttribute("data-repo-id", "R_kgDOSuttsw");
-      script.setAttribute("data-category", "Announcements");
-      script.setAttribute("data-category-id", "DIC_kwDOSutts84C-zu8");
-      script.setAttribute("data-mapping", "pathname");
-      script.setAttribute("data-strict", "0");
-      script.setAttribute("data-reactions-enabled", "1");
-      script.setAttribute("data-emit-metadata", "0");
-      script.setAttribute("data-input-position", "bottom");
-      script.setAttribute("data-theme", getGiscusTheme());
-      script.setAttribute("data-lang", "zh-CN");
-      script.setAttribute("crossorigin", "anonymous");
-      script.async = true;
-
-      container.appendChild(script);
-    };
-
-    const syncGiscusTheme = () => {
-      const iframe = document.querySelector("iframe.giscus-frame");
-      if (!iframe || !iframe.contentWindow) return;
-      iframe.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: getGiscusTheme() } } },
-        "https://giscus.app",
-      );
-    };
-
-    // Enhance code blocks with copy button
-    const enhanceCodeBlocks = () => {
-      document.querySelectorAll(".prose pre").forEach((pre) => {
-        if (pre.dataset.copyEnhanced === "1") return;
-        pre.dataset.copyEnhanced = "1";
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = "Copy";
-        btn.setAttribute("aria-label", "Copy code");
-        btn.className =
-          "absolute top-2.5 right-2.5 cursor-pointer rounded-lg border border-border bg-background/85 px-2.5 py-1 font-mono text-[11px] font-medium text-muted-foreground opacity-80 backdrop-blur-xs transition-[opacity,background-color,color,border-color] duration-150 hover:border-primary/50 hover:bg-accent hover:text-foreground hover:opacity-100";
-
-        btn.addEventListener("click", async () => {
-          const code = pre.querySelector("code")?.textContent || pre.textContent || "";
-          try {
-            await navigator.clipboard.writeText(code);
-            btn.textContent = "Copied ✓";
-            btn.classList.add("border-primary/60", "text-primary");
-            window.setTimeout(() => {
-              btn.textContent = "Copy";
-              btn.classList.remove("border-primary/60", "text-primary");
-            }, 1800);
-          } catch {
-            btn.textContent = "Failed";
-          }
-        });
-
-        pre.appendChild(btn);
-      });
-    };
-
-    // Lightweight image lightbox for prose images
-    const enhanceLightbox = () => {
-      const lightbox = document.getElementById("article-lightbox");
-      const lightboxImg = document.getElementById("article-lightbox-img");
-      if (!lightbox || !lightboxImg) return;
-
-      const close = () => {
-        lightbox.classList.remove("opacity-100");
-        lightbox.classList.add("opacity-0", "pointer-events-none");
-        lightboxImg.classList.remove("scale-100");
-        lightboxImg.classList.add("scale-95");
-        window.setTimeout(() => {
-          lightbox.classList.add("hidden");
-          lightbox.classList.remove("flex");
-        }, 180);
-      };
-
-      const open = (src, alt) => {
-        lightboxImg.src = src;
-        lightboxImg.alt = alt || "";
-        lightbox.classList.remove("hidden", "pointer-events-none");
-        lightbox.classList.add("flex");
-        requestAnimationFrame(() => {
-          lightbox.classList.remove("opacity-0");
-          lightbox.classList.add("opacity-100");
-          lightboxImg.classList.remove("scale-95");
-          lightboxImg.classList.add("scale-100");
-        });
-      };
-
-      if (!lightbox.dataset.bound) {
-        lightbox.dataset.bound = "1";
-        lightbox.addEventListener("click", close);
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && !lightbox.classList.contains("hidden")) {
-            close();
-          }
-        });
-      }
-
-      document.querySelectorAll(".prose img").forEach((img) => {
-        if (img.dataset.lightboxBound === "1") return;
-        img.dataset.lightboxBound = "1";
-        img.classList.add("cursor-zoom-in");
-        img.addEventListener("click", () => open(img.currentSrc || img.src, img.alt));
-      });
-    };
-
-    // Sliding-rail TOC scrollspy
-    const enhanceToc = () => {
-      const tocList = document.getElementById("desktop-toc-list");
-      const rail = document.getElementById("toc-active-rail");
-      if (!tocList || !rail) return;
-
-      const links = Array.from(tocList.querySelectorAll("[data-toc-link]"));
-      const headings = links
-        .map((link) => {
-          const id = link.getAttribute("data-toc-link");
-          return id ? { id, link, el: document.getElementById(id) } : null;
-        })
-        .filter((item) => item && item.el);
-
-      if (!headings.length) return;
-
-      const setActive = (activeId) => {
-        let matched = null;
-        headings.forEach(({ id, link }) => {
-          const isActive = id === activeId;
-          link.classList.toggle("text-primary", isActive);
-          link.classList.toggle("font-medium", isActive);
-          link.classList.toggle("text-muted-foreground", !isActive);
-          if (isActive) matched = link;
-        });
-
-        if (matched) {
-          const listRect = tocList.getBoundingClientRect();
-          const linkRect = matched.getBoundingClientRect();
-          const top = linkRect.top - listRect.top + 4;
-          const height = Math.max(16, linkRect.height - 8);
-          rail.style.transform = `translateY(${top}px)`;
-          rail.style.height = `${height}px`;
-          rail.style.opacity = "1";
-        }
-      };
-
-      const onScroll = () => {
-        const threshold = 120;
-        let current = headings[0].id;
-        for (const item of headings) {
-          if (item.el.getBoundingClientRect().top <= threshold) {
-            current = item.id;
-          } else {
-            break;
-          }
-        }
-        setActive(current);
-      };
-
-      if (window.__tocScrollHandler) {
-        window.removeEventListener("scroll", window.__tocScrollHandler);
-      }
-      window.__tocScrollHandler = onScroll;
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-    };
-
-    const initArticle = () => {
-      loadGiscus();
-      enhanceCodeBlocks();
-      enhanceLightbox();
-      enhanceToc();
-    };
-
-    if (!window.__articleListenersBound) {
-      window.__articleListenersBound = true;
-      window.addEventListener("theme-change", syncGiscusTheme);
-      document.addEventListener("astro:page-load", initArticle);
-    }
-
-    initArticle();
-  })();
+<script>
+  import { initArticleReader } from "@/scripts/articleReader";
+  initArticleReader();
 </script>

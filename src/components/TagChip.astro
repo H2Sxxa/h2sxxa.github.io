@@ -1,0 +1,30 @@
+---
+import { snake_case } from "@/utils/snakecase";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  tag: string;
+  count?: number;
+  class?: string;
+}
+
+const { tag, count, class: className } = Astro.props as Props;
+---
+
+<a
+  href={`/tag/${snake_case(tag)}`}
+  class={cn(
+    "m3-pill pointer-events-auto inline-flex shrink-0 items-center border border-border/80 bg-card px-3 py-0.5 text-xs font-medium whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:bg-accent hover:text-accent-foreground",
+    className,
+  )}
+>
+  <span class="pr-0.5 text-primary">#</span>
+  <span>{tag}</span>
+  {
+    typeof count === "number" && (
+      <span class="ml-1.5 font-mono text-[11px] tabular-nums text-muted-foreground">
+        {count}
+      </span>
+    )
+  }
+</a>

@@ -1,37 +1,30 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { snake_case } from "@/utils/snakecase";
-const posts = await getCollection("blog");
+import TagChip from "@/components/TagChip.astro";
 
+const posts = await getCollection("blog");
 const tags = new Map<string, number>();
 
 posts.forEach((post) => {
   post.data.tags?.forEach((tag) => {
-    tags.set(tag, (tags.get(tag) || 0) + 1);
+    tags.set(tag, (tags.get(tag) ?? 0) + 1);
   });
 });
+
+const sortedTags = Array.from(tags).sort((a, b) => b[1] - a[1]);
 ---
 
-<BaseLayout>
+<BaseLayout title="Tags" showTitleTemplate>
   <main class="page">
-    <h1 class="mb-4 font-serif text-3xl font-bold">Tags</h1>
-    <!-- <p></p> -->
-    <div class="flex flex-wrap gap-2">
+    <h1 class="mb-6 font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      Tags
+    </h1>
+    <div class="flex flex-wrap gap-2.5">
       {
-        Array.from(tags)
-          .sort((a, b) => b[1] - a[1])
-          .map(([tag, count]) => (
-            <a
-              href={`/tag/${snake_case(tag)}`}
-              class="m3-pill pointer-events-auto border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground hover:border-primary/50 hover:bg-accent hover:text-accent-foreground"
-            >
-              <span class="mr-0.5 text-primary">#</span>{tag}
-              <span class="ml-1.5 font-mono text-xs tabular-nums text-muted-foreground">
-                {count}
-              </span>
-            </a>
-          ))
+        sortedTags.map(([tag, count]) => (
+          <TagChip tag={tag} count={count} class="px-3.5 py-1.5 text-sm text-foreground" />
+        ))
       }
     </div>
   </main>
