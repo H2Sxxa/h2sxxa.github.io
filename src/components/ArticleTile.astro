@@ -15,6 +15,9 @@ const { post, eagerLoading } = Astro.props as Props;
 
 const excerpt: string = post.body ? clip_markdown(post.body, 110) : "";
 const readingMinutes: number = estimateReadingMinutes(post.body);
+const tags: readonly string[] = post.data.tags ?? [];
+const primaryTag: string | undefined = tags[0];
+const overflowTags: readonly string[] = tags.slice(1);
 ---
 
 <article
@@ -75,13 +78,22 @@ const readingMinutes: number = estimateReadingMinutes(post.body);
       )
     }
 
-    {/* Tags */}
+    {/* Tags (Primary Tag +N for consistent card rhythm) */}
     {
-      post.data.tags && post.data.tags.length > 0 && (
-        <div class="relative z-20 mt-4 flex flex-wrap gap-2">
-          {post.data.tags.map((tag) => (
-            <TagChip tag={tag} class="bg-background/70" />
-          ))}
+      primaryTag && (
+        <div class="relative z-20 mt-3.5 flex items-center gap-1.5">
+          <TagChip
+            tag={primaryTag}
+            class="border-transparent bg-muted/65 hover:border-primary/40"
+          />
+          {overflowTags.length > 0 && (
+            <span
+              title={overflowTags.map((tag: string) => `#${tag}`).join("  ")}
+              class="rounded-full bg-muted/50 px-2 py-0.5 font-mono text-[11px] tabular-nums text-muted-foreground"
+            >
+              +{overflowTags.length}
+            </span>
+          )}
         </div>
       )
     }

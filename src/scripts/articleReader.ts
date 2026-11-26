@@ -54,35 +54,70 @@ function syncGiscusTheme(): void {
   );
 }
 
+const COPY_ICON_SVG =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const CHECK_ICON_SVG =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
 function enhanceCodeBlocks(): void {
+  const prefersReducedMotion: boolean = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
   document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
-    if (pre.dataset.copyEnhanced === "1") return;
+    if (pre.dataset.copyEnhanced === "1" || !pre.parentNode) return;
     pre.dataset.copyEnhanced = "1";
+
+    const wrapper: HTMLDivElement = document.createElement("div");
+    wrapper.className = "group/code relative my-6";
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+    pre.classList.add("my-0!");
 
     const button: HTMLButtonElement = document.createElement("button");
     button.type = "button";
-    button.textContent = "Copy";
+    button.dataset.copied = "false";
     button.setAttribute("aria-label", "Copy code");
     button.className =
-      "m3-pill absolute top-2.5 right-2.5 cursor-pointer border border-border bg-background/85 px-2.5 py-1 font-mono text-[11px] font-medium text-muted-foreground opacity-80 backdrop-blur-xs hover:border-primary/50 hover:bg-accent hover:text-foreground hover:opacity-100";
+      "m3-pill group/copy absolute top-2.5 right-2.5 z-10 inline-flex cursor-pointer items-center gap-1.5 border border-border bg-background/85 px-2.5 py-1 font-mono text-[11px] font-medium text-muted-foreground opacity-70 backdrop-blur-xs transition-[opacity,background-color,border-color,color,border-radius,transform] duration-200 group-hover/code:opacity-100 hover:border-primary/50 hover:bg-accent hover:text-foreground data-[copied=true]:border-primary/60 data-[copied=true]:bg-accent data-[copied=true]:text-primary data-[copied=true]:opacity-100";
+
+    button.innerHTML = `<span class="relative inline-flex h-3.5 w-3.5 items-center justify-center"><span class="absolute inset-0 inline-flex items-center justify-center transition-[transform,opacity] duration-250 ease-(--ease-spring) group-data-[copied=true]/copy:scale-50 group-data-[copied=true]/copy:rotate-45 group-data-[copied=true]/copy:opacity-0">${COPY_ICON_SVG}</span><span class="absolute inset-0 inline-flex scale-50 -rotate-45 items-center justify-center opacity-0 transition-[transform,opacity] duration-250 ease-(--ease-spring) group-data-[copied=true]/copy:scale-100 group-data-[copied=true]/copy:rotate-0 group-data-[copied=true]/copy:opacity-100">${CHECK_ICON_SVG}</span></span><span data-copy-label>Copy</span>`;
+
+    const labelEl: HTMLElement | null =
+      button.querySelector<HTMLElement>("[data-copy-label]");
+    let resetTimer = 0;
 
     button.addEventListener("click", async () => {
       const codeText: string =
         pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
+      window.clearTimeout(resetTimer);
       try {
         await navigator.clipboard.writeText(codeText);
-        button.textContent = "Copied ✓";
-        button.classList.add("border-primary/60", "text-primary");
-        window.setTimeout(() => {
-          button.textContent = "Copy";
-          button.classList.remove("border-primary/60", "text-primary");
+        button.dataset.copied = "true";
+        if (labelEl) labelEl.textContent = "Copied";
+        if (!prefersReducedMotion) {
+          button.animate(
+            [
+              { transform: "scale(0.92)" },
+              { transform: "scale(1.05)" },
+              { transform: "scale(1)" },
+            ],
+            {
+              duration: 280,
+              easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+            },
+          );
+        }
+        resetTimer = window.setTimeout(() => {
+          button.dataset.copied = "false";
+          if (labelEl) labelEl.textContent = "Copy";
         }, COPY_FEEDBACK_MS);
       } catch {
-        button.textContent = "Failed";
+        if (labelEl) labelEl.textContent = "Failed";
       }
     });
 
-    pre.appendChild(button);
+    wrapper.appendChild(button);
   });
 }
 

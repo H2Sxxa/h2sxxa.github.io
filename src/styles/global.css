@@ -320,7 +320,6 @@ html.curtain-locked body {
 .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  position: relative;
 }
 
 .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
