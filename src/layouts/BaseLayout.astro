@@ -80,6 +80,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
             ).matches;
             if (!document.startViewTransition || reduced) {
               commit();
+              window.dispatchEvent(new CustomEvent("theme-transition-end"));
               return;
             }
 
@@ -113,6 +114,7 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
 
             transition.finished.finally(() => {
               document.documentElement.classList.remove("theme-transitioning");
+              window.dispatchEvent(new CustomEvent("theme-transition-end"));
             });
           };
         }
