@@ -39,22 +39,25 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
       <!-- Right: Expressive Variable Typography + Quiet Links -->
       <section class="max-w-xl text-center md:text-left">
         <h2
-          class="home-bio-heading home-reveal home-reveal-2"
+          class="home-bio-heading home-reveal home-reveal-2 flex flex-col gap-2 md:gap-1.5"
           aria-label={SITE_OWNER.bio}
         >
-          <ExpressiveFlex class="text-[clamp(2.1rem,4.5vw,2.75rem)]">
-            Just
-          </ExpressiveFlex>{" "}
-          <ExpressiveItalic class="text-[clamp(2.45rem,5.2vw,3.25rem)]">
-            Developing
-          </ExpressiveItalic>
-          <br />
-          <ExpressiveFlex class="text-[clamp(1.95rem,4vw,2.5rem)]">
-            for
-          </ExpressiveFlex>{" "}
-          <ExpressiveBadge class="text-[clamp(2.55rem,5.5vw,3.375rem)]">
-            Fun<span class="text-primary">.</span>
-          </ExpressiveBadge>
+          <span class="block">
+            <ExpressiveFlex class="text-[clamp(2rem,4.5vw,2.75rem)]">
+              Just
+            </ExpressiveFlex>{" "}
+            <ExpressiveItalic class="text-[clamp(2.35rem,5.2vw,3.25rem)]">
+              Developing
+            </ExpressiveItalic>
+          </span>
+          <span class="block">
+            <ExpressiveFlex class="text-[clamp(1.85rem,4vw,2.5rem)]">
+              for
+            </ExpressiveFlex>{" "}
+            <ExpressiveBadge class="text-[clamp(2.4rem,5.5vw,3.375rem)]">
+              Fun<span class="text-primary">.</span>
+            </ExpressiveBadge>
+          </span>
         </h2>
 
         <p
@@ -180,7 +183,7 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
     }
 
     .home-bio-heading {
-      line-height: 1.1;
+      line-height: 1.26;
       letter-spacing: -0.025em;
       color: var(--foreground);
     }

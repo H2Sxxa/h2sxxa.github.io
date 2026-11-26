@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TagChip from "@/components/TagChip.astro";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 
 const posts = await getCollection("blog");
 const tags = new Map<string, number>();
@@ -17,7 +19,10 @@ const sortedTags = Array.from(tags).sort((a, b) => b[1] - a[1]);
 
 <BaseLayout title="Tags" showTitleTemplate>
   <main class="page">
-    <h1 class="page-title">Tags</h1>
+    <h1 class="page-title flex items-center gap-3">
+      <ExpressiveItalic>Tags</ExpressiveItalic>
+      <ExpressiveBadge class="text-sm tabular-nums">{sortedTags.length}</ExpressiveBadge>
+    </h1>
     <p class="page-subtitle mb-8 font-mono tabular-nums">
       {sortedTags.length} tags across {posts.length} essays
     </p>

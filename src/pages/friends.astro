@@ -2,11 +2,16 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { FRIENDS_LINKS } from "@/consts";
 import { Image } from "astro:assets";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 ---
 
 <BaseLayout title="Friends" showTitleTemplate>
   <main class="page">
-    <h1 class="page-title">Friends</h1>
+    <h1 class="page-title flex items-center gap-3">
+      <ExpressiveItalic>Friends</ExpressiveItalic>
+      <ExpressiveBadge class="text-sm tabular-nums">{FRIENDS_LINKS.length}</ExpressiveBadge>
+    </h1>
     <p class="page-subtitle mb-8">
       Feel free to add your own blog link!
     </p>

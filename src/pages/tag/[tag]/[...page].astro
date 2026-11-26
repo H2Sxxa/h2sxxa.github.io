@@ -5,6 +5,7 @@ import { PAGE_SIZE } from "@/consts";
 import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 import { snake_case } from "@/utils/snakecase";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
@@ -50,8 +51,13 @@ const { tag, page } = Astro.props;
       >
         ← All tags
       </a>
-      <h1 class="page-title">
-        <span class="mr-1 text-primary">#</span>{tag}
+      <h1 class="page-title flex flex-wrap items-center gap-3">
+        <ExpressiveBadge class="text-[0.86em]">
+          <span class="mr-0.5 text-primary">#</span>{tag}
+        </ExpressiveBadge>
+        <span class="font-mono text-sm font-normal tabular-nums text-muted-foreground">
+          {page.total} {page.total === 1 ? "post" : "posts"}
+        </span>
       </h1>
     </div>
     <div class="space-y-4">

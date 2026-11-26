@@ -6,6 +6,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PAGE_SIZE } from "@/consts";
 import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 
 interface Props {
   page: Page<CollectionEntry<"blog">>;
@@ -27,7 +29,10 @@ const { page } = Astro.props;
   <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
     <header class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <h1 class="page-title">Blog</h1>
+        <h1 class="page-title flex items-center gap-3">
+          <ExpressiveItalic>Blog</ExpressiveItalic>
+          <ExpressiveBadge class="text-sm tabular-nums">{page.total}</ExpressiveBadge>
+        </h1>
         <p class="page-subtitle">
           RSS is available at{" "}
           <a href="/rss.xml" class="font-mono text-primary hover:underline"
