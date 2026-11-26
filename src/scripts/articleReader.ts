@@ -6,16 +6,18 @@ interface TocHeadingItem {
   readonly element: HTMLElement;
 }
 
+interface ThemeChangeEventDetail {
+  readonly dark: boolean;
+  readonly waitUntil?: (promise: Promise<void>) => void;
+}
+
 const GISCUS_ORIGIN = "https://giscus.app";
-const GISCUS_SETTLE_AFTER_TRANSITION_MS = 140;
-const GISCUS_FALLBACK_RESTORE_MS = 720;
+const GISCUS_THEME_SYNC_WAIT_MS = 150;
 const COPY_FEEDBACK_MS = 1800;
 const TOC_SCROLL_OFFSET = 120;
 
 let listenersBound = false;
 let giscusThemesPrefetched = false;
-let giscusFadeTimer = 0;
-let giscusAwaitingReveal = false;
 let activeTocScrollHandler: (() => void) | null = null;
 let activeGiscusConfig: GiscusCommentsConfig | null = null;
 
@@ -86,54 +88,39 @@ function loadGiscus(): void {
   container.appendChild(script);
 }
 
-function revealGiscus(): void {
-  const container: HTMLElement | null =
-    document.getElementById("giscus-comments");
-  giscusAwaitingReveal = false;
-  window.clearTimeout(giscusFadeTimer);
-  if (!container) return;
-  container.style.transition = "opacity 320ms ease-out";
-  container.style.opacity = "1";
-}
-
-function handleThemeTransitionEnd(): void {
-  if (!giscusAwaitingReveal) return;
-  window.clearTimeout(giscusFadeTimer);
-  giscusFadeTimer = window.setTimeout(
-    revealGiscus,
-    GISCUS_SETTLE_AFTER_TRANSITION_MS,
+function isElementInViewport(element: HTMLElement): boolean {
+  const rect: DOMRect = element.getBoundingClientRect();
+  return (
+    rect.width > 0 &&
+    rect.height > 0 &&
+    rect.bottom > 0 &&
+    rect.top < window.innerHeight &&
+    rect.right > 0 &&
+    rect.left < window.innerWidth
   );
 }
 
-function syncGiscusTheme(): void {
+function waitForGiscusRepaint(): Promise<void> {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, GISCUS_THEME_SYNC_WAIT_MS);
+  });
+}
+
+function syncGiscusTheme(event: Event): void {
   const iframe: HTMLIFrameElement | null = document.querySelector(
     "iframe.giscus-frame",
   );
   if (!iframe?.contentWindow || !activeGiscusConfig) return;
 
-  const container: HTMLElement | null =
-    document.getElementById("giscus-comments");
-  const reducedMotion: boolean = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-
-  if (container && !reducedMotion) {
-    window.clearTimeout(giscusFadeTimer);
-    giscusAwaitingReveal = true;
-    // Hide synchronously before View Transition captures the new-theme snapshot
-    // so neither the stale theme nor any cross-origin CSS swap FOUC leaks through.
-    container.style.transition = "none";
-    container.style.opacity = "0";
-    giscusFadeTimer = window.setTimeout(
-      revealGiscus,
-      GISCUS_FALLBACK_RESTORE_MS,
-    );
-  }
-
   iframe.contentWindow.postMessage(
     { giscus: { setConfig: { theme: getGiscusTheme(activeGiscusConfig) } } },
     GISCUS_ORIGIN,
   );
+
+  const detail = (event as CustomEvent<ThemeChangeEventDetail>).detail;
+  if (detail?.waitUntil && isElementInViewport(iframe)) {
+    detail.waitUntil(waitForGiscusRepaint());
+  }
 }
 
 const COPY_ICON_SVG =
@@ -329,7 +316,6 @@ export function initArticleReader(): void {
   if (!listenersBound) {
     listenersBound = true;
     window.addEventListener("theme-change", syncGiscusTheme);
-    window.addEventListener("theme-transition-end", handleThemeTransitionEnd);
     document.addEventListener("astro:page-load", hydrateArticlePage);
   }
   hydrateArticlePage();

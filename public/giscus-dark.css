@@ -115,17 +115,6 @@ main .gsc-loading-image {
    M3 Expressive Overrides
    ========================= */
 
-main,
-.gsc-header,
-.gsc-comment-content,
-.gsc-comment-box-tabs,
-.gsc-reply-box {
-  transition:
-    background-color 240ms ease,
-    color 200ms ease,
-    border-color 200ms ease;
-}
-
 .gsc-main {
   gap: 1.25rem;
 }
@@ -136,11 +125,7 @@ main,
   border-color: var(--color-border-default) !important;
   background-color: var(--color-canvas-overlay) !important;
   overflow: hidden;
-  transition:
-    background-color 240ms ease,
-    color 200ms ease,
-    border-color 200ms ease,
-    box-shadow 220ms ease;
+  transition: box-shadow 220ms ease;
 }
 
 .gsc-comment-box:focus-within {
@@ -156,7 +141,6 @@ main,
 .gsc-comment-box-textarea {
   border-radius: 0.875rem !important;
   background-color: var(--color-canvas-inset) !important;
-  transition: border-color 180ms ease, background-color 180ms ease;
 }
 
 .gsc-comment-box-textarea:focus {
@@ -171,10 +155,7 @@ main,
   border-radius: 20px !important;
   transition:
     border-radius 320ms var(--ease-spring),
-    transform 260ms var(--ease-spring),
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease !important;
+    transform 260ms var(--ease-spring) !important;
 }
 
 .btn:hover,

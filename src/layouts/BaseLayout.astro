@@ -72,20 +72,30 @@ const defaultTheme: "system" | "light" | "dark" = theme.defaultTheme;
 
           window.__toggleTheme = (originX, originY) => {
             const nextDark = !document.documentElement.classList.contains("dark");
-            const commit = () => {
+            const commit = async () => {
               localStorage.setItem(STORAGE_KEY, nextDark ? "dark" : "light");
               setColorScheme(document.documentElement, nextDark);
+              const pendingTasks = [];
               window.dispatchEvent(
-                new CustomEvent("theme-change", { detail: { dark: nextDark } }),
+                new CustomEvent("theme-change", {
+                  detail: {
+                    dark: nextDark,
+                    waitUntil: (promise) => {
+                      pendingTasks.push(promise);
+                    },
+                  },
+                }),
               );
+              if (pendingTasks.length > 0) {
+                await Promise.allSettled(pendingTasks);
+              }
             };
 
             const reduced = window.matchMedia(
               "(prefers-reduced-motion: reduce)",
             ).matches;
             if (!document.startViewTransition || reduced) {
-              commit();
-              window.dispatchEvent(new CustomEvent("theme-transition-end"));
+              void commit();
               return;
             }
 
@@ -119,7 +129,6 @@ const defaultTheme: "system" | "light" | "dark" = theme.defaultTheme;
 
             transition.finished.finally(() => {
               document.documentElement.classList.remove("theme-transitioning");
-              window.dispatchEvent(new CustomEvent("theme-transition-end"));
             });
           };
         }
