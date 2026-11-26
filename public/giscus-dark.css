@@ -115,6 +115,17 @@ main .gsc-loading-image {
    M3 Expressive Overrides
    ========================= */
 
+main,
+.gsc-header,
+.gsc-comment-content,
+.gsc-comment-box-tabs,
+.gsc-reply-box {
+  transition:
+    background-color 240ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
+}
+
 .gsc-main {
   gap: 1.25rem;
 }
@@ -126,6 +137,8 @@ main .gsc-loading-image {
   background-color: var(--color-canvas-overlay) !important;
   overflow: hidden;
   transition:
+    background-color 240ms ease,
+    color 200ms ease,
     border-color 200ms ease,
     box-shadow 220ms ease;
 }

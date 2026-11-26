@@ -5,10 +5,13 @@ interface TocHeadingItem {
 }
 
 const GISCUS_ORIGIN = "https://giscus.app";
+const GISCUS_FADE_RESTORE_MS = 260;
 const COPY_FEEDBACK_MS = 1800;
 const TOC_SCROLL_OFFSET = 120;
 
 let listenersBound = false;
+let giscusThemesPrefetched = false;
+let giscusFadeTimer = 0;
 let activeTocScrollHandler: (() => void) | null = null;
 
 function getGiscusTheme(): string {
@@ -19,12 +22,26 @@ function getGiscusTheme(): string {
   return isDark ? "dark_dimmed" : "light";
 }
 
+function prefetchGiscusThemes(): void {
+  if (giscusThemesPrefetched || window.location.protocol !== "https:") return;
+  giscusThemesPrefetched = true;
+  for (const variant of ["light", "dark"] as const) {
+    const link: HTMLLinkElement = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "style";
+    link.href = `${window.location.origin}/giscus-${variant}.css`;
+    document.head.appendChild(link);
+  }
+}
+
 function loadGiscus(): void {
   const container: HTMLElement | null =
     document.getElementById("giscus-comments");
   if (!container || container.dataset.loaded === "1") return;
   container.dataset.loaded = "1";
   container.innerHTML = "";
+
+  prefetchGiscusThemes();
 
   const script: HTMLScriptElement = document.createElement("script");
   script.src = `${GISCUS_ORIGIN}/client.js`;
@@ -50,6 +67,23 @@ function syncGiscusTheme(): void {
     "iframe.giscus-frame",
   );
   if (!iframe?.contentWindow) return;
+
+  const container: HTMLElement | null =
+    document.getElementById("giscus-comments");
+  const reducedMotion: boolean = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (container && !reducedMotion) {
+    window.clearTimeout(giscusFadeTimer);
+    container.style.transition = "opacity 160ms ease";
+    container.style.opacity = "0.22";
+    giscusFadeTimer = window.setTimeout(() => {
+      container.style.transition = "opacity 280ms ease-out";
+      container.style.opacity = "1";
+    }, GISCUS_FADE_RESTORE_MS);
+  }
+
   iframe.contentWindow.postMessage(
     { giscus: { setConfig: { theme: getGiscusTheme() } } },
     GISCUS_ORIGIN,
