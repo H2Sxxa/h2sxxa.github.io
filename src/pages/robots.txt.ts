@@ -1,4 +1,12 @@
-# robots.txt for https://h2sxxa.github.io
+import type { APIRoute } from "astro";
+
+export const GET: APIRoute = ({ site }) => {
+  const origin: string = site ? site.origin : "";
+  const sitemapLine: string = site
+    ? `\nSitemap: ${new URL("sitemap-index.xml", site).href}`
+    : "";
+
+  const body: string = `# robots.txt${origin ? ` for ${origin}` : ""}
 
 # Content Signals policy (https://contentsignals.org)
 # search=yes: allow use for search indexing
@@ -34,6 +42,12 @@ User-agent: Google-Extended
 Allow: /
 
 User-agent: Applebot-Extended
-Allow: /
+Allow: /${sitemapLine}
+`;
 
-Sitemap: https://h2sxxa.github.io/sitemap-index.xml
+  return new Response(body, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+};

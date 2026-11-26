@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
-import { PAGE_SIZE } from "@/consts";
+import { siteConfig } from "@/site.config";
 import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -29,7 +29,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
       props: {
         tag,
       },
-      pageSize: PAGE_SIZE,
+      pageSize: siteConfig.blog.pageSize,
     });
   });
 };

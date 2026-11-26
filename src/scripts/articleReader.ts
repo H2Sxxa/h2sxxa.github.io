@@ -1,3 +1,5 @@
+import type { GiscusCommentsConfig } from "@/site.config";
+
 interface TocHeadingItem {
   readonly id: string;
   readonly link: HTMLAnchorElement;
@@ -15,23 +17,35 @@ let giscusThemesPrefetched = false;
 let giscusFadeTimer = 0;
 let giscusAwaitingReveal = false;
 let activeTocScrollHandler: (() => void) | null = null;
+let activeGiscusConfig: GiscusCommentsConfig | null = null;
 
-function getGiscusTheme(): string {
-  const isDark: boolean = document.documentElement.classList.contains("dark");
-  if (window.location.protocol === "https:") {
-    return `${window.location.origin}/giscus-${isDark ? "dark" : "light"}.css`;
-  }
-  return isDark ? "dark_dimmed" : "light";
+function parseGiscusConfig(
+  container: HTMLElement,
+): GiscusCommentsConfig | null {
+  const raw: string | undefined = container.dataset.giscusConfig;
+  if (!raw) return null;
+  return JSON.parse(raw) as GiscusCommentsConfig;
 }
 
-function prefetchGiscusThemes(): void {
+function getGiscusTheme(config: GiscusCommentsConfig): string {
+  const isDark: boolean = document.documentElement.classList.contains("dark");
+  if (window.location.protocol === "https:") {
+    const cssPath: string = isDark
+      ? config.theme.darkCss
+      : config.theme.lightCss;
+    return new URL(cssPath, window.location.origin).href;
+  }
+  return isDark ? config.theme.fallbackDark : config.theme.fallbackLight;
+}
+
+function prefetchGiscusThemes(config: GiscusCommentsConfig): void {
   if (giscusThemesPrefetched || window.location.protocol !== "https:") return;
   giscusThemesPrefetched = true;
-  for (const variant of ["light", "dark"] as const) {
+  for (const cssPath of [config.theme.lightCss, config.theme.darkCss]) {
     const link: HTMLLinkElement = document.createElement("link");
     link.rel = "prefetch";
     link.as = "style";
-    link.href = `${window.location.origin}/giscus-${variant}.css`;
+    link.href = new URL(cssPath, window.location.origin).href;
     document.head.appendChild(link);
   }
 }
@@ -40,24 +54,32 @@ function loadGiscus(): void {
   const container: HTMLElement | null =
     document.getElementById("giscus-comments");
   if (!container || container.dataset.loaded === "1") return;
+
+  const config: GiscusCommentsConfig | null = parseGiscusConfig(container);
+  if (!config) return;
+
+  activeGiscusConfig = config;
   container.dataset.loaded = "1";
   container.innerHTML = "";
 
-  prefetchGiscusThemes();
+  prefetchGiscusThemes(config);
 
   const script: HTMLScriptElement = document.createElement("script");
   script.src = `${GISCUS_ORIGIN}/client.js`;
-  script.setAttribute("data-repo", "H2Sxxa/h2sxxa.github.io");
-  script.setAttribute("data-repo-id", "R_kgDOSuttsw");
-  script.setAttribute("data-category", "Announcements");
-  script.setAttribute("data-category-id", "DIC_kwDOSutts84C-zu8");
-  script.setAttribute("data-mapping", "pathname");
-  script.setAttribute("data-strict", "0");
-  script.setAttribute("data-reactions-enabled", "1");
-  script.setAttribute("data-emit-metadata", "0");
-  script.setAttribute("data-input-position", "bottom");
-  script.setAttribute("data-theme", getGiscusTheme());
-  script.setAttribute("data-lang", "zh-CN");
+  script.setAttribute("data-repo", config.repo);
+  script.setAttribute("data-repo-id", config.repoId);
+  script.setAttribute("data-category", config.category);
+  script.setAttribute("data-category-id", config.categoryId);
+  script.setAttribute("data-mapping", config.mapping);
+  script.setAttribute("data-strict", config.strict ? "1" : "0");
+  script.setAttribute(
+    "data-reactions-enabled",
+    config.reactionsEnabled ? "1" : "0",
+  );
+  script.setAttribute("data-emit-metadata", config.emitMetadata ? "1" : "0");
+  script.setAttribute("data-input-position", config.inputPosition);
+  script.setAttribute("data-theme", getGiscusTheme(config));
+  script.setAttribute("data-lang", config.lang);
   script.setAttribute("crossorigin", "anonymous");
   script.async = true;
 
@@ -87,7 +109,7 @@ function syncGiscusTheme(): void {
   const iframe: HTMLIFrameElement | null = document.querySelector(
     "iframe.giscus-frame",
   );
-  if (!iframe?.contentWindow) return;
+  if (!iframe?.contentWindow || !activeGiscusConfig) return;
 
   const container: HTMLElement | null =
     document.getElementById("giscus-comments");
@@ -109,7 +131,7 @@ function syncGiscusTheme(): void {
   }
 
   iframe.contentWindow.postMessage(
-    { giscus: { setConfig: { theme: getGiscusTheme() } } },
+    { giscus: { setConfig: { theme: getGiscusTheme(activeGiscusConfig) } } },
     GISCUS_ORIGIN,
   );
 }

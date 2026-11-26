@@ -8,6 +8,7 @@ import TagChip from "@/components/TagChip.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
 import { clip_markdown } from "@/utils/clip";
 import { estimateReadingMinutes } from "@/utils/readingTime";
+import { siteConfig } from "@/site.config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -26,6 +27,9 @@ const sortedTags: string[] = post.data.tags
   : [];
 const readingMinutes: number = estimateReadingMinutes(post.body);
 const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
+const giscusConfigJson: string | null = siteConfig.comments
+  ? JSON.stringify(siteConfig.comments)
+  : null;
 ---
 
 <BaseLayout
@@ -154,7 +158,15 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
         }
 
         <!-- Giscus Comments -->
-        <div id="giscus-comments" class="mt-10"></div>
+        {
+          giscusConfigJson && (
+            <div
+              id="giscus-comments"
+              class="mt-10"
+              data-giscus-config={giscusConfigJson}
+            />
+          )
+        }
       </div>
 
       <!-- Desktop Sticky TOC with Sliding Active Rail -->

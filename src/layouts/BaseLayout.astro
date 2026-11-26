@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import BaseHead from "@/components/BaseHead.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import { siteConfig } from "@/site.config";
 import FloatActionButton from "@/components/FloatActionButton.astro";
 import PageLoader from "@/components/PageLoader.astro";
 import CommandPalette from "@/components/CommandPalette.astro";
@@ -18,14 +18,17 @@ interface Props {
 
 const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
   Astro.props as Props;
+const { site, theme } = siteConfig;
+const defaultTheme: "system" | "light" | "dark" = theme.defaultTheme;
 ---
 
-<html lang="zh-CN">
+<html lang={site.lang}>
   <head>
     <!-- Theme (dark/light) with manual override + circular View Transition ripple -->
-    <script is:inline>
+    <script is:inline define:vars={{ defaultTheme }}>
       (() => {
         const STORAGE_KEY = "blog-theme";
+        const DEFAULT_THEME = defaultTheme;
         const colorSchemeQuery = window.matchMedia(
           "(prefers-color-scheme: dark)",
         );
@@ -34,6 +37,8 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved === "dark") return true;
           if (saved === "light") return false;
+          if (DEFAULT_THEME === "dark") return true;
+          if (DEFAULT_THEME === "light") return false;
           return colorSchemeQuery.matches;
         };
 
@@ -121,8 +126,8 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
       })();
     </script>
     <BaseHead
-      title={title || SITE_TITLE}
-      description={description || SITE_DESCRIPTION}
+      title={title || site.title}
+      description={description || site.description}
       showTitleTemplate={showTitleTemplate}
       image={image}
     />

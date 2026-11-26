@@ -1,11 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import { SITE_OWNER } from "@/consts";
+import { siteConfig } from "@/site.config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ExpressiveFlex from "@/components/expressive/ExpressiveFlex.astro";
 import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
 import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.astro";
+
+const { author } = siteConfig;
 ---
 
 <BaseLayout dontIncludeFABPadding>
@@ -21,8 +23,8 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
         >
           <span class="home-avatar-clip">
             <Image
-              src={SITE_OWNER.avatar}
-              alt={SITE_OWNER.name}
+              src={author.avatar}
+              alt={author.name}
               inferSize
               loading="eager"
               class="home-avatar-img h-28 w-28 md:h-36 md:w-36"
@@ -32,7 +34,7 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
         </div>
 
         <h1 class="home-owner-name home-reveal home-reveal-2 mt-5">
-          {SITE_OWNER.name}
+          {author.name}
         </h1>
       </section>
 
@@ -40,7 +42,7 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
       <section class="max-w-xl text-center md:text-left">
         <h2
           class="home-bio-heading home-reveal home-reveal-2 flex flex-col gap-2 md:gap-1.5"
-          aria-label={SITE_OWNER.bio}
+          aria-label={author.bio}
         >
           <span class="block">
             <ExpressiveFlex class="text-[clamp(2rem,4.5vw,2.75rem)]">
@@ -60,23 +62,23 @@ import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.ast
           </span>
         </h2>
 
-        <p
-          class="home-reveal home-reveal-3 mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-xs text-muted-foreground md:justify-start"
-        >
-          {
-            SITE_OWNER.roles.map((role, index) => (
-              <>
-                {index > 0 && (
-                  <span
-                    class="inline-block h-1 w-1 rounded-full bg-primary/65"
-                    aria-hidden="true"
-                  />
-                )}
-                <span>{role}</span>
-              </>
-            ))
-          }
-        </p>
+        {
+          author.roles.length > 0 && (
+            <p class="home-reveal home-reveal-3 mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-xs text-muted-foreground md:justify-start">
+              {author.roles.map((role, index) => (
+                <>
+                  {index > 0 && (
+                    <span
+                      class="inline-block h-1 w-1 rounded-full bg-primary/65"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span>{role}</span>
+                </>
+              ))}
+            </p>
+          )
+        }
 
         <p class="home-manifesto home-reveal home-reveal-4 mt-3">
           I think technology should make the world better, so I keep{" "}

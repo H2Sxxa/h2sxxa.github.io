@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { EXPLORE_LINKS, SITE_OWNER_LINKS } from "@/consts.ts";
+import { siteConfig } from "@/site.config";
 
 import Divider from "@/components/Divider.astro";
 import FlatGrid from "@/components/FlatGrid.astro";
@@ -9,6 +9,8 @@ import DecorativeIndex from "@/components/DecorativeIndex.astro";
 import DecorativeTitle from "@/components/DecorativeTitle.astro";
 import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
 import { Icon } from "astro-icon/components";
+
+const { navigation, author } = siteConfig;
 ---
 
 <BaseLayout title="Explore" showTitleTemplate>
@@ -22,7 +24,7 @@ import { Icon } from "astro-icon/components";
 
     <FlatGrid>
       {
-        EXPLORE_LINKS.map((link, index) => (
+        navigation.explore.map((link, index) => (
           <DecorativeCard>
             <DecorativeIndex>
               {index < 9 ? `0${index + 1}` : index + 1}
@@ -37,23 +39,27 @@ import { Icon } from "astro-icon/components";
         ))
       }
     </FlatGrid>
-    <Divider />
-    <FlatGrid>
-      {
-        SITE_OWNER_LINKS.map((link) => (
-          <DecorativeCard>
-            <DecorativeIndex>
-              <Icon name={link.icon} />
-            </DecorativeIndex>
+    {
+      author.socials.length > 0 && (
+        <>
+          <Divider />
+          <FlatGrid>
+            {author.socials.map((link) => (
+              <DecorativeCard>
+                <DecorativeIndex>
+                  <Icon name={link.icon} />
+                </DecorativeIndex>
 
-            <DecorativeTitle
-              href={link.href}
-              title={link.title}
-              description={link.description}
-            />
-          </DecorativeCard>
-        ))
-      }
-    </FlatGrid>
+                <DecorativeTitle
+                  href={link.href}
+                  title={link.title}
+                  description={link.description}
+                />
+              </DecorativeCard>
+            ))}
+          </FlatGrid>
+        </>
+      )
+    }
   </main>
 </BaseLayout>
