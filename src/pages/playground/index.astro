@@ -3,12 +3,16 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import DecorativeCard from "@/components/DecorativeCard.astro";
 import DecorativeIndex from "@/components/DecorativeIndex.astro";
 import DecorativeTitle from "@/components/DecorativeTitle.astro";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
 ---
 
-<BaseLayout>
+<BaseLayout title="Playground" showTitleTemplate>
   <main class="page">
-    <h1 class="font-handwriting text-3xl font-bold">Playground</h1>
-    <p class="mb-6 text-lg text-muted-foreground">
+    <h1 class="page-title" aria-label="Playground">
+      <ExpressiveItalic>Play</ExpressiveItalic><ExpressiveBadge class="ml-1">Ground</ExpressiveBadge>
+    </h1>
+    <p class="page-subtitle mb-8">
       Want Something, Coding Something.
     </p>
 

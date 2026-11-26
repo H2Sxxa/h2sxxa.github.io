@@ -1,0 +1,85 @@
+/* =========================
+   Custom Utilities & Surfaces
+   ========================= */
+
+@utility page {
+  @apply mx-auto max-w-5xl px-4 py-10 md:px-6;
+}
+
+@utility page-title {
+  font-family: var(--font-expressive);
+  font-weight: 760;
+  font-variation-settings:
+    "wght" 760,
+    "wdth" 104,
+    "opsz" 40;
+  letter-spacing: -0.025em;
+  @apply text-3xl text-foreground md:text-4xl;
+}
+
+@utility page-subtitle {
+  @apply mt-2 text-sm leading-relaxed text-muted-foreground md:text-base;
+}
+
+@utility elevated {
+  @apply border border-border/80 shadow-xs;
+
+  @variant dark {
+    @apply border-border/90 shadow-none;
+  }
+}
+
+@utility decorative-index {
+  @apply pointer-events-none absolute -top-2 -right-2 -z-10 font-mono text-7xl font-black tracking-tighter text-primary/15 transition-transform duration-300 group-hover:scale-105;
+
+  @variant dark {
+    @apply text-primary/10;
+  }
+}
+
+@utility decorative {
+  @apply relative z-0 overflow-hidden rounded-3xl border bg-card p-6 shadow-xs hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md active:scale-[0.99];
+  transition:
+    transform 360ms var(--ease-spring-soft),
+    border-color 200ms ease,
+    box-shadow 240ms ease,
+    background-color 200ms ease,
+    border-radius 320ms var(--ease-spring);
+}
+
+@utility m3-pill {
+  border-radius: 24px;
+  transition:
+    border-radius 320ms var(--ease-spring),
+    transform 280ms var(--ease-spring),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+
+  &:hover {
+    border-radius: 14px;
+  }
+
+  &:active {
+    border-radius: 10px;
+    transform: scale(0.95);
+  }
+}
+
+/* Global subtle Warm Washi / Dark Ceramic Chawan backdrop */
+.washi-backdrop-light {
+  background: radial-gradient(
+    ellipse 68% 58% at 50% 24%,
+    color-mix(in oklab, var(--primary-container) 24%, transparent) 0%,
+    transparent 72%
+  );
+}
+
+.washi-backdrop-grain {
+  opacity: 0.024;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+.dark .washi-backdrop-grain {
+  opacity: 0.034;
+}

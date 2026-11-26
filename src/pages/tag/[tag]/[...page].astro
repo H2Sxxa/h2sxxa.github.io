@@ -43,12 +43,17 @@ const { tag, page } = Astro.props;
 
 <BaseLayout title={`#${tag}`} showTitleTemplate>
   <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
-    <h1 class="mb-2 font-serif text-3xl font-bold tracking-tight">
-      <span class="mr-1 text-primary">#</span>{tag}
-    </h1>
-    <p class="mb-6 text-sm text-muted-foreground md:text-base">
-      <a href="/tag" class="hover:underline">← View all tags</a>
-    </p>
+    <div class="mb-6">
+      <a
+        href="/tag"
+        class="m3-pill mb-4 inline-flex items-center gap-1.5 border border-border bg-card/80 px-3.5 py-1 font-mono text-xs text-muted-foreground no-underline hover:border-primary/45 hover:bg-primary-container hover:text-on-primary-container"
+      >
+        ← All tags
+      </a>
+      <h1 class="page-title">
+        <span class="mr-1 text-primary">#</span>{tag}
+      </h1>
+    </div>
     <div class="space-y-4">
       {
         page.data.map((post, index) => (

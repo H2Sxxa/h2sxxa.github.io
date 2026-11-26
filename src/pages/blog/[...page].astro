@@ -27,10 +27,8 @@ const { page } = Astro.props;
   <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
     <header class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <h1 class="font-serif text-3xl font-bold tracking-tight md:text-4xl">
-          Blog
-        </h1>
-        <p class="mt-1.5 text-sm text-muted-foreground md:text-base">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-subtitle">
           RSS is available at{" "}
           <a href="/rss.xml" class="font-mono text-primary hover:underline"
             >rss.xml</a
@@ -43,11 +41,11 @@ const { page } = Astro.props;
       <button
         type="button"
         data-open-cmd
-        class="m3-pill inline-flex w-fit cursor-pointer items-center gap-2 border border-border bg-card/80 px-4 py-2 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-accent hover:text-foreground"
+        class="m3-pill inline-flex w-fit cursor-pointer items-center gap-2 border border-primary/25 bg-card/80 px-4 py-2 font-mono text-xs text-muted-foreground hover:border-tertiary hover:bg-tertiary-container hover:text-on-tertiary-container"
       >
         <Icon name="mdi:magnify" class="h-4 w-4" />
         <span>Quick search</span>
-        <kbd class="rounded border border-border bg-muted px-1.5 py-0.5 text-[10px]">
+        <kbd class="rounded border border-border/80 bg-background/70 px-1.5 py-0.5 text-[10px]">
           ⌘K
         </kbd>
       </button>

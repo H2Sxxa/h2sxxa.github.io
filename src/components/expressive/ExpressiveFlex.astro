@@ -1,0 +1,40 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<span class={cn("expressive-flex", className)}>
+  <slot />
+</span>
+
+<style>
+  .expressive-flex {
+    display: inline-block;
+    cursor: default;
+    font-family: var(--font-expressive);
+    font-weight: 400;
+    font-variation-settings:
+      "wght" 400,
+      "wdth" 88,
+      "opsz" 48;
+    color: var(--muted-foreground);
+    transition:
+      font-variation-settings 380ms var(--ease-spring),
+      transform 340ms var(--ease-spring),
+      color 200ms ease;
+  }
+
+  .expressive-flex:hover {
+    font-variation-settings:
+      "wght" 740,
+      "wdth" 112,
+      "opsz" 48;
+    color: var(--foreground);
+    transform: translateY(-0.04em);
+  }
+</style>

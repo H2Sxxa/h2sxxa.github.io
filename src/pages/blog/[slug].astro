@@ -59,7 +59,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
       <div class="mb-4 flex items-center justify-center">
         <a
           href="/blog"
-          class="m3-pill inline-flex items-center gap-1.5 border border-border bg-card/80 px-3.5 py-1 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-accent hover:text-foreground"
+          class="m3-pill inline-flex items-center gap-1.5 border border-border bg-card/80 px-3.5 py-1 font-mono text-xs text-muted-foreground hover:border-primary/45 hover:bg-primary-container hover:text-on-primary-container"
         >
           <Icon name="mdi:arrow-left" class="h-3.5 w-3.5" />
           <span>Back to Blog</span>
@@ -68,7 +68,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 
       <h1
         transition:name={`post-title-${post.id}`}
-        class="font-serif text-3xl leading-tight font-semibold tracking-tight text-foreground lg:text-4xl"
+        class="font-expressive-serif text-3xl leading-tight font-semibold tracking-tight text-foreground lg:text-4xl"
       >
         {post.data.title}
       </h1>
@@ -86,7 +86,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
       {
         post.data.wip && (
           <div
-            class="mx-auto mt-5 rounded-xl border border-amber-500/40 border-l-4 border-l-amber-500 bg-amber-500/10 p-4 text-left text-sm text-amber-900 dark:text-amber-200"
+            class="mx-auto mt-5 rounded-2xl border border-tertiary/40 border-l-4 border-l-tertiary bg-tertiary-container/75 p-4 text-left text-sm text-on-tertiary-container"
             role="alert"
           >
             <p class="font-semibold">Work in Progress</p>

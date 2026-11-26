@@ -2,109 +2,12 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
-/* =========================
-   Theme Tokens
-   ========================= */
-
-:root {
-  /* Colors — Ceremonial Uji Matcha & Warm Washi */
-  --background: oklch(0.978 0.011 108);
-  --foreground: oklch(0.24 0.025 136);
-
-  --primary: oklch(0.49 0.105 135);
-  --primary-foreground: oklch(0.985 0.008 115);
-
-  --muted: oklch(0.942 0.018 122);
-  --muted-foreground: oklch(0.47 0.032 132);
-
-  --accent: oklch(0.905 0.042 134);
-  --accent-foreground: oklch(0.24 0.028 136);
-
-  --border: oklch(0.885 0.022 124);
-
-  --card: oklch(0.992 0.006 112);
-  --card-foreground: oklch(0.24 0.025 136);
-
-  /* Typography */
-  --font-sans:
-    var(--font-lato), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
-    "Microsoft YaHei", system-ui, sans-serif;
-  --font-serif:
-    var(--font-lora), "Noto Serif SC", "Songti SC", Georgia, serif;
-  --font-mono:
-    var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-handwriting: var(--font-dancing-script), cursive;
-
-  /* Radius */
-  --radius: 0.75rem;
-
-  /* M3 Expressive Motion */
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-spring-soft: cubic-bezier(0.22, 1.25, 0.36, 1);
-}
-
-.dark {
-  /* Colors — Dark Ceramic Chawan & Fresh Matcha Froth */
-  --background: oklch(0.185 0.016 138);
-  --foreground: oklch(0.925 0.015 112);
-
-  --primary: oklch(0.74 0.115 134);
-  --primary-foreground: oklch(0.18 0.02 138);
-
-  --muted: oklch(0.265 0.022 136);
-  --muted-foreground: oklch(0.72 0.032 128);
-
-  --accent: oklch(0.30 0.038 135);
-  --accent-foreground: oklch(0.94 0.018 120);
-
-  --border: oklch(0.31 0.024 136);
-
-  --card: oklch(0.225 0.019 138);
-  --card-foreground: oklch(0.925 0.015 112);
-}
+@import "./tokens.css";
+@import "./prose.css";
+@import "./utilities.css";
 
 /* =========================
-   Tailwind Theme Mapping
-   ========================= */
-
-@theme inline {
-  /* Colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-border: var(--border);
-
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-
-  /* Fonts */
-  --font-sans:
-    var(--font-lato), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
-    "Microsoft YaHei", system-ui, sans-serif;
-  --font-serif:
-    var(--font-lora), "Noto Serif SC", "Songti SC", Georgia, serif;
-  --font-mono:
-    var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-handwriting: var(--font-dancing-script), cursive;
-
-  /* Radius */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-}
-
-/* =========================
-   Base Styles
+   Base Styles & Scrollbars
    ========================= */
 @layer base {
   *,
@@ -159,7 +62,7 @@
     }
   }
 
-  /* Unified Matcha Scrollbar for inner scrollable containers (Firefox) */
+  /* Unified Matcha Scrollbar for inner scrollable containers */
   @supports not selector(::-webkit-scrollbar) {
     :not(html):not(body) {
       scrollbar-width: thin;
@@ -168,13 +71,13 @@
     }
   }
 
-  /* Unified Matcha Scrollbar for inner scrollable containers (Chromium / Safari) */
   :not(html):not(body)::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
-  :not(html):not(body)::-webkit-scrollbar-track {
+  :not(html):not(body)::-webkit-scrollbar-track,
+  :not(html):not(body)::-webkit-scrollbar-corner {
     background: transparent;
   }
 
@@ -193,13 +96,12 @@
   :not(html):not(body)::-webkit-scrollbar-thumb:active {
     background-color: color-mix(in oklab, var(--primary) 85%, transparent);
   }
-
-  :not(html):not(body)::-webkit-scrollbar-corner {
-    background: transparent;
-  }
 }
 
-/* Circular ripple theme toggle via View Transitions API */
+/* =========================
+   View Transitions & Curtain
+   ========================= */
+
 html.theme-transitioning * {
   view-transition-name: none !important;
 }
@@ -218,175 +120,12 @@ html.theme-transitioning::view-transition-new(root) {
   z-index: 9999;
 }
 
-/* Disable root crossfade while the 4-band route curtain is covering the screen */
 html.curtain-active::view-transition-old(root),
 html.curtain-active::view-transition-new(root) {
   animation: none !important;
 }
 
-/* Lock scroll while the route curtain is visible (0px layout shift thanks to overlay scrollbar) */
 html.curtain-locked,
 html.curtain-locked body {
   overflow: hidden !important;
-}
-
-/* Typography Color */
-.prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-lead: var(--muted-foreground);
-  --tw-prose-links: var(--primary);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-counters: var(--muted-foreground);
-  --tw-prose-bullets: var(--muted-foreground);
-  --tw-prose-hr: var(--border);
-  --tw-prose-quotes: var(--foreground);
-  --tw-prose-quote-borders: var(--border);
-  --tw-prose-captions: var(--muted-foreground);
-  --tw-prose-kbd: var(--foreground);
-  --tw-prose-kbd-shadows: color-mix(
-    in oklab,
-    var(--foreground) 20%,
-    transparent
-  );
-  --tw-prose-code: var(--primary);
-  --tw-prose-pre-code: var(--card-foreground);
-  --tw-prose-pre-bg: var(--card);
-  --tw-prose-th-borders: var(--border);
-  --tw-prose-td-borders: var(--border);
-  --tw-prose-invert-body: var(--foreground);
-  --tw-prose-invert-headings: var(--foreground);
-  --tw-prose-invert-lead: var(--muted-foreground);
-  --tw-prose-invert-links: var(--primary);
-  --tw-prose-invert-bold: var(--foreground);
-  --tw-prose-invert-counters: var(--muted-foreground);
-  --tw-prose-invert-bullets: var(--muted-foreground);
-  --tw-prose-invert-hr: var(--border);
-  --tw-prose-invert-quotes: var(--foreground);
-  --tw-prose-invert-quote-borders: var(--border);
-  --tw-prose-invert-captions: var(--muted-foreground);
-  --tw-prose-invert-kbd: var(--foreground);
-  --tw-prose-invert-kbd-shadows: color-mix(
-    in oklab,
-    var(--foreground) 20%,
-    transparent
-  );
-  --tw-prose-invert-code: var(--primary);
-  --tw-prose-invert-pre-code: var(--card-foreground);
-  --tw-prose-invert-pre-bg: var(--card);
-  --tw-prose-invert-th-borders: var(--border);
-  --tw-prose-invert-td-borders: var(--border);
-}
-
-.dark .prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-lead: var(--muted-foreground);
-  --tw-prose-links: var(--primary);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-counters: var(--muted-foreground);
-  --tw-prose-bullets: var(--muted-foreground);
-  --tw-prose-hr: var(--border);
-  --tw-prose-quotes: var(--foreground);
-  --tw-prose-quote-borders: var(--border);
-  --tw-prose-captions: var(--muted-foreground);
-  --tw-prose-kbd: var(--foreground);
-  --tw-prose-kbd-shadows: color-mix(
-    in oklab,
-    var(--foreground) 20%,
-    transparent
-  );
-  --tw-prose-code: var(--primary);
-  --tw-prose-pre-code: var(--card-foreground);
-  --tw-prose-pre-bg: var(--card);
-  --tw-prose-th-borders: var(--border);
-  --tw-prose-td-borders: var(--border);
-}
-
-.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
-.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
-  content: none;
-}
-
-.prose :where(:not(pre) > code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  background-color: color-mix(in oklab, var(--muted) 90%, transparent);
-  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
-  border-radius: 0.375rem;
-  padding: 0.125rem 0.375rem;
-  font-size: 0.875em;
-  font-weight: 500;
-}
-
-.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-}
-
-.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border-inline-start: 3px solid var(--primary);
-  background-color: color-mix(in oklab, var(--muted) 55%, transparent);
-  border-radius: 0 0.75rem 0.75rem 0;
-  padding: 0.75rem 1.125rem;
-  font-style: normal;
-}
-
-.prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border-radius: 0.75rem;
-  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
-}
-
-@utility elevated {
-  @apply border border-border/80 shadow-xs;
-
-  @variant dark {
-    @apply border-border/90 shadow-none;
-  }
-}
-
-@utility decorative-index {
-  @apply pointer-events-none absolute -top-2 -right-2 -z-10 font-mono text-7xl font-black tracking-tighter text-primary/15 transition-transform duration-300 group-hover:scale-105;
-
-  @variant dark {
-    @apply text-primary/10;
-  }
-}
-
-@utility decorative {
-  @apply relative z-0 overflow-hidden rounded-3xl border bg-card p-6 shadow-xs hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md active:scale-[0.99];
-  transition:
-    transform 360ms var(--ease-spring-soft),
-    border-color 200ms ease,
-    box-shadow 240ms ease,
-    background-color 200ms ease,
-    border-radius 320ms var(--ease-spring);
-}
-
-@utility m3-pill {
-  border-radius: 24px;
-  transition:
-    border-radius 320ms var(--ease-spring),
-    transform 280ms var(--ease-spring),
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease;
-
-  &:hover {
-    border-radius: 14px;
-  }
-
-  &:active {
-    border-radius: 10px;
-    transform: scale(0.95);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --ease-spring: ease;
-    --ease-spring-soft: ease;
-  }
-}
-
-@utility page {
-  @apply mx-auto max-w-5xl px-4 py-10 md:px-6;
 }

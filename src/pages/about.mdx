@@ -1,22 +1,32 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/Text.astro";
 import Avatar from "@/components/Avatar.astro";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
 import { SITE_OWNER, SITE_OWNER_LINKS } from "@/consts";
 import { Icon } from "astro-icon/components";
 
-<BaseLayout>
+<BaseLayout title="About" showTitleTemplate>
     <main>
-    <div class="flex flex-col items-center mt-12">
-      <Avatar src={SITE_OWNER.avatar} />
-      <h1 class="mt-4 text-3xl font-bold font-handwriting">About Me</h1>
-      <nav>
-        <ul class="flex gap-2 mt-4">
+    <div class="flex flex-col items-center mt-12 mb-4 px-4">
+      <Avatar src={SITE_OWNER.avatar} alt={SITE_OWNER.name} />
+      <h1 class="page-title mt-5">
+        About <ExpressiveItalic>Me</ExpressiveItalic>
+      </h1>
+      <nav aria-label="Social links">
+        <ul class="flex flex-wrap justify-center gap-2 mt-4">
             {
               SITE_OWNER_LINKS.map(link => (
                 <li>
-                      <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.href}>
-                        <Icon name={link.icon} class="w-8 h-8 text-foreground hover:text-foreground/90" />
-                      </a>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.title}
+                    class="m3-pill inline-flex items-center gap-1.5 border border-border/85 bg-card/80 px-3.5 py-1.5 font-mono text-xs text-muted-foreground no-underline hover:border-primary/45 hover:bg-primary-container hover:text-on-primary-container"
+                  >
+                    <Icon name={link.icon} class="h-4 w-4" />
+                    <span>{link.title}</span>
+                  </a>
                 </li>
               ))
             }

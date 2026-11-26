@@ -11,10 +11,12 @@ const TOC_SCROLL_OFFSET = 120;
 let listenersBound = false;
 let activeTocScrollHandler: (() => void) | null = null;
 
-function getGiscusTheme(): "dark_dimmed" | "light" {
-  return document.documentElement.classList.contains("dark")
-    ? "dark_dimmed"
-    : "light";
+function getGiscusTheme(): string {
+  const isDark: boolean = document.documentElement.classList.contains("dark");
+  if (window.location.protocol === "https:") {
+    return `${window.location.origin}/giscus-${isDark ? "dark" : "light"}.css`;
+  }
+  return isDark ? "dark_dimmed" : "light";
 }
 
 function loadGiscus(): void {

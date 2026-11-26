@@ -1,0 +1,45 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<span class={cn("expressive-badge", className)}>
+  <slot />
+</span>
+
+<style>
+  .expressive-badge {
+    display: inline-block;
+    cursor: default;
+    font-family: var(--font-expressive);
+    font-weight: 850;
+    font-variation-settings:
+      "wght" 850,
+      "wdth" 116,
+      "opsz" 64;
+    padding: 0 0.22em 0.04em;
+    border-radius: 0.34em;
+    background: color-mix(in oklab, var(--tertiary-container) 72%, transparent);
+    color: var(--on-tertiary-container);
+    transition:
+      font-variation-settings 380ms var(--ease-spring),
+      transform 340ms var(--ease-spring),
+      background-color 200ms ease,
+      border-radius 320ms var(--ease-spring);
+  }
+
+  .expressive-badge:hover {
+    font-variation-settings:
+      "wght" 900,
+      "wdth" 124,
+      "opsz" 64;
+    border-radius: 0.48em;
+    background: var(--tertiary-container);
+    transform: translateY(-0.06em) rotate(1.2deg);
+  }
+</style>

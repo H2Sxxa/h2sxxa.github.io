@@ -17,9 +17,10 @@ const sortedTags = Array.from(tags).sort((a, b) => b[1] - a[1]);
 
 <BaseLayout title="Tags" showTitleTemplate>
   <main class="page">
-    <h1 class="mb-6 font-serif text-3xl font-bold tracking-tight md:text-4xl">
-      Tags
-    </h1>
+    <h1 class="page-title">Tags</h1>
+    <p class="page-subtitle mb-8 font-mono tabular-nums">
+      {sortedTags.length} tags across {posts.length} essays
+    </p>
     <div class="flex flex-wrap gap-2.5">
       {
         sortedTags.map(([tag, count]) => (

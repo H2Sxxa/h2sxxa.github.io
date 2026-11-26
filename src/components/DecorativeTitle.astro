@@ -9,9 +9,14 @@ const { href, title, description } = Astro.props as Props;
 ---
 
 <h2
-  class="block font-serif text-2xl font-semibold text-primary no-underline transition-colors hover:text-primary/80 hover:underline"
+  class="block font-expressive text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary md:text-2xl"
 >
-  <a href={href}>{title}</a>
+  <a
+    href={href}
+    class="text-inherit no-underline after:absolute after:inset-0 hover:text-primary"
+  >
+    {title}
+  </a>
 </h2>
 <p class="mt-2 text-sm leading-6 text-muted-foreground">
   {description}

@@ -69,6 +69,22 @@ export default defineConfig({
       cssVariable: "--font-dancing-script",
       fallbacks: ["cursive"],
     },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Roboto Flex",
+      cssVariable: "--font-flex",
+      weights: ["300 900"],
+      styles: ["normal"],
+      fallbacks: ["sans-serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Fraunces",
+      cssVariable: "--font-serif-flex",
+      weights: ["300 900"],
+      styles: ["normal", "italic"],
+      fallbacks: ["serif"],
+    },
   ],
   vite: {
     plugins: [tailwindcss()],

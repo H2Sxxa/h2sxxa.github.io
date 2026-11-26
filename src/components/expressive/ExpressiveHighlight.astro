@@ -1,0 +1,36 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<em class={cn("expressive-highlight", className)}>
+  <slot />
+</em>
+
+<style>
+  .expressive-highlight {
+    display: inline-block;
+    padding: 0 0.36em 0.04em;
+    margin: 0 0.04em;
+    border-radius: 0.5em;
+    background: color-mix(in oklab, var(--primary-container) 78%, transparent);
+    color: var(--on-primary-container);
+    font-style: normal;
+    font-weight: 600;
+    transition:
+      border-radius 320ms var(--ease-spring),
+      background-color 200ms ease,
+      transform 280ms var(--ease-spring);
+  }
+
+  .expressive-highlight:hover {
+    border-radius: 0.9em;
+    background: var(--primary-container);
+    transform: translateY(-0.05em);
+  }
+</style>

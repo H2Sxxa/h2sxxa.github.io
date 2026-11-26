@@ -6,10 +6,8 @@ import { Image } from "astro:assets";
 
 <BaseLayout title="Friends" showTitleTemplate>
   <main class="page">
-    <h1 class="font-serif text-3xl font-bold tracking-tight md:text-4xl">
-      Friends
-    </h1>
-    <p class="mt-1.5 mb-8 text-sm text-muted-foreground md:text-base">
+    <h1 class="page-title">Friends</h1>
+    <p class="page-subtitle mb-8">
       Feel free to add your own blog link!
     </p>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -19,18 +17,18 @@ import { Image } from "astro:assets";
             href={friend.link}
             target="_blank"
             rel="noopener noreferrer"
-            class="group decorative flex items-center gap-4 p-4"
+            class="group decorative flex items-center gap-4 p-4 no-underline"
           >
             <Image
               src={friend.avatar}
               alt={friend.title}
               inferSize
               loading="eager"
-              class="h-14 w-14 shrink-0 rounded-full border-2 border-primary/30 transition-transform duration-200 group-hover:scale-105"
+              class="h-14 w-14 shrink-0 rounded-[38%] border-[1.5px] border-primary/35 object-cover transition-[border-radius,transform,border-color] duration-350 ease-(--ease-spring) group-hover:scale-105 group-hover:rounded-[50%] group-hover:border-primary"
               aria-label={`${friend.title}'s avatar`}
             />
             <div class="min-w-0">
-              <h2 class="truncate font-serif text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+              <h2 class="truncate font-expressive text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
                 {friend.title}
               </h2>
               <p class="mt-0.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">

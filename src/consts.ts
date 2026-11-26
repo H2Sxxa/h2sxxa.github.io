@@ -9,6 +9,12 @@ export const SITE_OWNER = {
   name: "H2Sxxa",
   bio: "Just Developing for Fun.",
   avatar: "https://avatars.githubusercontent.com/u/88923783",
+  roles: [
+    "Full-Stack",
+    "Rustacean",
+    "Modder",
+    "Open-Source Builder",
+  ] as const,
   description: `
 Full-Stack Developer, Rustacean, Modder, Open-Source Builder...
 I think technology should make the world better, so I keep programming instead of 'coding'.

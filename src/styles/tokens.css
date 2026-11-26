@@ -1,0 +1,109 @@
+/* =========================
+   Theme Tokens — Uji Matcha & Warm Washi
+   ========================= */
+
+:root {
+  --background: oklch(0.98 0.012 108);
+  --foreground: oklch(0.22 0.032 138);
+
+  --primary: oklch(0.54 0.165 137);
+  --primary-foreground: oklch(0.99 0.008 115);
+  --primary-container: oklch(0.915 0.088 130);
+  --on-primary-container: oklch(0.26 0.075 138);
+
+  --tertiary: oklch(0.64 0.145 86);
+  --tertiary-container: oklch(0.935 0.082 96);
+  --on-tertiary-container: oklch(0.32 0.075 84);
+
+  --muted: oklch(0.942 0.022 122);
+  --muted-foreground: oklch(0.45 0.038 134);
+
+  --accent: oklch(0.905 0.068 133);
+  --accent-foreground: oklch(0.23 0.042 138);
+
+  --border: oklch(0.875 0.032 126);
+
+  --card: oklch(0.994 0.008 110);
+  --card-foreground: oklch(0.22 0.032 138);
+
+  --radius: 0.75rem;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring-soft: cubic-bezier(0.22, 1.28, 0.36, 1);
+}
+
+/* Dark Ceramic Chawan & Fresh Matcha Froth */
+.dark {
+  --background: oklch(0.18 0.018 138);
+  --foreground: oklch(0.94 0.016 112);
+
+  --primary: oklch(0.80 0.165 134);
+  --primary-foreground: oklch(0.17 0.028 138);
+  --primary-container: oklch(0.31 0.075 136);
+  --on-primary-container: oklch(0.92 0.095 130);
+
+  --tertiary: oklch(0.84 0.135 92);
+  --tertiary-container: oklch(0.33 0.068 88);
+  --on-tertiary-container: oklch(0.95 0.085 96);
+
+  --muted: oklch(0.255 0.024 136);
+  --muted-foreground: oklch(0.73 0.036 128);
+
+  --accent: oklch(0.295 0.058 135);
+  --accent-foreground: oklch(0.95 0.025 122);
+
+  --border: oklch(0.31 0.028 136);
+
+  --card: oklch(0.22 0.022 138);
+  --card-foreground: oklch(0.94 0.016 112);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ease-spring: ease;
+    --ease-spring-soft: ease;
+  }
+}
+
+/* Tailwind Theme Mapping */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-border: var(--border);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --font-sans:
+    var(--font-lato), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --font-serif:
+    var(--font-lora), "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-mono:
+    var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-handwriting: var(--font-dancing-script), cursive;
+  --font-expressive:
+    var(--font-flex), "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-expressive-serif:
+    var(--font-serif-flex), var(--font-lora), "Noto Serif SC", Georgia, serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}

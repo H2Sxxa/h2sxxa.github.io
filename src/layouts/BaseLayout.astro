@@ -125,7 +125,17 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
       image={image}
     />
   </head>
-  <body>
+  <body class="relative isolate min-h-dvh">
+    <div
+      class="washi-backdrop-light pointer-events-none fixed inset-0 -z-10"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="washi-backdrop-grain pointer-events-none fixed inset-0 -z-10"
+      aria-hidden="true"
+    >
+    </div>
     <PageLoader />
     <RouteTransitionOverlay />
     <OverlayScrollbar />

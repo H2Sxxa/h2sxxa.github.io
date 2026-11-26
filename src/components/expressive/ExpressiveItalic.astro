@@ -1,0 +1,42 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<span class={cn("expressive-italic", className)}>
+  <slot />
+</span>
+
+<style>
+  .expressive-italic {
+    display: inline-block;
+    cursor: default;
+    font-family: var(--font-expressive-serif);
+    font-style: italic;
+    font-weight: 720;
+    font-variation-settings:
+      "wght" 720,
+      "opsz" 72,
+      "SOFT" 100,
+      "WONK" 1;
+    color: var(--primary);
+    transition:
+      font-variation-settings 380ms var(--ease-spring),
+      transform 340ms var(--ease-spring),
+      color 200ms ease;
+  }
+
+  .expressive-italic:hover {
+    font-variation-settings:
+      "wght" 860,
+      "opsz" 96,
+      "SOFT" 100,
+      "WONK" 1;
+    transform: translateY(-0.06em) rotate(-1deg);
+  }
+</style>

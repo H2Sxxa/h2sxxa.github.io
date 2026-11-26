@@ -1,58 +1,312 @@
 ---
+import { Image } from "astro:assets";
 import { SITE_OWNER } from "@/consts";
-import Avatar from "@/components/Avatar.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ExpressiveFlex from "@/components/expressive/ExpressiveFlex.astro";
+import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
+import ExpressiveBadge from "@/components/expressive/ExpressiveBadge.astro";
+import ExpressiveHighlight from "@/components/expressive/ExpressiveHighlight.astro";
 ---
 
 <BaseLayout dontIncludeFABPadding>
-  <main
-    class="mx-auto flex min-h-dvh max-w-5xl flex-col items-center justify-center gap-10 px-6 md:flex-row md:gap-14"
-  >
-    <!-- Left -->
-    <section class="flex shrink-0 flex-col items-center text-center">
-      <div
-        id="home-avatar-tilt"
-        class="rounded-full transition-transform duration-200 ease-out will-change-transform"
-      >
-        <Avatar src={SITE_OWNER.avatar} alt={SITE_OWNER.name} />
-      </div>
-      <h1 class="mt-6 font-serif text-3xl font-bold tracking-tight">
-        {SITE_OWNER.name}
-      </h1>
-    </section>
-
-    <!-- Right -->
-    <section class="max-w-xl text-center md:text-left">
-      <h2 class="font-handwriting text-4xl font-bold md:text-5xl">
-        {SITE_OWNER.bio}
-      </h2>
-
-      <p
-        class="mt-5 font-serif text-lg leading-relaxed text-muted-foreground md:text-xl"
-      >
-        {SITE_OWNER.description}
-      </p>
-
-      <nav
-        aria-label="Quick links"
-        class="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-mono text-xs text-muted-foreground md:justify-start"
-      >
-        <a href="/blog" class="text-primary hover:underline">Blog</a>
-        <span aria-hidden="true">·</span>
-        <a href="/about" class="text-muted-foreground hover:text-primary">About</a>
-        <span aria-hidden="true">·</span>
-        <a href="/explore" class="text-muted-foreground hover:text-primary">Explore</a>
-        <span aria-hidden="true">·</span>
-        <button
-          type="button"
-          data-open-cmd
-          class="m3-pill cursor-pointer border border-border bg-card/70 px-2.5 py-0.5 text-muted-foreground hover:border-primary/40 hover:bg-accent hover:text-foreground"
+  <div class="relative min-h-dvh overflow-hidden">
+    <main
+      class="mx-auto flex min-h-dvh max-w-5xl flex-col items-center justify-center gap-10 px-6 py-16 md:flex-row md:gap-16"
+    >
+      <!-- Left: M3E Morphing Squircle Avatar + Name -->
+      <section class="flex shrink-0 flex-col items-center text-center">
+        <div
+          id="home-avatar-tilt"
+          class="home-avatar-m3e home-reveal home-reveal-1"
         >
-          ⌘K
-        </button>
-      </nav>
-    </section>
-  </main>
+          <span class="home-avatar-clip">
+            <Image
+              src={SITE_OWNER.avatar}
+              alt={SITE_OWNER.name}
+              inferSize
+              loading="eager"
+              class="home-avatar-img h-28 w-28 md:h-36 md:w-36"
+            />
+            <span class="home-avatar-sheen" aria-hidden="true"></span>
+          </span>
+        </div>
+
+        <h1 class="home-owner-name home-reveal home-reveal-2 mt-5">
+          {SITE_OWNER.name}
+        </h1>
+      </section>
+
+      <!-- Right: Expressive Variable Typography + Quiet Links -->
+      <section class="max-w-xl text-center md:text-left">
+        <h2
+          class="home-bio-heading home-reveal home-reveal-2"
+          aria-label={SITE_OWNER.bio}
+        >
+          <ExpressiveFlex class="text-[clamp(2.1rem,4.5vw,2.75rem)]">
+            Just
+          </ExpressiveFlex>{" "}
+          <ExpressiveItalic class="text-[clamp(2.45rem,5.2vw,3.25rem)]">
+            Developing
+          </ExpressiveItalic>
+          <br />
+          <ExpressiveFlex class="text-[clamp(1.95rem,4vw,2.5rem)]">
+            for
+          </ExpressiveFlex>{" "}
+          <ExpressiveBadge class="text-[clamp(2.55rem,5.5vw,3.375rem)]">
+            Fun<span class="text-primary">.</span>
+          </ExpressiveBadge>
+        </h2>
+
+        <p
+          class="home-reveal home-reveal-3 mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-xs text-muted-foreground md:justify-start"
+        >
+          {
+            SITE_OWNER.roles.map((role, index) => (
+              <>
+                {index > 0 && (
+                  <span
+                    class="inline-block h-1 w-1 rounded-full bg-primary/65"
+                    aria-hidden="true"
+                  />
+                )}
+                <span>{role}</span>
+              </>
+            ))
+          }
+        </p>
+
+        <p class="home-manifesto home-reveal home-reveal-4 mt-3">
+          I think technology should make the world better, so I keep{" "}
+          <ExpressiveHighlight>programming</ExpressiveHighlight> instead of
+          &lsquo;coding&rsquo;.
+        </p>
+
+        <nav
+          aria-label="Quick links"
+          class="home-reveal home-reveal-5 mt-7 flex flex-wrap items-center justify-center gap-1.5 font-mono text-[13px] md:justify-start"
+        >
+          <a href="/blog" class="home-nav-pill home-nav-pill--primary">Blog</a>
+          <a href="/about" class="home-nav-pill">About</a>
+          <a href="/explore" class="home-nav-pill">Explore</a>
+          <button
+            type="button"
+            data-open-cmd
+            aria-label="Open command palette"
+            class="home-cmd-pill ml-1"
+          >
+            ⌘K
+          </button>
+        </nav>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .home-avatar-m3e {
+      position: relative;
+      display: inline-flex;
+      padding: 6px;
+      border-radius: 40%;
+      border: 1.5px solid color-mix(in oklab, var(--primary) 34%, var(--border));
+      background: color-mix(in oklab, var(--primary-container) 36%, var(--card));
+      box-shadow:
+        0 2px 6px color-mix(in oklab, var(--primary) 10%, transparent),
+        0 16px 36px -20px color-mix(in oklab, var(--primary) 28%, transparent);
+      transition:
+        transform 240ms ease-out,
+        border-radius 460ms var(--ease-spring),
+        border-color 220ms ease,
+        background-color 220ms ease,
+        box-shadow 260ms ease;
+      will-change: transform;
+    }
+
+    .home-avatar-m3e:hover {
+      border-radius: 50%;
+      border-color: var(--primary);
+      background: color-mix(in oklab, var(--primary-container) 65%, var(--card));
+    }
+
+    .home-avatar-clip {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+
+    .home-avatar-img {
+      display: block;
+      border-radius: inherit;
+      object-fit: cover;
+      background: var(--accent);
+    }
+
+    .home-avatar-sheen {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 220ms ease;
+      background: radial-gradient(
+        circle 92px at var(--mx, 50%) var(--my, 50%),
+        oklch(1 0 0 / 0.26),
+        transparent 70%
+      );
+    }
+
+    .home-avatar-m3e:hover .home-avatar-sheen {
+      opacity: 1;
+    }
+
+    .home-owner-name {
+      font-family: var(--font-expressive);
+      font-size: 1.875rem;
+      font-weight: 760;
+      font-variation-settings:
+        "wght" 760,
+        "wdth" 108,
+        "opsz" 32;
+      letter-spacing: -0.025em;
+      color: var(--foreground);
+      transition: font-variation-settings 340ms var(--ease-spring);
+    }
+
+    .home-owner-name:hover {
+      font-variation-settings:
+        "wght" 860,
+        "wdth" 118,
+        "opsz" 32;
+    }
+
+    .home-bio-heading {
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--foreground);
+    }
+
+    .home-manifesto {
+      font-family: var(--font-expressive-serif);
+      font-size: clamp(1.0625rem, 1.8vw, 1.21875rem);
+      font-variation-settings:
+        "wght" 420,
+        "opsz" 24,
+        "SOFT" 60,
+        "WONK" 0;
+      line-height: 1.72;
+      color: var(--muted-foreground);
+    }
+
+    .home-nav-pill {
+      display: inline-flex;
+      align-items: center;
+      height: 2rem;
+      padding: 0 0.6875rem;
+      border-radius: 16px;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      transition:
+        border-radius 320ms var(--ease-spring),
+        transform 260ms var(--ease-spring),
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+
+    .home-nav-pill:hover {
+      border-radius: 10px;
+      background: color-mix(in oklab, var(--primary-container) 65%, transparent);
+      color: var(--on-primary-container);
+    }
+
+    .home-nav-pill:active {
+      border-radius: 8px;
+      transform: scale(0.95);
+    }
+
+    .home-nav-pill--primary {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+      padding: 0 0.875rem;
+    }
+
+    .home-nav-pill--primary:hover {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .home-cmd-pill {
+      display: inline-flex;
+      align-items: center;
+      height: 2rem;
+      padding: 0 0.75rem;
+      border-radius: 16px;
+      border: 1px solid color-mix(in oklab, var(--primary) 26%, var(--border));
+      background: color-mix(in oklab, var(--card) 75%, transparent);
+      color: var(--muted-foreground);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1;
+      cursor: pointer;
+      transition:
+        border-radius 320ms var(--ease-spring),
+        transform 260ms var(--ease-spring),
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+
+    .home-cmd-pill:hover {
+      border-radius: 10px;
+      border-color: var(--tertiary);
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+
+    .home-cmd-pill:active {
+      border-radius: 8px;
+      transform: scale(0.95);
+    }
+
+    @keyframes home-spring-rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .home-reveal {
+      opacity: 0;
+      animation: home-spring-rise 600ms var(--ease-spring-soft) forwards;
+    }
+
+    .home-reveal-1 {
+      animation-delay: 40ms;
+    }
+    .home-reveal-2 {
+      animation-delay: 110ms;
+    }
+    .home-reveal-3 {
+      animation-delay: 175ms;
+    }
+    .home-reveal-4 {
+      animation-delay: 235ms;
+    }
+    .home-reveal-5 {
+      animation-delay: 295ms;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-reveal {
+        opacity: 1;
+        animation: none;
+      }
+    }
+  </style>
 
   <script is:inline>
     (() => {
@@ -69,9 +323,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         avatar.dataset.bound = "1";
         avatar.addEventListener("pointermove", (e) => {
           const rect = avatar.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width - 0.5;
-          const py = (e.clientY - rect.top) / rect.height - 0.5;
-          avatar.style.transform = `perspective(500px) rotateX(${(-py * 14).toFixed(1)}deg) rotateY(${(px * 14).toFixed(1)}deg) scale(1.03)`;
+          const rx = (e.clientX - rect.left) / rect.width;
+          const ry = (e.clientY - rect.top) / rect.height;
+          const px = rx - 0.5;
+          const py = ry - 0.5;
+          avatar.style.transform = `perspective(520px) rotateX(${(-py * 13).toFixed(1)}deg) rotateY(${(px * 13).toFixed(1)}deg) scale(1.025)`;
+          avatar.style.setProperty("--mx", `${(rx * 100).toFixed(1)}%`);
+          avatar.style.setProperty("--my", `${(ry * 100).toFixed(1)}%`);
         });
         avatar.addEventListener("pointerleave", () => {
           avatar.style.transform = "";

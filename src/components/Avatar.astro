@@ -20,8 +20,7 @@ const sizes = {
 
 <div
   class={cn(
-    "inline-block rounded-full pointer-events-none shrink-0",
-    sizes[size],
+    "inline-flex shrink-0 rounded-[40%] border-[1.5px] border-primary/35 bg-primary-container/35 p-1.5 shadow-xs transition-[border-radius,border-color,background-color] duration-400 ease-(--ease-spring) hover:rounded-[50%] hover:border-primary hover:bg-primary-container/60",
     Astro.props.class,
   )}
 >
@@ -30,6 +29,6 @@ const sizes = {
     alt={alt ?? "Avatar"}
     inferSize
     loading="eager"
-    class:list={["rounded-full border-4 border-primary/50", sizes[size]]}
+    class:list={["rounded-[inherit] object-cover", sizes[size]]}
   />
 </div>
