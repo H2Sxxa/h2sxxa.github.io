@@ -36,8 +36,8 @@ import { FAB_LINKS } from "@/consts";
       ariaLabel="Toggle color theme"
       delayMs={120}
     >
-      <Icon name="mdi:weather-sunny" class="hidden h-5 w-5 dark:block" />
-      <Icon name="mdi:weather-night" class="block h-5 w-5 dark:hidden" />
+      <Icon name="mdi:weather-sunny" is:inline class="hidden h-5 w-5 dark:block" />
+      <Icon name="mdi:weather-night" is:inline class="block h-5 w-5 dark:hidden" />
     </FloatActionButtonItem>
 
     <div class="my-0.5 h-px w-8 self-center bg-border/80"></div>
@@ -101,10 +101,10 @@ import { FAB_LINKS } from "@/consts";
       class="pointer-events-none flex items-center justify-center"
     >
       <span id="fab-icon-menu">
-        <Icon name="mdi:menu" class="h-6 w-6" />
+        <Icon name="mdi:menu" is:inline class="h-6 w-6" />
       </span>
       <span id="fab-icon-close" class="hidden">
-        <Icon name="mdi:close" class="h-6 w-6" />
+        <Icon name="mdi:close" is:inline class="h-6 w-6" />
       </span>
     </span>
   </button>

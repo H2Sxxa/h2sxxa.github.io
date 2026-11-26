@@ -46,7 +46,7 @@ const tooltipClass: string = cn(
       aria-label={ariaLabel ?? label}
     >
       <span class={tooltipClass}>{label}</span>
-      {icon ? <Icon name={icon} class="h-5 w-5" /> : <slot />}
+      {icon ? <Icon name={icon} is:inline class="h-5 w-5" /> : <slot />}
     </a>
   ) : (
     <button
@@ -57,7 +57,7 @@ const tooltipClass: string = cn(
       aria-label={ariaLabel ?? label}
     >
       <span class={tooltipClass}>{label}</span>
-      {icon ? <Icon name={icon} class="h-5 w-5" /> : <slot />}
+      {icon ? <Icon name={icon} is:inline class="h-5 w-5" /> : <slot />}
     </button>
   )
 }
