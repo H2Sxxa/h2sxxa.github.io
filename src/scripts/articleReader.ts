@@ -6,13 +6,7 @@ interface TocHeadingItem {
   readonly element: HTMLElement;
 }
 
-interface ThemeChangeEventDetail {
-  readonly dark: boolean;
-  readonly waitUntil?: (promise: Promise<void>) => void;
-}
-
 const GISCUS_ORIGIN = "https://giscus.app";
-const GISCUS_THEME_SYNC_WAIT_MS = 150;
 const COPY_FEEDBACK_MS = 1800;
 const TOC_SCROLL_OFFSET = 120;
 
@@ -88,25 +82,7 @@ function loadGiscus(): void {
   container.appendChild(script);
 }
 
-function isElementInViewport(element: HTMLElement): boolean {
-  const rect: DOMRect = element.getBoundingClientRect();
-  return (
-    rect.width > 0 &&
-    rect.height > 0 &&
-    rect.bottom > 0 &&
-    rect.top < window.innerHeight &&
-    rect.right > 0 &&
-    rect.left < window.innerWidth
-  );
-}
-
-function waitForGiscusRepaint(): Promise<void> {
-  return new Promise((resolve) => {
-    window.setTimeout(resolve, GISCUS_THEME_SYNC_WAIT_MS);
-  });
-}
-
-function syncGiscusTheme(event: Event): void {
+function syncGiscusTheme(): void {
   const iframe: HTMLIFrameElement | null = document.querySelector(
     "iframe.giscus-frame",
   );
@@ -116,11 +92,6 @@ function syncGiscusTheme(event: Event): void {
     { giscus: { setConfig: { theme: getGiscusTheme(activeGiscusConfig) } } },
     GISCUS_ORIGIN,
   );
-
-  const detail = (event as CustomEvent<ThemeChangeEventDetail>).detail;
-  if (detail?.waitUntil && isElementInViewport(iframe)) {
-    detail.waitUntil(waitForGiscusRepaint());
-  }
 }
 
 const COPY_ICON_SVG =
