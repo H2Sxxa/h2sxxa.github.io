@@ -61,6 +61,6 @@ const { page } = Astro.props;
       }
     </div>
 
-    <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
+    <ArticlesNavigator page={page} basePath="/blog" />
   </main>
 </BaseLayout>

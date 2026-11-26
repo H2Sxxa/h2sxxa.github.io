@@ -39,11 +39,13 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
     {
       post.data.heroImage && (
         <div class="mx-auto max-w-4xl px-4 pt-6 md:px-6">
-          <div class="max-h-104 w-full overflow-hidden rounded-3xl border border-border/80 bg-card shadow-sm">
+          <div
+            transition:name={`post-hero-${post.id}`}
+            class="max-h-104 w-full overflow-hidden rounded-3xl border border-border/80 bg-card shadow-sm"
+          >
             <Image
               src={post.data.heroImage}
               alt={post.data.title}
-              transition:name={`post-hero-${post.id}`}
               class="h-full max-h-104 w-full object-cover"
               loading="eager"
             />

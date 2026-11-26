@@ -1,36 +1,183 @@
 ---
+import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
+import { cn } from "@/utils/cn";
+import {
+  buildPageTokens,
+  resolvePageUrl,
+  type PageToken,
+} from "@/utils/pagination";
 
 interface Props {
-  prev?: string;
-  next?: string;
+  page: Page<unknown>;
+  basePath: string;
 }
 
-const { prev, next } = Astro.props as Props;
+const { page, basePath } = Astro.props as Props;
+const shouldRender: boolean = page.lastPage > 1;
+const tokens: readonly PageToken[] = shouldRender
+  ? buildPageTokens(page.currentPage, page.lastPage)
+  : [];
+const progressPercent: number = shouldRender
+  ? Math.round((page.currentPage / page.lastPage) * 100)
+  : 0;
+
+const CELL =
+  "h-10 w-10 items-center justify-center gap-1 rounded-[7px] border border-border bg-card font-mono text-[13px] font-medium tabular-nums text-foreground no-underline select-none transition-[border-radius,transform,background-color,border-color,color] duration-300 ease-(--ease-spring)";
+const INTERACTIVE =
+  "hover:rounded-[15px] hover:border-primary/45 hover:bg-accent hover:text-accent-foreground active:scale-93 active:rounded-[11px]";
+const DISABLED =
+  "cursor-not-allowed border-border/60 bg-muted/55 text-muted-foreground/45";
 ---
 
-<div class="mt-8 flex items-center">
-  {
-    prev && (
-      <a
-        href={prev}
-        class="m3-pill inline-flex items-center gap-2 border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent"
-      >
-        <Icon name="mdi:chevron-left" class="h-4 w-4" />
-        <span>Previous</span>
-      </a>
-    )
+{
+  shouldRender && (
+    <div class="mt-10 flex flex-col items-center gap-3">
+      <nav aria-label="Pagination" class="inline-flex items-center gap-[3px]">
+        {page.url.prev ? (
+          <a
+            href={page.url.prev}
+            rel="prev"
+            aria-label="Previous page"
+            data-nav-slot
+            data-nav-interactive
+            class={cn(
+              CELL,
+              INTERACTIVE,
+              "group inline-flex w-10 rounded-l-[20px] font-sans hover:rounded-l-[20px] sm:w-auto sm:pr-3.5 sm:pl-2.5",
+            )}
+          >
+            <Icon
+              name="mdi:chevron-left"
+              class="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+            />
+            <span class="hidden text-[13px] font-bold sm:inline">Prev</span>
+          </a>
+        ) : (
+          <span
+            aria-disabled="true"
+            data-nav-slot
+            class={cn(
+              CELL,
+              DISABLED,
+              "inline-flex w-10 rounded-l-[20px] font-sans sm:w-auto sm:pr-3.5 sm:pl-2.5",
+            )}
+          >
+            <Icon name="mdi:chevron-left" class="h-4 w-4" />
+            <span class="hidden text-[13px] font-bold sm:inline">Prev</span>
+          </span>
+        )}
+
+        {tokens.map((token: PageToken) =>
+          token === "ellipsis" ? (
+            <span
+              aria-hidden="true"
+              data-nav-slot
+              class={cn(
+                CELL,
+                "hidden border-border/60 bg-muted/35 text-muted-foreground/65 sm:inline-flex",
+              )}
+            >
+              …
+            </span>
+          ) : token === page.currentPage ? (
+            <span
+              aria-current="page"
+              class={cn(
+                CELL,
+                "hidden rounded-[18px] border-primary bg-primary font-semibold text-primary-foreground sm:inline-flex",
+              )}
+            >
+              {token}
+            </span>
+          ) : (
+            <a
+              href={resolvePageUrl(basePath, token)}
+              aria-label={`Page ${token}`}
+              data-nav-slot
+              data-nav-interactive
+              class={cn(CELL, INTERACTIVE, "hidden sm:inline-flex")}
+            >
+              {token}
+            </a>
+          ),
+        )}
+
+        <span
+          data-nav-slot
+          class={cn(
+            CELL,
+            "inline-flex w-auto px-3.5 text-xs font-semibold sm:hidden",
+          )}
+        >
+          {String(page.currentPage).padStart(2, "0")} /{" "}
+          {String(page.lastPage).padStart(2, "0")}
+        </span>
+
+        {page.url.next ? (
+          <a
+            href={page.url.next}
+            rel="next"
+            aria-label="Next page"
+            data-nav-slot
+            data-nav-interactive
+            class={cn(
+              CELL,
+              INTERACTIVE,
+              "group inline-flex w-10 rounded-r-[20px] font-sans hover:rounded-r-[20px] sm:w-auto sm:pr-2.5 sm:pl-3.5",
+            )}
+          >
+            <span class="hidden text-[13px] font-bold sm:inline">Next</span>
+            <Icon
+              name="mdi:chevron-right"
+              class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+            />
+          </a>
+        ) : (
+          <span
+            aria-disabled="true"
+            data-nav-slot
+            class={cn(
+              CELL,
+              DISABLED,
+              "inline-flex w-10 rounded-r-[20px] font-sans sm:w-auto sm:pr-2.5 sm:pl-3.5",
+            )}
+          >
+            <span class="hidden text-[13px] font-bold sm:inline">Next</span>
+            <Icon name="mdi:chevron-right" class="h-4 w-4" />
+          </span>
+        )}
+      </nav>
+
+      <div class="flex w-full max-w-64 flex-col items-center gap-1.5">
+        <div
+          class="h-0.5 w-full overflow-hidden rounded-full bg-border/75"
+          role="progressbar"
+          aria-valuenow={page.currentPage}
+          aria-valuemin={1}
+          aria-valuemax={page.lastPage}
+        >
+          <div
+            class="h-full rounded-full bg-primary"
+            style={`width: ${progressPercent}%`}
+          />
+        </div>
+        <p class="font-mono text-[11px] tabular-nums text-muted-foreground/80">
+          Showing {page.start + 1}–{page.end + 1} of {page.total}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  [data-nav-interactive]:hover + [data-nav-slot] {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
   }
 
-  {
-    next && (
-      <a
-        href={next}
-        class="m3-pill ml-auto inline-flex items-center gap-2 border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent"
-      >
-        <span>Next</span>
-        <Icon name="mdi:chevron-right" class="h-4 w-4" />
-      </a>
-    )
+  [data-nav-slot]:has(+ [data-nav-interactive]:hover) {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
-</div>
+</style>

@@ -200,6 +200,10 @@
 }
 
 /* Circular ripple theme toggle via View Transitions API */
+html.theme-transitioning * {
+  view-transition-name: none !important;
+}
+
 html.theme-transitioning::view-transition-old(root),
 html.theme-transitioning::view-transition-new(root) {
   animation: none;

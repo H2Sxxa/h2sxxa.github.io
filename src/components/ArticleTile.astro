@@ -24,14 +24,14 @@ const readingMinutes: number = estimateReadingMinutes(post.body);
   {
     post.data.heroImage && (
       <div
-        class="pointer-events-none absolute top-0 right-0 hidden h-full w-64 overflow-hidden md:block"
+        transition:name={`post-hero-${post.id}`}
+        class="pointer-events-none absolute top-0 right-0 hidden h-full w-64 overflow-hidden rounded-r-3xl md:block"
         aria-hidden="true"
       >
         <Image
           src={post.data.heroImage}
           alt=""
           loading={eagerLoading ? "eager" : "lazy"}
-          transition:name={`post-hero-${post.id}`}
           class="h-full w-full mask-[linear-gradient(to_left,black_20%,transparent_95%)] object-cover opacity-35 transition-transform duration-300 group-hover:scale-105 dark:opacity-25"
         />
       </div>

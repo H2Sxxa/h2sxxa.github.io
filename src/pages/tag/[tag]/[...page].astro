@@ -57,6 +57,6 @@ const { tag, page } = Astro.props;
       }
     </div>
 
-    <ArticlesNavigator prev={page.url.prev} next={page.url.next} />
+    <ArticlesNavigator page={page} basePath={`/tag/${snake_case(tag)}`} />
   </main>
 </BaseLayout>
