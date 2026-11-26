@@ -1,4 +1,4 @@
-import type { GiscusCommentsConfig } from "@/site.config";
+import type { GiscusCommentsConfig } from "@/types/config";
 
 interface TocHeadingItem {
   readonly id: string;

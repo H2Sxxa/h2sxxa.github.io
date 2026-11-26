@@ -24,14 +24,18 @@ const fabLinks = siteConfig.navigation.fab;
       delayMs={180}
       hiddenByDefault
     />
-    <FloatActionButtonItem
-      id="fab-search"
-      label="Search ⌘K"
-      ariaLabel="Search (Ctrl+K)"
-      icon="mdi:magnify"
-      delayMs={150}
-      monoLabel
-    />
+    {
+      siteConfig.commandPalette.enabled && (
+        <FloatActionButtonItem
+          id="fab-search"
+          label="Search ⌘K"
+          ariaLabel="Search (Ctrl+K)"
+          icon="mdi:magnify"
+          delayMs={150}
+          monoLabel
+        />
+      )
+    }
     <FloatActionButtonItem
       id="fab-theme"
       label="Theme"

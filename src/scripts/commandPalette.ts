@@ -1,3 +1,5 @@
+import type { CommandPaletteLink } from "@/types/config";
+
 interface PostEntry {
   readonly title: string;
   readonly href: string;
@@ -14,6 +16,8 @@ interface PageEntry {
 interface PaletteDataset {
   readonly posts: readonly PostEntry[];
   readonly pages: readonly PageEntry[];
+  readonly links: readonly CommandPaletteLink[];
+  readonly resultLimit: number;
 }
 
 interface PaletteItem {
@@ -33,11 +37,12 @@ interface PaletteElements {
   list: HTMLElement | null;
 }
 
-const DEFAULT_RESULT_LIMIT = 18;
+const FALLBACK_RESULT_LIMIT = 18;
 
 let initialized = false;
 let isOpen = false;
 let activeIndex = 0;
+let resultLimit = FALLBACK_RESULT_LIMIT;
 let allItems: readonly PaletteItem[] = [];
 let filteredItems: readonly PaletteItem[] = [];
 
@@ -61,7 +66,12 @@ function parseDataset(): PaletteDataset {
   const dataEl: HTMLElement | null =
     document.getElementById("cmd-palette-data");
   if (!dataEl?.textContent) {
-    return { posts: [], pages: [] };
+    return {
+      posts: [],
+      pages: [],
+      links: [],
+      resultLimit: FALLBACK_RESULT_LIMIT,
+    };
   }
   return JSON.parse(dataEl.textContent) as PaletteDataset;
 }
@@ -98,6 +108,15 @@ function buildItems(dataset: PaletteDataset): readonly PaletteItem[] {
     },
   ];
 
+  const customItems: readonly PaletteItem[] = dataset.links.map((link) => ({
+    group: link.group ?? "Links",
+    title: link.title,
+    subtitle: link.subtitle,
+    keywords:
+      link.keywords ?? `${link.title} ${link.subtitle} ${link.href}`,
+    href: link.href,
+  }));
+
   const pageItems: readonly PaletteItem[] = dataset.pages.map((page) => ({
     group: "Pages",
     title: page.title,
@@ -118,12 +137,16 @@ function buildItems(dataset: PaletteDataset): readonly PaletteItem[] {
     href: post.href,
   }));
 
-  return [...actions, ...pageItems, ...postItems];
+  return [...actions, ...customItems, ...pageItems, ...postItems];
 }
 
 function navigateTo(href: string): void {
   const anchor: HTMLAnchorElement = document.createElement("a");
   anchor.href = href;
+  if (/^https?:\/\//.test(href)) {
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+  }
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
@@ -181,7 +204,7 @@ function renderList(): void {
 function filterItems(query: string): void {
   const normalized: string = query.trim().toLowerCase();
   if (!normalized) {
-    filteredItems = allItems.slice(0, DEFAULT_RESULT_LIMIT);
+    filteredItems = allItems.slice(0, resultLimit);
   } else {
     const terms: string[] = normalized.split(/\s+/);
     filteredItems = allItems.filter((item) => {
@@ -240,7 +263,9 @@ export function initCommandPalette(): void {
   if (initialized) return;
   initialized = true;
 
-  allItems = buildItems(parseDataset());
+  const dataset: PaletteDataset = parseDataset();
+  resultLimit = dataset.resultLimit > 0 ? dataset.resultLimit : FALLBACK_RESULT_LIMIT;
+  allItems = buildItems(dataset);
   filteredItems = allItems;
 
   window.__openCommandPalette = openPalette;

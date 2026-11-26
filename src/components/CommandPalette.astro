@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/site.config";
 
+const { commandPalette, navigation } = siteConfig;
+
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .map((post) => ({
@@ -12,13 +14,18 @@ const posts = (await getCollection("blog"))
     date: post.data.pubDate.toISOString().slice(0, 10),
   }));
 
-const pages = siteConfig.navigation.explore.map((link) => ({
+const pages = navigation.explore.map((link) => ({
   title: link.title,
   description: link.description,
   href: link.href,
 }));
 
-const payload: string = JSON.stringify({ posts, pages });
+const payload: string = JSON.stringify({
+  posts,
+  pages,
+  links: commandPalette.links ?? [],
+  resultLimit: commandPalette.resultLimit,
+});
 ---
 
 <div
@@ -38,7 +45,7 @@ const payload: string = JSON.stringify({ posts, pages });
       <input
         id="cmd-palette-input"
         type="text"
-        placeholder="Search posts, tags, pages, or actions..."
+        placeholder={commandPalette.placeholder}
         autocomplete="off"
         spellcheck="false"
         class="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"

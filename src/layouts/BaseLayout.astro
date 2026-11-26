@@ -146,7 +146,7 @@ const defaultTheme: "system" | "light" | "dark" = theme.defaultTheme;
     <OverlayScrollbar />
     <ClientRouter />
     <slot />
-    <CommandPalette />
+    {siteConfig.commandPalette.enabled && <CommandPalette />}
     <FloatActionButton />
     <!-- Padding for FAB -->
     {!dontIncludeFABPadding && <div class="h-24" />}

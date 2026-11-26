@@ -93,14 +93,18 @@ const { author } = siteConfig;
           <a href="/blog" class="home-nav-pill home-nav-pill--primary">Blog</a>
           <a href="/about" class="home-nav-pill">About</a>
           <a href="/explore" class="home-nav-pill">Explore</a>
-          <button
-            type="button"
-            data-open-cmd
-            aria-label="Open command palette"
-            class="home-cmd-pill ml-1"
-          >
-            ⌘K
-          </button>
+          {
+            siteConfig.commandPalette.enabled && (
+              <button
+                type="button"
+                data-open-cmd
+                aria-label="Open command palette"
+                class="home-cmd-pill ml-1"
+              >
+                ⌘K
+              </button>
+            )
+          }
         </nav>
       </section>
     </main>
