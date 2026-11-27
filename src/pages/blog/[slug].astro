@@ -115,29 +115,79 @@ const giscusConfigJson: string | null = siteConfig.comments
       <!-- Mobile Collapsible TOC -->
       {
         tocHeadings.length > 0 && (
-          <details class="mb-6 rounded-2xl border border-border bg-card/80 p-4 lg:hidden">
-            <summary class="cursor-pointer font-serif text-sm font-semibold text-foreground">
-              Contents ({tocHeadings.length})
-            </summary>
-            <ul class="mt-3 space-y-1.5 border-l border-border pl-3 text-sm">
-              {tocHeadings.map((heading) => (
-                <li
-                  class:list={[
-                    heading.depth === 2 && "pl-2",
-                    heading.depth === 3 && "pl-4",
-                    heading.depth === 4 && "pl-6",
-                  ]}
-                >
-                  <a
-                    href={`#${heading.slug}`}
-                    class="block py-0.5 text-muted-foreground hover:text-primary"
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
+          <nav
+            id="mobile-toc"
+            data-open="false"
+            aria-label="Table of contents"
+            class="group/toc mx-auto mb-8 w-full max-w-3xl border-y border-border/75 lg:hidden"
+          >
+            <button
+              id="mobile-toc-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobile-toc-panel"
+              class="group/toc-trigger flex w-full cursor-pointer items-center justify-between gap-3 py-3 text-left transition-colors"
+            >
+              <span class="flex items-center gap-2.5">
+                <Icon
+                  name="mdi:format-list-bulleted"
+                  class="h-4 w-4 shrink-0 text-primary/80 transition-colors group-hover/toc-trigger:text-primary"
+                />
+                <span class="font-mono text-xs font-semibold tracking-wider text-muted-foreground transition-colors group-hover/toc-trigger:text-foreground">
+                  ON THIS PAGE
+                </span>
+                <span class="rounded-full bg-muted/70 px-2 py-0.5 font-mono text-[11px] font-medium tabular-nums text-muted-foreground">
+                  {tocHeadings.length}
+                </span>
+              </span>
+              <span
+                class="mobile-toc-chevron inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground group-hover/toc-trigger:bg-primary-container/70 group-hover/toc-trigger:text-on-primary-container group-active/toc-trigger:scale-95"
+                aria-hidden="true"
+              >
+                <Icon name="mdi:chevron-down" class="h-4 w-4" />
+              </span>
+            </button>
+
+            <div
+              id="mobile-toc-panel"
+              aria-hidden="true"
+              inert
+              class="mobile-toc-panel"
+            >
+              <div class="min-h-0 overflow-hidden">
+                <div class="max-h-72 overflow-y-auto pt-1 pb-4">
+                  <div class="relative ml-1.5">
+                    <div
+                      class="mobile-toc-rail pointer-events-none absolute top-0 bottom-0 left-0 w-px bg-border/80"
+                      aria-hidden="true"
+                    />
+                    <ul class="space-y-0.5 text-sm">
+                      {tocHeadings.map((heading, index) => (
+                        <li
+                          class="mobile-toc-item"
+                          style={`--toc-idx: ${Math.min(index, 8)}`}
+                        >
+                          <a
+                            href={`#${heading.slug}`}
+                            class:list={[
+                              "relative flex min-h-10 items-center py-1.5 pr-2 leading-snug transition-colors before:pointer-events-none before:absolute before:top-2 before:bottom-2 before:-left-[0.5px] before:w-0.5 before:rounded-full before:bg-primary before:opacity-0 before:transition-opacity hover:text-primary hover:before:opacity-100",
+                              heading.depth <= 2 &&
+                                "pl-3.5 font-medium text-foreground/85",
+                              heading.depth === 3 && "pl-6 text-muted-foreground",
+                              heading.depth >= 4 &&
+                                "pl-8 text-[13px] text-muted-foreground/90",
+                            ]}
+                          >
+                            {heading.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
         )
       }
 
@@ -228,6 +278,85 @@ const giscusConfigJson: string | null = siteConfig.comments
     />
   </div>
 </BaseLayout>
+
+<style>
+  .mobile-toc-chevron {
+    transition:
+      transform 320ms var(--ease-spring-soft),
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  #mobile-toc[data-open="true"] .mobile-toc-chevron {
+    transform: rotate(180deg);
+    background-color: color-mix(
+      in oklab,
+      var(--primary-container) 70%,
+      transparent
+    );
+    color: var(--on-primary-container);
+  }
+
+  /* Critically damped curves: smooth height fold with zero overshoot or close clamping */
+  .mobile-toc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #mobile-toc[data-open="true"] .mobile-toc-panel {
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-toc-rail {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition:
+      opacity 140ms ease,
+      transform 180ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  #mobile-toc[data-open="true"] .mobile-toc-rail {
+    opacity: 1;
+    transform: scaleY(1);
+    transition:
+      opacity 200ms ease 20ms,
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1) 20ms;
+  }
+
+  .mobile-toc-item {
+    opacity: 0;
+    transform: translateY(-5px);
+    transition:
+      opacity 130ms ease,
+      transform 150ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  #mobile-toc[data-open="true"] .mobile-toc-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 220ms ease calc(35ms + var(--toc-idx, 0) * 18ms),
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1)
+        calc(25ms + var(--toc-idx, 0) * 18ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-toc-chevron,
+    .mobile-toc-panel,
+    .mobile-toc-rail,
+    .mobile-toc-item {
+      transition: none !important;
+    }
+
+    .mobile-toc-rail,
+    .mobile-toc-item {
+      transform: none !important;
+    }
+  }
+</style>
 
 <script>
   import { initArticleReader } from "@/scripts/articleReader";

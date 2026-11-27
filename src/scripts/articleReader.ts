@@ -277,11 +277,42 @@ function enhanceToc(): void {
   onScroll();
 }
 
+function enhanceMobileToc(): void {
+  const nav: HTMLElement | null = document.getElementById("mobile-toc");
+  const toggle = document.getElementById(
+    "mobile-toc-toggle",
+  ) as HTMLButtonElement | null;
+  const panel: HTMLElement | null =
+    document.getElementById("mobile-toc-panel");
+  if (!nav || !toggle || !panel || toggle.dataset.bound === "1") return;
+
+  toggle.dataset.bound = "1";
+
+  const setOpen = (open: boolean): void => {
+    nav.dataset.open = open ? "true" : "false";
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    panel.inert = !open;
+  };
+
+  toggle.addEventListener("click", () => {
+    setOpen(nav.dataset.open !== "true");
+  });
+
+  nav.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Escape" && nav.dataset.open === "true") {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+}
+
 function hydrateArticlePage(): void {
   loadGiscus();
   enhanceCodeBlocks();
   enhanceLightbox();
   enhanceToc();
+  enhanceMobileToc();
 }
 
 export function initArticleReader(): void {
