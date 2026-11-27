@@ -102,6 +102,8 @@ export interface GiscusCommentsConfig {
 
 export interface ThemeConfig {
   readonly defaultTheme: "system" | "light" | "dark";
+  readonly hue: number;
+  readonly tertiaryHue?: number;
 }
 
 export interface SiteConfig {

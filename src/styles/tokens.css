@@ -1,60 +1,64 @@
 /* =========================
-   Theme Tokens — Uji Matcha & Warm Washi
+   Theme Tokens — OKLCH Hue-Driven Palette + M3 Expressive
+   Default: Uji Matcha (hue: 137) & Yuzu Tea (tertiary: 86)
    ========================= */
 
 :root {
-  --background: oklch(0.98 0.012 108);
-  --foreground: oklch(0.22 0.032 138);
+  --hue-primary: 137;
+  --hue-tertiary: calc(var(--hue-primary) - 51);
 
-  --primary: oklch(0.54 0.165 137);
-  --primary-foreground: oklch(0.99 0.008 115);
-  --primary-container: oklch(0.915 0.088 130);
-  --on-primary-container: oklch(0.26 0.075 138);
+  --background: oklch(0.98 0.012 calc(var(--hue-primary) - 29));
+  --foreground: oklch(0.22 0.032 calc(var(--hue-primary) + 1));
 
-  --tertiary: oklch(0.64 0.145 86);
-  --tertiary-container: oklch(0.935 0.082 96);
-  --on-tertiary-container: oklch(0.32 0.075 84);
+  --primary: oklch(0.54 0.165 var(--hue-primary));
+  --primary-foreground: oklch(0.99 0.008 calc(var(--hue-primary) - 22));
+  --primary-container: oklch(0.915 0.088 calc(var(--hue-primary) - 7));
+  --on-primary-container: oklch(0.26 0.075 calc(var(--hue-primary) + 1));
 
-  --muted: oklch(0.942 0.022 122);
-  --muted-foreground: oklch(0.45 0.038 134);
+  --tertiary: oklch(0.64 0.145 var(--hue-tertiary));
+  --tertiary-container: oklch(0.935 0.082 calc(var(--hue-tertiary) + 10));
+  --on-tertiary-container: oklch(0.32 0.075 calc(var(--hue-tertiary) - 2));
 
-  --accent: oklch(0.905 0.068 133);
-  --accent-foreground: oklch(0.23 0.042 138);
+  --muted: oklch(0.942 0.022 calc(var(--hue-primary) - 15));
+  --muted-foreground: oklch(0.45 0.038 calc(var(--hue-primary) - 3));
 
-  --border: oklch(0.875 0.032 126);
+  --accent: oklch(0.905 0.068 calc(var(--hue-primary) - 4));
+  --accent-foreground: oklch(0.23 0.042 calc(var(--hue-primary) + 1));
 
-  --card: oklch(0.994 0.008 110);
-  --card-foreground: oklch(0.22 0.032 138);
+  --border: oklch(0.875 0.032 calc(var(--hue-primary) - 11));
+
+  --card: oklch(0.994 0.008 calc(var(--hue-primary) - 27));
+  --card-foreground: oklch(0.22 0.032 calc(var(--hue-primary) + 1));
 
   --radius: 0.75rem;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-spring-soft: cubic-bezier(0.22, 1.28, 0.36, 1);
 }
 
-/* Dark Ceramic Chawan & Fresh Matcha Froth */
+/* Dark Mode */
 .dark {
-  --background: oklch(0.18 0.018 138);
-  --foreground: oklch(0.94 0.016 112);
+  --background: oklch(0.18 0.018 calc(var(--hue-primary) + 1));
+  --foreground: oklch(0.94 0.016 calc(var(--hue-primary) - 25));
 
-  --primary: oklch(0.80 0.165 134);
-  --primary-foreground: oklch(0.17 0.028 138);
-  --primary-container: oklch(0.31 0.075 136);
-  --on-primary-container: oklch(0.92 0.095 130);
+  --primary: oklch(0.80 0.165 calc(var(--hue-primary) - 3));
+  --primary-foreground: oklch(0.17 0.028 calc(var(--hue-primary) + 1));
+  --primary-container: oklch(0.31 0.075 calc(var(--hue-primary) - 1));
+  --on-primary-container: oklch(0.92 0.095 calc(var(--hue-primary) - 7));
 
-  --tertiary: oklch(0.84 0.135 92);
-  --tertiary-container: oklch(0.33 0.068 88);
-  --on-tertiary-container: oklch(0.95 0.085 96);
+  --tertiary: oklch(0.84 0.135 calc(var(--hue-tertiary) + 6));
+  --tertiary-container: oklch(0.33 0.068 calc(var(--hue-tertiary) + 2));
+  --on-tertiary-container: oklch(0.95 0.085 calc(var(--hue-tertiary) + 10));
 
-  --muted: oklch(0.255 0.024 136);
-  --muted-foreground: oklch(0.73 0.036 128);
+  --muted: oklch(0.255 0.024 calc(var(--hue-primary) - 1));
+  --muted-foreground: oklch(0.73 0.036 calc(var(--hue-primary) - 9));
 
-  --accent: oklch(0.295 0.058 135);
-  --accent-foreground: oklch(0.95 0.025 122);
+  --accent: oklch(0.295 0.058 calc(var(--hue-primary) - 2));
+  --accent-foreground: oklch(0.95 0.025 calc(var(--hue-primary) - 15));
 
-  --border: oklch(0.31 0.028 136);
+  --border: oklch(0.31 0.028 calc(var(--hue-primary) - 1));
 
-  --card: oklch(0.22 0.022 138);
-  --card-foreground: oklch(0.94 0.016 112);
+  --card: oklch(0.22 0.022 calc(var(--hue-primary) + 1));
+  --card-foreground: oklch(0.94 0.016 calc(var(--hue-primary) - 25));
 }
 
 @media (prefers-reduced-motion: reduce) {

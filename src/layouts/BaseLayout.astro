@@ -20,9 +20,14 @@ const { dontIncludeFABPadding, description, title, showTitleTemplate, image } =
   Astro.props as Props;
 const { site, theme } = siteConfig;
 const defaultTheme: "system" | "light" | "dark" = theme.defaultTheme;
+const themeStyleParts: string[] = [`--hue-primary: ${theme.hue}`];
+if (typeof theme.tertiaryHue === "number") {
+  themeStyleParts.push(`--hue-tertiary: ${theme.tertiaryHue}`);
+}
+const themeStyle: string = themeStyleParts.join("; ");
 ---
 
-<html lang={site.lang}>
+<html lang={site.lang} style={themeStyle}>
   <head>
     <!-- Theme (dark/light) with manual override + circular View Transition ripple -->
     <script is:inline define:vars={{ defaultTheme }}>

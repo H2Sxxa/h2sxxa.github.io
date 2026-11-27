@@ -178,5 +178,6 @@ export const siteConfig: SiteConfig = defineSiteConfig({
 
   theme: {
     defaultTheme: "system",
+    hue: 137,
   },
 });
