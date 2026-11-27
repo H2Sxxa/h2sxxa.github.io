@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 
 const { commandPalette, navigation } = siteConfig;
 
@@ -9,7 +10,7 @@ const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .map((post) => ({
     title: post.data.title,
-    href: `/blog/${post.id}`,
+    href: withBase(`/blog/${post.id}`),
     tags: post.data.tags ?? [],
     date: post.data.pubDate.toISOString().slice(0, 10),
   }));
@@ -17,13 +18,18 @@ const posts = (await getCollection("blog"))
 const pages = navigation.explore.map((link) => ({
   title: link.title,
   description: link.description,
-  href: link.href,
+  href: withBase(link.href),
+}));
+
+const links = (commandPalette.links ?? []).map((link) => ({
+  ...link,
+  href: withBase(link.href),
 }));
 
 const payload: string = JSON.stringify({
   posts,
   pages,
-  links: commandPalette.links ?? [],
+  links,
   resultLimit: commandPalette.resultLimit,
 });
 ---

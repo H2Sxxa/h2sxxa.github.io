@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { withBase } from "@/utils/url";
 
 interface Props {
   title: string;
@@ -14,7 +15,7 @@ const { title, subtitle, href, leadingIcon } = Astro.props;
 <div
   class="group relative z-0 my-4 block overflow-hidden rounded-lg elevated bg-card p-6 transition-colors hover:bg-accent has-[span:hover]:bg-card"
 >
-  <a href={href} class="absolute inset-0 z-10" aria-label="Tile Link"></a>
+  <a href={withBase(href)} class="absolute inset-0 z-10" aria-label="Tile Link"></a>
 
   <div class="flex items-center">
     <!-- Leading -->

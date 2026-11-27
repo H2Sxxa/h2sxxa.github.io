@@ -3,6 +3,7 @@ import Text from "@/components/Text.astro";
 import Avatar from "@/components/Avatar.astro";
 import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 import { Icon } from "astro-icon/components";
 
 <BaseLayout title="About" showTitleTemplate>
@@ -18,7 +19,7 @@ import { Icon } from "astro-icon/components";
               siteConfig.author.socials.map(link => (
                 <li>
                   <a
-                    href={link.href}
+                    href={withBase(link.href)}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.title}

@@ -4,6 +4,7 @@ import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 import ArticlesNavigator from "@/components/ArticlesNavigator.astro";
 import ArticleTile from "@/components/ArticleTile.astro";
 import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
@@ -35,11 +36,11 @@ const { page } = Astro.props;
         </h1>
         <p class="page-subtitle">
           RSS is available at{" "}
-          <a href="/rss.xml" class="font-mono text-primary hover:underline"
+          <a href={withBase("/rss.xml")} class="font-mono text-primary hover:underline"
             >rss.xml</a
           >
           <span class="mx-2 text-border">|</span>
-          <a href="/tag" class="text-primary hover:underline">Browse by tags</a>
+          <a href={withBase("/tag")} class="text-primary hover:underline">Browse by tags</a>
         </p>
       </div>
 

@@ -1,4 +1,5 @@
 import type { GiscusCommentsConfig } from "@/types/config";
+import { withBase } from "@/utils/url";
 
 interface TocHeadingItem {
   readonly id: string;
@@ -29,7 +30,7 @@ function getGiscusTheme(config: GiscusCommentsConfig): string {
     const cssPath: string = isDark
       ? config.theme.darkCss
       : config.theme.lightCss;
-    return new URL(cssPath, window.location.origin).href;
+    return new URL(withBase(cssPath), window.location.origin).href;
   }
   return isDark ? config.theme.fallbackDark : config.theme.fallbackLight;
 }
@@ -41,7 +42,7 @@ function prefetchGiscusThemes(config: GiscusCommentsConfig): void {
     const link: HTMLLinkElement = document.createElement("link");
     link.rel = "prefetch";
     link.as = "style";
-    link.href = new URL(cssPath, window.location.origin).href;
+    link.href = new URL(withBase(cssPath), window.location.origin).href;
     document.head.appendChild(link);
   }
 }

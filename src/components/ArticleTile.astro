@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { clip_markdown } from "@/utils/clip";
 import { estimateReadingMinutes } from "@/utils/readingTime";
+import { withBase } from "@/utils/url";
 import FormattedDate from "./FormattedDate.astro";
 import TagChip from "./TagChip.astro";
 
@@ -63,7 +64,7 @@ const overflowTags: readonly string[] = tags.slice(1);
       class="mt-2 font-serif text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary lg:text-2xl"
     >
       <a
-        href={`/blog/${post.id}`}
+        href={withBase(`/blog/${post.id}`)}
         class="text-inherit no-underline after:absolute after:inset-0 hover:text-primary"
       >
         {post.data.title}

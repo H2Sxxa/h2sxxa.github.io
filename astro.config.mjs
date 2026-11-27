@@ -10,9 +10,37 @@ import icon from "astro-icon";
 
 import react from "@astrojs/react";
 
+function resolveSiteAndBase() {
+  if (process.env.SITE_URL || process.env.BASE_PATH) {
+    return {
+      site: process.env.SITE_URL || "https://h2sxxa.github.io",
+      base: process.env.BASE_PATH || "/",
+    };
+  }
+
+  const repoSlug = process.env.GITHUB_REPOSITORY;
+  if (repoSlug && repoSlug.includes("/")) {
+    const [owner, repo] = repoSlug.split("/");
+    const isUserSite =
+      repo.toLowerCase() === `${owner.toLowerCase()}.github.io`;
+    return {
+      site: `https://${owner.toLowerCase()}.github.io`,
+      base: isUserSite ? "/" : `/${repo}`,
+    };
+  }
+
+  return {
+    site: "https://h2sxxa.github.io",
+    base: "/",
+  };
+}
+
+const { site, base } = resolveSiteAndBase();
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://h2sxxa.github.io",
+  site,
+  base,
   integrations: [
     mdx(),
     sitemap(),

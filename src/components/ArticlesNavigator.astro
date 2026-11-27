@@ -7,6 +7,7 @@ import {
   resolvePageUrl,
   type PageToken,
 } from "@/utils/pagination";
+import { withBase } from "@/utils/url";
 
 interface Props {
   page: Page<unknown>;
@@ -92,7 +93,7 @@ const DISABLED =
             </span>
           ) : (
             <a
-              href={resolvePageUrl(basePath, token)}
+              href={withBase(resolvePageUrl(basePath, token))}
               aria-label={`Page ${token}`}
               data-nav-slot
               data-nav-interactive

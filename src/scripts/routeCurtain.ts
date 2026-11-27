@@ -3,6 +3,7 @@ import type {
   TransitionBeforeSwapEvent,
 } from "astro:transitions/client";
 import type { TopLevelRouteConfig } from "@/types/config";
+import { stripBase } from "@/utils/url";
 import { startM3eLoader, stopM3eLoader } from "./m3eLoader";
 
 interface TopLevelRouteMeta {
@@ -30,8 +31,7 @@ function unlockScroll(): void {
 }
 
 function normalizePath(pathname: string): string {
-  if (!pathname || pathname === "/") return "/";
-  return pathname.replace(/\/+$/, "") || "/";
+  return stripBase(pathname);
 }
 
 function getSection(pathname: string): string {

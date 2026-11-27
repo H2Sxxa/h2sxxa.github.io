@@ -4,6 +4,7 @@
 import "@/styles/global.css";
 import type { ImageMetadata } from "astro";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 import { Font } from "astro:assets";
 
 interface Props {
@@ -26,14 +27,14 @@ const imageSrc =
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+<link rel="icon" href={withBase("/favicon.ico")} />
+<link rel="sitemap" href={withBase("/sitemap-index.xml")} />
 <link
   rel="alternate"
   type="application/rss+xml"
   title={site.title}
-  href={new URL("rss.xml", Astro.site)}
+  href={new URL(withBase("/rss.xml"), Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 

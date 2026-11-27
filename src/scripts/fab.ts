@@ -1,3 +1,5 @@
+import { stripBase } from "@/utils/url";
+
 const RING_PERIMETER = 238;
 const SETTLE_DELAY_MS = 260;
 const SCROLL_TOP_THRESHOLD = 320;
@@ -65,10 +67,11 @@ function setFabOpen(next: boolean): void {
 }
 
 function syncActiveFabRoute(): void {
-  const path: string = window.location.pathname;
+  const path: string = stripBase(window.location.pathname);
   document.querySelectorAll<HTMLElement>("[data-fab-item]").forEach((el) => {
-    const href: string | null = el.getAttribute("data-fab-href");
-    if (!href) return;
+    const rawHref: string | null = el.getAttribute("data-fab-href");
+    if (!rawHref) return;
+    const href: string = stripBase(rawHref);
     const isActive: boolean =
       href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
     el.setAttribute("data-active", String(isActive));

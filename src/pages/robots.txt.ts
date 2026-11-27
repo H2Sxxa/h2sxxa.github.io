@@ -1,9 +1,10 @@
 import type { APIRoute } from "astro";
+import { withBase } from "@/utils/url";
 
 export const GET: APIRoute = ({ site }) => {
   const origin: string = site ? site.origin : "";
   const sitemapLine: string = site
-    ? `\nSitemap: ${new URL("sitemap-index.xml", site).href}`
+    ? `\nSitemap: ${new URL(withBase("/sitemap-index.xml"), site).href}`
     : "";
 
   const body: string = `# robots.txt${origin ? ` for ${origin}` : ""}

@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import FloatActionButtonItem from "./FloatActionButtonItem.astro";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 
 const fabLinks = siteConfig.navigation.fab;
 ---
@@ -51,7 +52,7 @@ const fabLinks = siteConfig.navigation.fab;
     {
       fabLinks.map((link, index) => (
         <FloatActionButtonItem
-          href={link.href}
+          href={withBase(link.href)}
           label={link.label}
           icon={link.icon}
           delayMs={(fabLinks.length - 1 - index) * 30}

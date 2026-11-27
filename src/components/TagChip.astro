@@ -1,6 +1,7 @@
 ---
 import { snake_case } from "@/utils/snakecase";
 import { cn } from "@/utils/cn";
+import { withBase } from "@/utils/url";
 
 interface Props {
   tag: string;
@@ -12,7 +13,7 @@ const { tag, count, class: className } = Astro.props as Props;
 ---
 
 <a
-  href={`/tag/${snake_case(tag)}`}
+  href={withBase(`/tag/${snake_case(tag)}`)}
   class={cn(
     "m3-pill pointer-events-auto inline-flex shrink-0 items-center border border-border/80 bg-card px-3 py-0.5 text-xs font-medium whitespace-nowrap text-muted-foreground hover:border-primary/45 hover:bg-primary-container hover:text-on-primary-container",
     className,

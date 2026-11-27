@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { siteConfig } from "@/site.config";
+import { withBase } from "@/utils/url";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ExpressiveFlex from "@/components/expressive/ExpressiveFlex.astro";
 import ExpressiveItalic from "@/components/expressive/ExpressiveItalic.astro";
@@ -90,9 +91,9 @@ const { author } = siteConfig;
           aria-label="Quick links"
           class="home-reveal home-reveal-5 mt-7 flex flex-wrap items-center justify-center gap-1.5 font-mono text-[13px] md:justify-start"
         >
-          <a href="/blog" class="home-nav-pill home-nav-pill--primary">Blog</a>
-          <a href="/about" class="home-nav-pill">About</a>
-          <a href="/explore" class="home-nav-pill">Explore</a>
+          <a href={withBase("/blog")} class="home-nav-pill home-nav-pill--primary">Blog</a>
+          <a href={withBase("/about")} class="home-nav-pill">About</a>
+          <a href={withBase("/explore")} class="home-nav-pill">Explore</a>
           {
             siteConfig.commandPalette.enabled && (
               <button

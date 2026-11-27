@@ -1,4 +1,5 @@
 import type { CommandPaletteLink } from "@/types/config";
+import { withBase } from "@/utils/url";
 
 interface PostEntry {
   readonly title: string;
@@ -104,7 +105,7 @@ function buildItems(dataset: PaletteDataset): readonly PaletteItem[] {
       title: "Browse All Tags",
       subtitle: "Explore articles by topic",
       keywords: "tags topics 标签 分类",
-      href: "/tag",
+      href: withBase("/tag"),
     },
   ];
 

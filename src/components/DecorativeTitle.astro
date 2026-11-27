@@ -1,4 +1,6 @@
 ---
+import { withBase } from "@/utils/url";
+
 interface Props {
   href: string;
   title: string;
@@ -12,7 +14,7 @@ const { href, title, description } = Astro.props as Props;
   class="block font-expressive text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary md:text-2xl"
 >
   <a
-    href={href}
+    href={withBase(href)}
     class="text-inherit no-underline after:absolute after:inset-0 hover:text-primary"
   >
     {title}

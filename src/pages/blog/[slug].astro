@@ -8,6 +8,7 @@ import TagChip from "@/components/TagChip.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
 import { clip_markdown } from "@/utils/clip";
 import { estimateReadingMinutes } from "@/utils/readingTime";
+import { withBase } from "@/utils/url";
 import { siteConfig } from "@/site.config";
 
 export async function getStaticPaths() {
@@ -62,7 +63,7 @@ const giscusConfigJson: string | null = siteConfig.comments
     <header class="mx-auto max-w-3xl px-4 pt-8 pb-6 text-center md:px-6">
       <div class="mb-4 flex items-center justify-center">
         <a
-          href="/blog"
+          href={withBase("/blog")}
           class="m3-pill inline-flex items-center gap-1.5 border border-border bg-card/80 px-3.5 py-1 font-mono text-xs text-muted-foreground hover:border-primary/45 hover:bg-primary-container hover:text-on-primary-container"
         >
           <Icon name="mdi:arrow-left" class="h-3.5 w-3.5" />
