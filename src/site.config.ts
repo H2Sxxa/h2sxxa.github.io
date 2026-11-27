@@ -135,6 +135,15 @@ export const siteConfig: SiteConfig = defineSiteConfig({
         avatar: "https://avatars.githubusercontent.com/u/288253848",
       },
     ],
+    routes: [
+      { path: "/", label: "HOME" },
+      { path: "/blog", label: "BLOG" },
+      { path: "/explore", label: "EXPLORE" },
+      { path: "/friends", label: "FRIENDS" },
+      { path: "/about", label: "ABOUT" },
+      { path: "/playground", label: "PLAYGROUND" },
+      { path: "/tag", label: "TAGS" },
+    ],
   },
 
   blog: {

@@ -2,6 +2,7 @@ import type {
   TransitionBeforePreparationEvent,
   TransitionBeforeSwapEvent,
 } from "astro:transitions/client";
+import type { TopLevelRouteConfig } from "@/types/config";
 import { startM3eLoader, stopM3eLoader } from "./m3eLoader";
 
 interface TopLevelRouteMeta {
@@ -9,17 +10,6 @@ interface TopLevelRouteMeta {
   readonly label: string;
   readonly index: string;
 }
-
-const TOP_LEVEL_ROUTES: Readonly<Record<string, TopLevelRouteMeta>> = {
-  "/": { section: "home", label: "HOME", index: "01" },
-  "/blog": { section: "blog", label: "BLOG", index: "02" },
-  "/explore": { section: "explore", label: "EXPLORE", index: "03" },
-  "/friends": { section: "friends", label: "FRIENDS", index: "04" },
-  "/about": { section: "about", label: "ABOUT", index: "05" },
-  "/playground": { section: "playground", label: "PLAYGROUND", index: "06" },
-  "/tag": { section: "tag", label: "TAGS", index: "07" },
-  "/category": { section: "category", label: "CATEGORIES", index: "08" },
-};
 
 const STRIP_DURATION_MS = 440;
 const STRIP_STAGGER_MS = 55;
@@ -29,6 +19,7 @@ let initialized = false;
 let activeCurtain = false;
 let runToken = 0;
 let pendingViewTransition: ViewTransition | null = null;
+let topLevelRoutes: Readonly<Record<string, TopLevelRouteMeta>> = {};
 
 function lockScroll(): void {
   document.documentElement.classList.add("curtain-locked");
@@ -47,6 +38,25 @@ function getSection(pathname: string): string {
   const normalized: string = normalizePath(pathname);
   if (normalized === "/") return "home";
   return normalized.split("/")[1] || "home";
+}
+
+function parseTopLevelRoutes(): Readonly<Record<string, TopLevelRouteMeta>> {
+  const dataEl: HTMLElement | null =
+    document.getElementById("route-curtain-data");
+  if (!dataEl?.textContent) {
+    return {};
+  }
+  const routes = JSON.parse(dataEl.textContent) as readonly TopLevelRouteConfig[];
+  const routeMap: Record<string, TopLevelRouteMeta> = {};
+  routes.forEach((route, idx) => {
+    const normalizedPath: string = normalizePath(route.path);
+    routeMap[normalizedPath] = {
+      section: route.section ?? getSection(normalizedPath),
+      label: route.label,
+      index: route.index ?? String(idx + 1).padStart(2, "0"),
+    };
+  });
+  return routeMap;
 }
 
 function queryOverlay(): HTMLElement | null {
@@ -119,6 +129,7 @@ function resetToIdle(overlay: HTMLElement): void {
 export function initRouteCurtain(): void {
   if (initialized) return;
   initialized = true;
+  topLevelRoutes = parseTopLevelRoutes();
 
   document.addEventListener("astro:before-preparation", (rawEvent: Event) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -129,7 +140,7 @@ export function initRouteCurtain(): void {
     );
     const toPath: string = normalizePath(event.to?.pathname || "");
 
-    const toMeta: TopLevelRouteMeta | undefined = TOP_LEVEL_ROUTES[toPath];
+    const toMeta: TopLevelRouteMeta | undefined = topLevelRoutes[toPath];
     if (!toMeta || getSection(fromPath) === toMeta.section) return;
 
     const overlay: HTMLElement | null = queryOverlay();

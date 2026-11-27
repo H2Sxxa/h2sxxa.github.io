@@ -40,10 +40,18 @@ export interface FriendLink {
   readonly avatar: string;
 }
 
+export interface TopLevelRouteConfig {
+  readonly path: string;
+  readonly label: string;
+  readonly section?: string;
+  readonly index?: string;
+}
+
 export interface NavigationConfig {
   readonly fab: readonly FabLink[];
   readonly explore: readonly ExploreLink[];
   readonly friends: readonly FriendLink[];
+  readonly routes: readonly TopLevelRouteConfig[];
 }
 
 export interface BlogConfig {

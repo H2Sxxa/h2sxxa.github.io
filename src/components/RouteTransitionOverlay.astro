@@ -1,7 +1,10 @@
 ---
 // 4-band staggered horizontal curtain transition inspired by chromasounds.work,
 // featuring a flat Material 3 Expressive (M3E) morphing loading indicator.
+import { siteConfig } from "@/site.config";
+
 const STRIPS = [0, 1, 2, 3] as const;
+const routesPayload: string = JSON.stringify(siteConfig.navigation.routes);
 ---
 
 <div
@@ -34,13 +37,13 @@ const STRIPS = [0, 1, 2, 3] as const;
                 data-rt-index
                 class="font-mono text-xs tracking-[0.12em] text-muted-foreground"
               >
-                01
+                ??
               </span>
               <span
                 data-rt-label
                 class="font-serif text-2xl font-semibold tracking-[0.14em] text-foreground"
               >
-                HOME
+                ELSEWHERE
               </span>
             </div>
           </div>
@@ -48,7 +51,7 @@ const STRIPS = [0, 1, 2, 3] as const;
             data-rt-path
             class="rt-path fixed bottom-8 font-mono text-xs tracking-[0.08em] text-muted-foreground opacity-0"
           >
-            /
+            /*
           </span>
         </div>
       </div>
@@ -95,6 +98,13 @@ const STRIPS = [0, 1, 2, 3] as const;
     }
   }
 </style>
+
+<script
+  is:inline
+  id="route-curtain-data"
+  type="application/json"
+  set:html={routesPayload}
+></script>
 
 <script>
   import { initRouteCurtain } from "@/scripts/routeCurtain";
